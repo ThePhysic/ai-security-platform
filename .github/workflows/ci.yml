@@ -1,0 +1,35 @@
+name: Phase 1 foundation
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      COMPOSE_PROJECT_NAME: asp-phase1-ci
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Generate ephemeral ignored test configuration
+        run: python3 scripts/bootstrap_local.py
+      - name: Build pinned test environment
+        run: docker compose --profile test build tests
+      - name: Start isolated disposable PostgreSQL
+        run: docker compose --profile test up -d --wait test-db
+      - name: Lint
+        run: docker compose --profile test run --rm tests uv run --no-sync ruff check .
+      - name: Types
+        run: docker compose --profile test run --rm tests uv run --no-sync mypy src
+      - name: Unit checks
+        run: docker compose --profile test run --rm tests uv run --no-sync pytest -m unit -p no:cacheprovider
+      - name: API checks
+        run: docker compose --profile test run --rm tests uv run --no-sync pytest -m api -p no:cacheprovider
+      - name: Real PostgreSQL checks
+        run: docker compose --profile test run --rm tests uv run --no-sync pytest -m postgres -p no:cacheprovider
+      - name: Stop only this job's disposable test database
+        if: always()
+        run: docker compose --profile test stop test-db

@@ -1,0 +1,14 @@
+{
+  "phase": 1,
+  "migration": "0001_foundation",
+  "checks": {
+    "container_restrictions": true,
+    "live_access_and_phase_boundary": true,
+    "project_after_api_restart": true,
+    "project_after_database_restart": true,
+    "live_database_outage": true,
+    "live_log_and_error_disclosure": true,
+    "test_scan_after_api_restart": true,
+    "test_scan_after_database_restart": true
+  }
+}
