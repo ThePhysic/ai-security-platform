@@ -1,0 +1,47 @@
+﻿# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# JavaScript
+node_modules/
+dist/
+build/
+
+# Environment and credentials
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Local cache/output
+.cache/
+.trivy-cache/
+scanner-cache/
+reports/local/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+/AGENTS.md
+
+# Local-only Codex instructions
+/AGENTS.md
+
+# Local-only Codex instructions
+/AGENTS.md

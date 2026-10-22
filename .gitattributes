@@ -1,0 +1,6 @@
+﻿# Cross-platform line endings
+* text=auto
+*.py text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
