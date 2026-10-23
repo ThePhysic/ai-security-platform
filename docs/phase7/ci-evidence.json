@@ -1,0 +1,21 @@
+{
+  "passed": 7,
+  "failed": 0,
+  "skipped": 0,
+  "clean_candidate_files": 433,
+  "unit_api_passed": 176,
+  "checks": {
+    "no_private_build_files": true,
+    "clean_image_build": true,
+    "network_disabled_artifact_generation": true,
+    "official_sarif_schema": true,
+    "json_report_schema": true,
+    "policy_failure_distinct_from_generation_success": true,
+    "clean_unit_api_suite": true
+  },
+  "remote_actions_executed": false,
+  "code_scanning_uploaded": false,
+  "mode": "clean candidate tree includes authorized unstaged changes; not a committed checkout or remote GitHub run",
+  "policy_exit_code": 1,
+  "artifact_files": 3
+}

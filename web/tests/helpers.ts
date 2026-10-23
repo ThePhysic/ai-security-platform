@@ -9,7 +9,8 @@ export const root = resolve(import.meta.dirname, '../..');
 const configuration = readFileSync(resolve(root, '.env'), 'utf8');
 export const bearer = /^ASP_API_TOKEN=(.+)$/m.exec(configuration)?.[1]?.trim().replace(/^(['"])(.*)\1$/, '$2') ?? '';
 if (!/^[A-Za-z0-9_-]{43,256}$/.test(bearer)) throw new Error('Local browser test credentials unavailable');
-export const fixture = JSON.parse(readFileSync(resolve(root, '.cache/phase6-browser-fixture.json'), 'utf8')) as {
+export const evidencePhase = process.env.ASP_EVIDENCE_PHASE === 'phase7' ? 'phase7' : 'phase6';
+export const fixture = JSON.parse(readFileSync(resolve(root, `.cache/${evidencePhase}-browser-fixture.json`), 'utf8')) as {
   project: string; scan: string; finding: string; rule: string; snapshot: string;
   review_finding: string; review_rule: string; fake_scan: string; empty_project: string;
   unsupported_rule: string;

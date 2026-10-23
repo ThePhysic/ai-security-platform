@@ -1,0 +1,24 @@
+{
+  "commands": [
+    {
+      "command": ".\\.venv\\Scripts\\ruff.exe check .",
+      "exit_code": 0
+    },
+    {
+      "command": ".\\.venv\\Scripts\\mypy.exe src",
+      "exit_code": 0,
+      "source_files": 67
+    },
+    {
+      "command": "npm.cmd run typecheck (cwd web)",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0
+}

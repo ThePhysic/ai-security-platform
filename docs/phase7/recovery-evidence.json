@@ -1,0 +1,7 @@
+{
+  "worker_killed_after_output": true,
+  "kill_to_recovered_ms": 547.3112300023786,
+  "n": 1,
+  "stale_write_rejected": true,
+  "generation": 2
+}

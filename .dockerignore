@@ -18,6 +18,7 @@
 !scripts/**
 !Dockerfile
 !compose.yaml
+!compose.phase7.yaml
 !.dockerignore
 !.github/
 !.github/workflows/

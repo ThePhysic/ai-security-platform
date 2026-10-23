@@ -1,0 +1,167 @@
+{
+  "checks": {
+    "authorized_immutable_source_acquired_and_registered": true,
+    "genuine_isolated_scan_complete_with_independent_provenance": true,
+    "policy_failed_on_required_completed_findings_exit_1": true,
+    "explicit_offline_investigation_and_abstention": true,
+    "explicit_human_revisions_feedback_and_stale_conflict": true,
+    "json_sarif_schema_and_synthetic_secret_redaction": true,
+    "queued_acceptance_and_completed_genuine_results_survive_api_db_restart": true,
+    "synthetic_diagnostic_does_not_satisfy_real_scanner_policy_exit_2": true
+  },
+  "commands": [
+    {
+      "command": "project-create",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "snapshot-create",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "snapshot-register",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "scan",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "command": "export",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "command": "export",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "command": "scan-submit",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "scan-status",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "scan-status",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "scan-wait",
+      "expected_exit": 2,
+      "actual_exit": 2
+    }
+  ],
+  "project_id": "52e38442-7103-47a3-aa8e-371359aa97ef",
+  "scan_id": "416718ed-b4b3-4f08-ba07-2f280a199697",
+  "snapshot_id": "834bc3fe-29d9-46f1-ad94-fe276da34afc",
+  "manifest_digest": "5a675076fdef56956a9540943626e4e5790ec5c5ed11a80aaa12ae8ffb909668",
+  "finding_id": "d782043f-f12d-43f5-bc3a-ed9a099d5fb8",
+  "triage_id": "2debeba4-b69d-4669-ace3-d68a56bdfd85",
+  "abstention_id": "98fa8a54-437d-4858-b6e5-79d587f3b5ed",
+  "review_revisions": {
+    "items": [
+      {
+        "finding_id": "d782043f-f12d-43f5-bc3a-ed9a099d5fb8",
+        "revision": 2,
+        "disposition": "investigate",
+        "note": "Explicit second human revision; advice remains advisory",
+        "reviewer": "local_operator",
+        "triage_run_id": null,
+        "feedback": null,
+        "created_at": "2026-10-23T06:20:16.499431Z"
+      },
+      {
+        "finding_id": "d782043f-f12d-43f5-bc3a-ed9a099d5fb8",
+        "revision": 1,
+        "disposition": "confirmed",
+        "note": "Controlled demonstration; human verified fixture label",
+        "reviewer": "local_operator",
+        "triage_run_id": "2debeba4-b69d-4669-ace3-d68a56bdfd85",
+        "feedback": "agree",
+        "created_at": "2026-10-23T06:20:16.440802Z"
+      }
+    ],
+    "next_before_revision": null
+  },
+  "genuine_findings": 86,
+  "scanners": [
+    {
+      "id": "af94b370-5a9d-45b4-92de-d76ee2387c5b",
+      "scanner_id": "semgrep",
+      "adapter_version": "real-1",
+      "status": "succeeded",
+      "coverage": {
+        "complete_execution": true,
+        "synthetic": false,
+        "source_files": 14,
+        "files_scanned": 4,
+        "warning_count": 0,
+        "excluded_files": 0,
+        "schema_version": 1,
+        "files_not_scanned": 10,
+        "excluded_directories": 0,
+        "policy_files_ignored": 5,
+        "complete_detection_claim": false,
+        "suppression_tokens_neutralized": 0,
+        "warnings": []
+      },
+      "error_code": null,
+      "synthetic": false,
+      "provenance": {
+        "view_policy": "audit-view-v1",
+        "image_digest": "sha256:08d17ceb2851b3e9eabb31ab966c6b6c98574473d3edca5b818e5c45473e9311",
+        "policy_digest": "12e58502b265a95d69709ae83cc4569c6b4d35b8d8873a6c51de5a57551e0fca",
+        "engine_version": "1.179.0",
+        "adapter_version": "real-1"
+      }
+    },
+    {
+      "id": "f583a318-c6ff-4964-981a-d50318533a57",
+      "scanner_id": "trivy",
+      "adapter_version": "real-1",
+      "status": "succeeded",
+      "coverage": {
+        "complete_execution": true,
+        "synthetic": false,
+        "source_files": 14,
+        "files_scanned": 5,
+        "warning_count": 0,
+        "excluded_files": 0,
+        "schema_version": 1,
+        "files_not_scanned": 9,
+        "excluded_directories": 0,
+        "policy_files_ignored": 5,
+        "complete_detection_claim": false,
+        "suppression_tokens_neutralized": 1,
+        "warnings": []
+      },
+      "error_code": null,
+      "synthetic": false,
+      "provenance": {
+        "view_policy": "audit-view-v1",
+        "image_digest": "sha256:8d6faeff42dd93b2056c8ed084610fb22120f6c95a056a7edd41e89479ee585d",
+        "policy_digest": "71bcd0217e6dbc4facca3abcc72fbbbec71946a102153f5e95ab00caf8768082",
+        "engine_version": "Version: 0.76.1",
+        "adapter_version": "real-1",
+        "database_digest": "4566427d61ff4e2c565b331376b07e58afc5166efd4a78cdc8fd10ca657d2898",
+        "database_updated_at": "2026-10-22T19:14:47.059491+00:00",
+        "database_age_seconds": 39923
+      }
+    }
+  ],
+  "diagnostic_scan_id": "f068546c-b196-43be-a339-c78a89f1be23",
+  "passed": 8,
+  "failed": 0,
+  "skipped": 0,
+  "limitations": "Controlled source-only fixture; limited deterministic reasoning; valid citations do not prove advice; no production or hosted-model claim"
+}

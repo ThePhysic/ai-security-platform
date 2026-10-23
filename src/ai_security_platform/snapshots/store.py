@@ -264,25 +264,9 @@ class SnapshotStore:
     def _remove_stage(self, path: Path) -> None:
         if path.parent != self.root / ".staging" or not re.fullmatch(KEY, path.name):
             raise SnapshotError("unsafe_cleanup")
-        _check_ancestors(path)
-        # No recursive shell/delete, no published paths, no followed links.
-        items: list[Path] = []
-        for directory, dirs, files in os.walk(path, followlinks=False):
-            for name in dirs + files:
-                item = Path(directory) / name
-                info = item.lstat()
-                if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
-                    raise SnapshotError("unsafe_cleanup")
-                items.append(item)
-                if len(items) > self.limits.files + self.limits.directories + 2:
-                    raise SnapshotError("cleanup_budget")
-        for item in sorted(items, key=lambda p: len(p.parts), reverse=True):
-            if item.is_dir():
-                item.rmdir()
-            else:
-                item.chmod(0o600)
-                item.unlink()
-        path.rmdir()
+        from ai_security_platform.snapshots.removal import remove_owned_tree
+
+        remove_owned_tree(self.root / ".staging", path.name)
 
     def cleanup_staging(self, older_than_seconds: int = 3600) -> int:
         if older_than_seconds < 3600:

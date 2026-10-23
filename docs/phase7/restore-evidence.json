@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "manifest_verified_before_target_writes": true,
+    "controlled_interruption_before_database_restore": true,
+    "interrupted_target_database_still_empty": true,
+    "resumed_restore_succeeded": true,
+    "idempotent_matching_restore_verified": true,
+    "missing_source_rejected_without_database_mutation": true,
+    "corrupt_dump_rejected_without_database_mutation": true,
+    "mismatched_manifest_rejected_without_database_mutation": true,
+    "restored_api_ready_authenticated_and_hosted_disabled": true,
+    "restored_project_finding_and_review_queries": true,
+    "missing_restored_source_abstains_without_substitution": true,
+    "source_verified_export_refuses_missing_snapshot": true,
+    "missing_evidence_cannot_change_successful_scanner_results": true,
+    "disposable_source_reinstated_and_identity_verified": true,
+    "actual_pg_restore_process_interruption_rolls_back_all_application_tables": true,
+    "actual_interrupted_restore_retries_successfully": true,
+    "all_destructive_restore_tests_confined_to_verified_disposable_cluster": true
+  },
+  "result": {
+    "restored": true,
+    "schema": "0004_triage_review",
+    "tables_verified": 18,
+    "snapshots_verified": 13,
+    "target": "asp-phase7-restore",
+    "retained_database_used_as_target": false
+  },
+  "passed": 17,
+  "failed": 0,
+  "skipped": 0,
+  "interruption_scope": "Controlled stop after verified spool copy; retry resumes before atomic PostgreSQL restoration",
+  "actual_restore_interruption": "PostgreSQL backend terminated during transactional DDL; all application tables rolled back; retry succeeded",
+  "unrelated_or_retained_targets_modified": false
+}

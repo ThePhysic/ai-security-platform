@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-10-23T07:36:21.081363+00:00",
+  "url": "http://127.0.0.1:18082/",
+  "bind": "127.0.0.1",
+  "port": 18082,
+  "http_status": 200,
+  "cache_control": "no-store",
+  "csp": "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self' http://127.0.0.1:18081 ws://127.0.0.1:18082; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'",
+  "scope": "Trusted local development server; not production deployment"
+}

@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "command": "C:\\Users\\ridle\\ai-security-platform\\.venv\\Scripts\\python.exe scripts/prepare_phase7_browser.py",
+      "cwd": ".",
+      "preview": false,
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd ci --ignore-scripts --no-audit",
+      "cwd": "web",
+      "preview": false,
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run build",
+      "cwd": "web",
+      "preview": false,
+      "exit_code": 0
+    },
+    {
+      "command": "node node_modules/@playwright/test/cli.js install chromium --only-shell",
+      "cwd": "web",
+      "preview": false,
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd test",
+      "cwd": "web",
+      "preview": false,
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd test",
+      "cwd": "web",
+      "preview": true,
+      "exit_code": 0
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "skipped": 0
+}

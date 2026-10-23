@@ -1,0 +1,318 @@
+{
+  "recorded_at": "2026-10-23T07:47:37.312060+00:00",
+  "service": "https://api.osv.dev/v1/querybatch",
+  "source": "Public package metadata only; no source/credential transmission",
+  "packages": [
+    {
+      "ecosystem": "Go",
+      "package": "github.com/aquasecurity/trivy",
+      "version": "v0.76.1",
+      "advisories": [
+        {
+          "id": "GO-2026-4919",
+          "modified": "2026-06-16T13:29:16.436842Z"
+        }
+      ]
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "alembic",
+      "version": "1.20.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "annotated-doc",
+      "version": "0.0.5",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "annotated-types",
+      "version": "0.8.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "anyio",
+      "version": "4.15.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "attrs",
+      "version": "26.1.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "certifi",
+      "version": "2026.10.19",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "click",
+      "version": "8.5.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "colorama",
+      "version": "0.4.6",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "fastapi",
+      "version": "0.161.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "greenlet",
+      "version": "3.5.6",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "h11",
+      "version": "0.16.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "hatchling",
+      "version": "1.32.4",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "httpcore",
+      "version": "1.0.9",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "httpx",
+      "version": "0.28.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "idna",
+      "version": "3.20",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "iniconfig",
+      "version": "2.3.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "jsonschema",
+      "version": "4.26.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "librt",
+      "version": "0.16.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "mako",
+      "version": "1.4.3",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "markupsafe",
+      "version": "3.0.4",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "mypy",
+      "version": "1.20.2",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "mypy-extensions",
+      "version": "1.1.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "opentelemetry-api",
+      "version": "1.45.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "packaging",
+      "version": "26.3",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "pathspec",
+      "version": "1.1.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "pluggy",
+      "version": "1.7.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "psycopg",
+      "version": "3.3.6",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "psycopg-binary",
+      "version": "3.3.6",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "pydantic",
+      "version": "2.14.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "pydantic-core",
+      "version": "2.50.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "pydantic-settings",
+      "version": "2.16.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "pygments",
+      "version": "2.21.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "pytest",
+      "version": "9.1.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "python-dotenv",
+      "version": "1.2.4",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "pyyaml",
+      "version": "6.0.3",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "referencing",
+      "version": "0.37.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "rpds-py",
+      "version": "2026.9.1",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "ruff",
+      "version": "0.17.2",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "semgrep",
+      "version": "1.179.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "sqlalchemy",
+      "version": "2.0.55",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "starlette",
+      "version": "1.9.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "tomlkit",
+      "version": "0.15.2",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "trove-classifiers",
+      "version": "2026.9.21.13",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "types-pyyaml",
+      "version": "6.0.12.20260906",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "typing-extensions",
+      "version": "4.16.0",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "typing-inspection",
+      "version": "0.4.4",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "tzdata",
+      "version": "2026.5",
+      "advisories": []
+    },
+    {
+      "ecosystem": "PyPI",
+      "package": "uvicorn",
+      "version": "0.54.0",
+      "advisories": []
+    }
+  ],
+  "queried": 50,
+  "advisory_matches": 1,
+  "advisory_disposition": {
+    "GO-2026-4919": "Broad OSV range retained. Upstream affected releases differ; see FINDINGS.md for primary-source applicability review."
+  },
+  "scope": "Known advisories only; not an exhaustive scanner-transitive SBOM audit"
+}

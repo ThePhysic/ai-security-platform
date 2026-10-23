@@ -1,0 +1,146 @@
+{
+  "phase": "7",
+  "completed_client_date": "2026-10-23",
+  "timezone": "America/Los_Angeles",
+  "recorded_at": "2026-10-23T07:39:00.523354+00:00",
+  "checkpoints": {
+    "7A": "pass",
+    "7B": "pass",
+    "7C": "pass"
+  },
+  "G10": "pass",
+  "M4": "pass",
+  "scope": "Trusted single-operator Windows/NTFS, Docker Desktop Linux, actual PostgreSQL and Chromium, deterministic offline/mocked provider; no production or hosted-quality claim",
+  "required_checks_blocked": [],
+  "evidence": {
+    "browser-evidence.json": {
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0
+    },
+    "preview-evidence.json": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    "native-unit-evidence.json": {
+      "passed": 53,
+      "failed": 0,
+      "skipped": 0
+    },
+    "windows-filesystem-evidence.json": {
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    "isolation-regression.json": {
+      "passed": 31,
+      "failed": 0,
+      "skipped": 0
+    },
+    "scanner-regression.json": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    },
+    "restore-evidence.json": {
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0
+    },
+    "latest-restore-evidence.json": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0
+    },
+    "retention-evidence.json": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0
+    },
+    "rebuild-evidence.json": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0
+    },
+    "environment-evidence.json": {
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0
+    },
+    "demo-evidence.json": {
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0
+    },
+    "ci-evidence.json": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0
+    },
+    "supply-chain-evidence.json": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0
+    },
+    "frontend-evidence.json": {
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    "runtime-evidence.json": {
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0
+    },
+    "regression-comparison.json": {
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test-evidence.json": {
+      "passed": 286,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sandbox-capability-evidence.json": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "counts_overlap": true,
+  "scan_crash_retry_experiments": 25,
+  "triage_recovery_experiments": 5,
+  "database_revision": "0004_triage_review",
+  "new_migrations": [],
+  "real_scanning_admission_enabled": false,
+  "hosted_admission_enabled": false,
+  "live_hosted_calls": 0,
+  "retained_development_rows_unchanged": true,
+  "retained_source_publications_removed": 0,
+  "private_matched_backups": 2,
+  "latest_restore_tables_verified": 18,
+  "latest_restore_registered_sources_verified": 14,
+  "known_unaddressed_high_severity_defects_in_declared_scope": 0,
+  "reviewed_trivy_advisory_match_retained": true,
+  "evaluation_semantic_outcomes_unchanged": true,
+  "resource_observation_delta_investigated": true,
+  "frozen_labels_and_methodology_unchanged": true,
+  "remote_actions_executed": false,
+  "code_scanning_uploaded": false,
+  "staged_committed_pushed_or_deployed": false,
+  "phase8_or_matroid_implemented": false,
+  "limitations": [
+    "A13 unsupported advisory semantics remain; no action/human authority granted",
+    "Two ungraded Kubernetes bindings and unsupported/incomplete scanner coverage retained",
+    "Limited deterministic provider, no independent vulnerability discovery or hosted quality claim",
+    "Chromium-only browser and targeted accessibility coverage",
+    "Trusted host/browser/DB administrator; no universal sandbox/redaction guarantee",
+    "Private checksummed backups require trusted receipts and separately retained scanner assets; not signed or application-encrypted",
+    "Finite source/report/backup/restore quotas; registered/history data conservatively retained",
+    "Local workloads and query observations are not production capacity or SLOs"
+  ],
+  "review_1_evidence_preserved": "review-1/",
+  "sandbox_launcher_capability_inheritance_fixed_and_verified": true
+}

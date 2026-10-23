@@ -1,0 +1,10 @@
+{
+  "command": ".\\.venv\\Scripts\\python.exe -m pytest tests/unit/test_lifecycle.py tests/unit/test_reporting_cli.py -q --basetemp .cache/phase7-lifecycle-native-final",
+  "platform": "Windows NTFS / Python 3.12.15",
+  "passed": 52,
+  "failed": 0,
+  "skipped": 0,
+  "warnings": 1,
+  "warning_scope": "Existing Starlette/httpx TestClient deprecation",
+  "counts_overlap_full_backend_suite": true
+}

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { api, API, connect, detail, finding, fixture, FRONT, project, scan } from './helpers';
+import { api, API, connect, detail, finding, evidencePhase, fixture, FRONT, project, scan } from './helpers';
 import type { Detail, Page as ApiPage, Finding, Scan, Triage } from '../src/contracts';
 
 test('[security] exact API origin, frontend origin and Host denials enforce local boundary', async ({ request, page }) => {
@@ -124,9 +124,9 @@ test('[scripted] loading, unavailable API retry and empty filtered finding state
 });
 
 test('[security] frontend modules and artifacts cannot read private configuration or persist credentials', async ({ page, request }) => {
-  const denied = await request.get(FRONT + '/.env.phase6-probe');
+  const denied = await request.get(FRONT + `/.env.${evidencePhase}-probe`);
   expect(denied.status()).not.toBe(200);
-  expect((await denied.text()).includes('phase6-controlled-private-probe')).toBe(false);
+  expect((await denied.text()).includes(`${evidencePhase}-controlled-private-probe`)).toBe(false);
   expect((await request.get(FRONT + '/tests/helpers.ts')).status()).not.toBe(200);
   await page.goto(FRONT);
   const checked = await page.evaluate(async () => {

@@ -1,0 +1,85 @@
+{
+  "checks": {
+    "initial_restore_triage_worker_has_no_launcher_capability": true,
+    "clean_actual_api_ready_auth_and_hosted_default": true,
+    "clean_worker_no_launcher_capability": true,
+    "clean_triage-worker_no_launcher_capability": true,
+    "clean_final_image_and_restricted_consumers": true,
+    "restore_actual_api_ready_auth_and_hosted_default": true,
+    "restore_final_image_and_restricted_consumers": true,
+    "latest_restored_demo_scan_triage_and_review_relationships": true,
+    "latest_actual_api_source_verified_export_matches_development": true,
+    "latest_queries_did_not_mutate_restored_tables": true,
+    "private_backup_acl_restricts_access_to_operator_and_system": true,
+    "final_local_dashboard_serves_successfully": true,
+    "all_phase7_disposable_services_stopped_without_volume_removal": true
+  },
+  "environments": {
+    "clean": {
+      "project": "asp-phase7-clean",
+      "services": {
+        "api": {
+          "image": "sha256:c4ef5922e6210b8f86f940b1c8a5cb7a4e18376221edeea4350c76f35755912c",
+          "user": "10001:10001",
+          "readonly": true,
+          "ports": {
+            "8000/tcp": [
+              {
+                "HostIp": "127.0.0.1",
+                "HostPort": "18088"
+              }
+            ]
+          },
+          "spool_readonly": true,
+          "no_daemon_mount": true
+        },
+        "worker": {
+          "image": "sha256:c4ef5922e6210b8f86f940b1c8a5cb7a4e18376221edeea4350c76f35755912c",
+          "user": "10001:10001",
+          "readonly": true,
+          "ports": {},
+          "spool_readonly": true,
+          "no_daemon_mount": true
+        },
+        "triage-worker": {
+          "image": "sha256:c4ef5922e6210b8f86f940b1c8a5cb7a4e18376221edeea4350c76f35755912c",
+          "user": "10001:10001",
+          "readonly": true,
+          "ports": {},
+          "spool_readonly": true,
+          "no_daemon_mount": true
+        }
+      }
+    },
+    "restore": {
+      "project": "asp-phase7-restore-a4e5ea7a2a7a4534b9181903e52f581e",
+      "services": {
+        "api": {
+          "image": "sha256:c4ef5922e6210b8f86f940b1c8a5cb7a4e18376221edeea4350c76f35755912c",
+          "user": "10001:10001",
+          "readonly": true,
+          "ports": {
+            "8000/tcp": [
+              {
+                "HostIp": "127.0.0.1",
+                "HostPort": "18087"
+              }
+            ]
+          },
+          "spool_readonly": true,
+          "no_daemon_mount": true
+        }
+      }
+    }
+  },
+  "backup_acl": {
+    "entries": 2,
+    "unexpected_principals": 0,
+    "protected": true
+  },
+  "passed": 13,
+  "failed": 0,
+  "skipped": 0,
+  "retained_development_running": true,
+  "disposable_volumes_and_spools_preserved": true
+}

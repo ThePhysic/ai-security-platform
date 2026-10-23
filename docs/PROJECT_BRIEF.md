@@ -29,6 +29,9 @@ live cloud scanning and large-scale infrastructure.
 A separate AppSec Audit and Hardening case study will
 use the completed Matroid Visual Inspection Platform.
 
-## Next step
-Phase 0: architecture, threat modeling, technical choices,
-interfaces, scope boundaries and implementation plans.
+## Current state
+Phase 7 completes the local flagship within the documented G10/M4 trust and validation
+scope. See [the final completion report](phase7/COMPLETION-REPORT.md),
+[operations runbook](phase7/RUNBOOK.md) and [threat model](phase7/THREAT-MODEL.md).
+Real scanning and hosted AI remain disabled by default. Optional Phase 8 and the separate
+Matroid audit require their own authorization; no public deployment is implied.

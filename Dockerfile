@@ -22,7 +22,7 @@ RUN uv sync --frozen --no-editable
 COPY tests ./tests
 COPY evaluation ./evaluation
 COPY scripts ./scripts
-COPY Dockerfile compose.yaml .dockerignore ./
+COPY Dockerfile compose.yaml compose.phase7.yaml .dockerignore ./
 COPY .github/workflows/ci.yml ./.github/workflows/ci.yml
 COPY .github/workflows/developer-guardrails.yml ./.github/workflows/developer-guardrails.yml
 USER 10001:10001

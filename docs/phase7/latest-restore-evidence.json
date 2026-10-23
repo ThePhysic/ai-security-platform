@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "latest_backup_integrity_verified": true,
+    "fresh_instance_database_and_spool_verified": true,
+    "all_18_table_fingerprints_match": true,
+    "all_snapshot_bytes_verified": true,
+    "no_retained_target_or_earlier_restore_overwritten": true,
+    "final_application_lock_provenance_recorded": true,
+    "operator_cli_idempotent_restore_in_fresh_instance": true
+  },
+  "result": {
+    "restored": true,
+    "schema": "0004_triage_review",
+    "tables_verified": 18,
+    "snapshots_verified": 14,
+    "target": "asp-phase7-restore-a4e5ea7a2a7a4534b9181903e52f581e",
+    "retained_database_used_as_target": false
+  },
+  "bytes": 646383,
+  "passed": 7,
+  "failed": 0,
+  "skipped": 0
+}

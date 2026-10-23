@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "sandbox_worker_launcher_capability_absent": true,
+    "sandbox_triage-worker_launcher_capability_absent": true,
+    "development_worker_launcher_capability_absent": true,
+    "development_triage-worker_launcher_capability_absent": true
+  },
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "before_evidence": "review-1/sandbox-capability-finding.json",
+  "boundary": "API validates its independent launcher credential; ordinary/triage workers do not receive it",
+  "secret_values_exported": false,
+  "main_development_environment_changed": false
+}

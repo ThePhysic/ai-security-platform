@@ -177,7 +177,7 @@ def test_interrupted_atomic_export_and_no_overwrite(tmp_path, monkeypatch):
     with pytest.raises(KeyboardInterrupt):
         write_artifact(tmp_path, "report", "json", b"complete")
     root = tmp_path / ".local/reports"
-    assert list(root.iterdir()) == []
+    assert [p for p in root.iterdir() if p.name != ".publish.lock"] == []
     monkeypatch.setattr(os, "link", original)
     write_artifact(tmp_path, "report", "json", b"complete")
     with pytest.raises(FileExistsError):

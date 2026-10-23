@@ -1,0 +1,592 @@
+{
+  "version": "workload-1",
+  "profile": "fake-v1 diagnostic; no genuine vulnerability or real scanner capacity claim",
+  "files": 200,
+  "bytes": 6030,
+  "total_scans": 72,
+  "total_jobs": 144,
+  "total_findings": 15120,
+  "runs": [
+    {
+      "workers": 1,
+      "cache_label": "first_publication_execution",
+      "scans": 12,
+      "jobs": 24,
+      "findings": 2520,
+      "wall_seconds": 2.25226278899936,
+      "spawn_ready_seconds": 2.9607914939988405,
+      "jobs_per_second": 10.655950148100954,
+      "queue_wait": {
+        "n": 24,
+        "p50_ms": 4132.665,
+        "p95_ms": 4814.785,
+        "min_ms": 3243.239,
+        "max_ms": 4855.591
+      },
+      "job_execution": {
+        "n": 24,
+        "p50_ms": 25.842,
+        "p95_ms": 104.003,
+        "min_ms": 21.305999999999997,
+        "max_ms": 120.002
+      },
+      "scan_lifecycle": {
+        "n": 12,
+        "p50_ms": 4157.402,
+        "p95_ms": 4881.656000000001,
+        "min_ms": 3361.8610000000003,
+        "max_ms": 4881.656000000001
+      },
+      "retries": 0,
+      "worker_resources": [
+        {
+          "jobs": 24,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 4.446301999999999
+        }
+      ]
+    },
+    {
+      "workers": 1,
+      "cache_label": "repeated_warm",
+      "scans": 12,
+      "jobs": 24,
+      "findings": 2520,
+      "wall_seconds": 2.0887425590044586,
+      "spawn_ready_seconds": 2.878883561999828,
+      "jobs_per_second": 11.490166605998079,
+      "queue_wait": {
+        "n": 24,
+        "p50_ms": 3944.105,
+        "p95_ms": 4527.783,
+        "min_ms": 3187.9970000000003,
+        "max_ms": 4563.972
+      },
+      "job_execution": {
+        "n": 24,
+        "p50_ms": 23.859,
+        "p95_ms": 65.25,
+        "min_ms": 18.814,
+        "max_ms": 84.343
+      },
+      "scan_lifecycle": {
+        "n": 12,
+        "p50_ms": 3965.411,
+        "p95_ms": 4590.286,
+        "min_ms": 3298.23,
+        "max_ms": 4590.286
+      },
+      "retries": 0,
+      "worker_resources": [
+        {
+          "jobs": 24,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 4.189458
+        }
+      ]
+    },
+    {
+      "workers": 2,
+      "cache_label": "first_publication_execution",
+      "scans": 12,
+      "jobs": 24,
+      "findings": 2520,
+      "wall_seconds": 1.510138249002921,
+      "spawn_ready_seconds": 3.3064285349973943,
+      "jobs_per_second": 15.89258467947962,
+      "queue_wait": {
+        "n": 24,
+        "p50_ms": 4001.8900000000003,
+        "p95_ms": 4404.477,
+        "min_ms": 3590.139,
+        "max_ms": 4493.8
+      },
+      "job_execution": {
+        "n": 24,
+        "p50_ms": 25.308,
+        "p95_ms": 131.556,
+        "min_ms": 21.013,
+        "max_ms": 184.26000000000002
+      },
+      "scan_lifecycle": {
+        "n": 12,
+        "p50_ms": 4040.445,
+        "p95_ms": 4517.868,
+        "min_ms": 3744.537,
+        "max_ms": 4517.868
+      },
+      "retries": 0,
+      "worker_resources": [
+        {
+          "jobs": 11,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 4.063192
+        },
+        {
+          "jobs": 13,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 4.002084
+        }
+      ]
+    },
+    {
+      "workers": 2,
+      "cache_label": "repeated_warm",
+      "scans": 12,
+      "jobs": 24,
+      "findings": 2520,
+      "wall_seconds": 1.5680079880039557,
+      "spawn_ready_seconds": 3.182971456000814,
+      "jobs_per_second": 15.306044474015431,
+      "queue_wait": {
+        "n": 24,
+        "p50_ms": 3859.748,
+        "p95_ms": 4281.968,
+        "min_ms": 3450.438,
+        "max_ms": 4312.581
+      },
+      "job_execution": {
+        "n": 24,
+        "p50_ms": 27.195,
+        "p95_ms": 91.803,
+        "min_ms": 21.503999999999998,
+        "max_ms": 109.318
+      },
+      "scan_lifecycle": {
+        "n": 12,
+        "p50_ms": 3895.39,
+        "p95_ms": 4341.258,
+        "min_ms": 3579.22,
+        "max_ms": 4341.258
+      },
+      "retries": 0,
+      "worker_resources": [
+        {
+          "jobs": 11,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 3.8904
+        },
+        {
+          "jobs": 13,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 3.982545
+        }
+      ]
+    },
+    {
+      "workers": 4,
+      "cache_label": "first_publication_execution",
+      "scans": 12,
+      "jobs": 24,
+      "findings": 2520,
+      "wall_seconds": 1.1561165929961135,
+      "spawn_ready_seconds": 3.401669753002352,
+      "jobs_per_second": 20.759151927577847,
+      "queue_wait": {
+        "n": 24,
+        "p50_ms": 3943.409,
+        "p95_ms": 4117.950000000001,
+        "min_ms": 3683.2189999999996,
+        "max_ms": 4148.663
+      },
+      "job_execution": {
+        "n": 24,
+        "p50_ms": 34.726,
+        "p95_ms": 106.64,
+        "min_ms": 23.371,
+        "max_ms": 183.798
+      },
+      "scan_lifecycle": {
+        "n": 12,
+        "p50_ms": 4025.593,
+        "p95_ms": 4217.193,
+        "min_ms": 3803.935,
+        "max_ms": 4217.193
+      },
+      "retries": 0,
+      "worker_resources": [
+        {
+          "jobs": 6,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 3.794626
+        },
+        {
+          "jobs": 6,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 3.744318
+        },
+        {
+          "jobs": 6,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 3.8832519999999997
+        },
+        {
+          "jobs": 6,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 3.8738070000000002
+        }
+      ]
+    },
+    {
+      "workers": 4,
+      "cache_label": "repeated_warm",
+      "scans": 12,
+      "jobs": 24,
+      "findings": 2520,
+      "wall_seconds": 1.0781116459984332,
+      "spawn_ready_seconds": 3.3799997129972326,
+      "jobs_per_second": 22.26114529889317,
+      "queue_wait": {
+        "n": 24,
+        "p50_ms": 3838.346,
+        "p95_ms": 4022.3019999999997,
+        "min_ms": 3634.715,
+        "max_ms": 4028.807
+      },
+      "job_execution": {
+        "n": 24,
+        "p50_ms": 28.485,
+        "p95_ms": 94.006,
+        "min_ms": 22.544999999999998,
+        "max_ms": 98.393
+      },
+      "scan_lifecycle": {
+        "n": 12,
+        "p50_ms": 3865.636,
+        "p95_ms": 4056.189,
+        "min_ms": 3746.216,
+        "max_ms": 4056.189
+      },
+      "retries": 0,
+      "worker_resources": [
+        {
+          "jobs": 6,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 3.705958
+        },
+        {
+          "jobs": 5,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 3.8066619999999998
+        },
+        {
+          "jobs": 7,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 3.7757259999999997
+        },
+        {
+          "jobs": 6,
+          "max_rss_kib": 128588,
+          "cpu_seconds": 3.752473
+        }
+      ]
+    }
+  ],
+  "finding_query": {
+    "n": 30,
+    "p50_ms": 2.482895004504826,
+    "p95_ms": 3.7944020004943013,
+    "min_ms": 1.856732000305783,
+    "max_ms": 3.8934969998081215
+  },
+  "history_query": {
+    "n": 30,
+    "p50_ms": 1.3598730001831427,
+    "p95_ms": 1.9421199976932257,
+    "min_ms": 0.9842799991020001,
+    "max_ms": 2.253255996038206
+  },
+  "plans": {
+    "planner_default": [
+      {
+        "Plan": {
+          "Node Type": "Limit",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Startup Cost": 0.29,
+          "Total Cost": 174.67,
+          "Plan Rows": 50,
+          "Plan Width": 40,
+          "Actual Startup Time": 0.023,
+          "Actual Total Time": 0.085,
+          "Actual Rows": 50,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 48,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0,
+          "Plans": [
+            {
+              "Node Type": "Index Scan",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "ix_findings_scan_history",
+              "Relation Name": "findings",
+              "Alias": "findings",
+              "Startup Cost": 0.29,
+              "Total Cost": 732.69,
+              "Plan Rows": 210,
+              "Plan Width": 40,
+              "Actual Startup Time": 0.021,
+              "Actual Total Time": 0.079,
+              "Actual Rows": 50,
+              "Actual Loops": 1,
+              "Index Cond": "(scan_run_id = '2111f0bb-0669-4102-8613-ed86a29dea86'::uuid)",
+              "Rows Removed by Index Recheck": 0,
+              "Shared Hit Blocks": 48,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            }
+          ]
+        },
+        "Planning": {
+          "Shared Hit Blocks": 62,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        "Planning Time": 0.325,
+        "Triggers": [],
+        "Execution Time": 0.105
+      }
+    ],
+    "forced_sequential_diagnostic": [
+      {
+        "Plan": {
+          "Node Type": "Limit",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Startup Cost": 887.98,
+          "Total Cost": 888.1,
+          "Plan Rows": 50,
+          "Plan Width": 40,
+          "Actual Startup Time": 2.442,
+          "Actual Total Time": 2.448,
+          "Actual Rows": 50,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 692,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0,
+          "Plans": [
+            {
+              "Node Type": "Sort",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 887.98,
+              "Total Cost": 888.5,
+              "Plan Rows": 210,
+              "Plan Width": 40,
+              "Actual Startup Time": 2.442,
+              "Actual Total Time": 2.444,
+              "Actual Rows": 50,
+              "Actual Loops": 1,
+              "Sort Key": [
+                "created_at DESC",
+                "id DESC"
+              ],
+              "Sort Method": "top-N heapsort",
+              "Sort Space Used": 31,
+              "Sort Space Type": "Memory",
+              "Shared Hit Blocks": 692,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Seq Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Relation Name": "findings",
+                  "Alias": "findings",
+                  "Startup Cost": 0.0,
+                  "Total Cost": 881.0,
+                  "Plan Rows": 210,
+                  "Plan Width": 40,
+                  "Actual Startup Time": 1.886,
+                  "Actual Total Time": 2.385,
+                  "Actual Rows": 210,
+                  "Actual Loops": 1,
+                  "Filter": "(scan_run_id = '2111f0bb-0669-4102-8613-ed86a29dea86'::uuid)",
+                  "Rows Removed by Filter": 14910,
+                  "Shared Hit Blocks": 692,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            }
+          ]
+        },
+        "Planning": {
+          "Shared Hit Blocks": 54,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        "Planning Time": 0.202,
+        "Triggers": [],
+        "Execution Time": 2.465
+      }
+    ],
+    "history": [
+      {
+        "Plan": {
+          "Node Type": "Limit",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Startup Cost": 5.12,
+          "Total Cost": 5.25,
+          "Plan Rows": 50,
+          "Plan Width": 34,
+          "Actual Startup Time": 0.066,
+          "Actual Total Time": 0.074,
+          "Actual Rows": 50,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0,
+          "Plans": [
+            {
+              "Node Type": "Sort",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 5.12,
+              "Total Cost": 5.3,
+              "Plan Rows": 72,
+              "Plan Width": 34,
+              "Actual Startup Time": 0.065,
+              "Actual Total Time": 0.068,
+              "Actual Rows": 50,
+              "Actual Loops": 1,
+              "Sort Key": [
+                "created_at DESC",
+                "id DESC"
+              ],
+              "Sort Method": "quicksort",
+              "Sort Space Used": 30,
+              "Sort Space Type": "Memory",
+              "Shared Hit Blocks": 2,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Seq Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Relation Name": "scan_runs",
+                  "Alias": "scan_runs",
+                  "Startup Cost": 0.0,
+                  "Total Cost": 2.9,
+                  "Plan Rows": 72,
+                  "Plan Width": 34,
+                  "Actual Startup Time": 0.009,
+                  "Actual Total Time": 0.036,
+                  "Actual Rows": 72,
+                  "Actual Loops": 1,
+                  "Filter": "(project_id = '85ec4c7d-0b1b-4a5b-a673-7c2f017f64cb'::uuid)",
+                  "Rows Removed by Filter": 0,
+                  "Shared Hit Blocks": 2,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            }
+          ]
+        },
+        "Planning": {
+          "Shared Hit Blocks": 42,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        "Planning Time": 0.224,
+        "Triggers": [],
+        "Execution Time": 0.089
+      }
+    ]
+  },
+  "indexes_added": false,
+  "cache_limit": "OS/Docker caches not flushed; growing retained disposable table; cache labels are execution order only",
+  "host": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "cpu_count": 16
+  },
+  "sample_sizes": "nearest-rank percentiles; 12 scan and 24 job observations per run"
+}

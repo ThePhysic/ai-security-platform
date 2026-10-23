@@ -1,0 +1,9 @@
+{
+  "scope": "Phase 7 disposable sandbox only; main development worker environment unchanged",
+  "checks": {
+    "worker_received_unneeded_launcher_capability": true,
+    "triage-worker_received_unneeded_launcher_capability": true
+  },
+  "secret_values_exported": false,
+  "status": "requires_fix"
+}

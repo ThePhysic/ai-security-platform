@@ -1,0 +1,32 @@
+{
+  "source": {
+    "bytes": 59939,
+    "publications": 15,
+    "byte_limit": 134217728,
+    "publication_limit": 32,
+    "admission_full": false,
+    "dry_run": true,
+    "removed": 0,
+    "registered_snapshots_removed": 0,
+    "database_rows_deleted": 0
+  },
+  "registered_sources": 14,
+  "eligible_orphans": 0,
+  "reports": {
+    "files": 7,
+    "bytes": 364231,
+    "temporary": 0,
+    "file_limit": 64,
+    "byte_limit": 67108864,
+    "removed": 0
+  },
+  "backups": {
+    "bundles": 2,
+    "bundle_limit": 3,
+    "total_bytes": 1385894,
+    "payload_limit_per_bundle": 402653184,
+    "private": true,
+    "removed": 0
+  },
+  "scope": "Inspection only of retained development sources/artifacts; destructive cleanup proof uses disposable clean spool"
+}

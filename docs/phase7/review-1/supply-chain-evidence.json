@@ -1,0 +1,66 @@
+{
+  "recorded_at": "2026-10-23T06:44:10.248468+00:00",
+  "checks": {
+    "runtime_python_versions_unchanged": true,
+    "six_build_dependencies_version_and_hash_pinned": true,
+    "build_hashes_recorded_in_uv_lock": true,
+    "known_advisories_reviewed": true,
+    "least_privilege_manual_workflows": true,
+    "official_actions_pinned_and_resolve": true,
+    "immutable_scanner_image_ids_match": true,
+    "offline_database_bytes_match_provenance": true,
+    "npm_registry_integrities_and_disabled_install_hooks": true
+  },
+  "actions": [
+    {
+      "workflow": "ci.yml",
+      "repository": "actions/checkout",
+      "commit": "11bd71901bbe5b1630ceea73d27597364c9af683",
+      "official_commit_resolves": true
+    },
+    {
+      "workflow": "developer-guardrails.yml",
+      "repository": "actions/checkout",
+      "commit": "11bd71901bbe5b1630ceea73d27597364c9af683",
+      "official_commit_resolves": true
+    },
+    {
+      "workflow": "developer-guardrails.yml",
+      "repository": "actions/upload-artifact",
+      "commit": "cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+      "official_commit_resolves": true
+    }
+  ],
+  "scanner_images": {
+    "semgrep": "sha256:08d17ceb2851b3e9eabb31ab966c6b6c98574473d3edca5b818e5c45473e9311",
+    "trivy": "sha256:8d6faeff42dd93b2056c8ed084610fb22120f6c95a056a7edd41e89479ee585d"
+  },
+  "database": {
+    "asset_key": "f31e5ee312124f2abafd6aeaabdf45f1",
+    "files": {
+      "metadata.json": "8bd2e8b581466582cf98fe50310d38238b01b047c6a3b4755382b5a44bfa2495",
+      "trivy.db": "7deff905cefceb3953cf6638e5399e3efb2061a8c71b7360d4d6fb3076a574de"
+    },
+    "metadata": {
+      "Version": 2,
+      "NextUpdate": "2026-10-23T19:14:47.059491102Z",
+      "UpdatedAt": "2026-10-22T19:14:47.059491382Z",
+      "DownloadedAt": "2026-10-23T00:44:25.847530258Z"
+    },
+    "repository": "ghcr.io/aquasecurity/trivy-db:2",
+    "digest": "4566427d61ff4e2c565b331376b07e58afc5166efd4a78cdc8fd10ca657d2898"
+  },
+  "database_bytes": 1627238400,
+  "input_sha256": {
+    "uv.lock": "53f24bd81558fba301b624be61957442a4a0a672d8b41d6c3fe3302941425875",
+    "pyproject.toml": "d45e7d45140af374183c99ee443fd0fff84c44a5fe132d7c45d21665ecc60b6a",
+    "Dockerfile": "e3c428d9b03e0afef467628e2e083c7e39af8fb15c1101bf8beff5340f715def",
+    "compose.yaml": "4bf926f08eb18541851a45d43f5d71a9bb855d2884619b2cec540f77471f9d65",
+    "web/package-lock.json": "b9440f4ffa135ea9b102a1177b0386eb8845339d8e23b057d56d57d613d2d9ac",
+    "policies/scanners.lock.json": "efecfccd5785fe6517f01ddb53cd779379b3d89109e23fadbbab8ebf7c08123f"
+  },
+  "passed": 9,
+  "failed": 0,
+  "skipped": 0,
+  "limits": "No signature assurance or exhaustive scanner-image CVE claim; live workflows and hosted providers remain untested"
+}

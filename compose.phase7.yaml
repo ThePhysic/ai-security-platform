@@ -1,0 +1,74 @@
+name: asp-phase7-${ASP_PHASE7_MODE:?Use the guarded Phase 7 preparation command}
+
+services:
+  db:
+    image: postgres:17.11-bookworm@sha256:858bb5e98eed02eb8cafbcdc007f9a65d1b613972028944a8ec2133ccaf80d27
+    environment:
+      POSTGRES_DB: ${ASP_PHASE7_DATABASE:?Required}
+      POSTGRES_USER: ${ASP_PHASE7_USER:?Required}
+      POSTGRES_PASSWORD: ${ASP_PHASE7_DB_PASSWORD:?Required}
+    volumes:
+      - phase7-db:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  api: &application
+    image: asp-phase7/platform:local
+    build:
+      context: .
+      target: runtime
+    environment: &environment
+      ASP_DATABASE_URL: postgresql+psycopg://${ASP_PHASE7_USER}:${ASP_PHASE7_DB_PASSWORD}@db:5432/${ASP_PHASE7_DATABASE}
+      ASP_API_TOKEN: ${ASP_PHASE7_API_TOKEN:?Required}
+      ASP_LAUNCHER_TOKEN: ${ASP_PHASE7_LAUNCHER_TOKEN:?Required}
+      ASP_SNAPSHOT_SPOOL: /spool
+      ASP_REAL_SCANNING_ENABLED: ${ASP_PHASE7_REAL_ENABLED:-false}
+      ASP_HOSTED_ENABLED: 'false'
+      ASP_ALLOWED_HOSTS: '["127.0.0.1:${ASP_PHASE7_PORT}","127.0.0.1:8000","localhost:8000"]'
+      ASP_ALLOWED_ORIGINS: '["http://127.0.0.1:${ASP_PHASE7_PORT}","http://127.0.0.1:18082"]'
+    ports:
+      - '127.0.0.1:${ASP_PHASE7_PORT:?Required}:8000'
+    volumes:
+      - type: bind
+        source: ${ASP_PHASE7_SPOOL:?Required}
+        target: /spool
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      db:
+        condition: service_healthy
+    read_only: true
+    mem_limit: 256m
+    cpus: 1
+    pids_limit: 64
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/ready', timeout=3).close()"]
+      interval: 3s
+      timeout: 4s
+      retries: 20
+  worker:
+    <<: *application
+    environment: &consumer-environment
+      <<: *environment
+      ASP_LAUNCHER_TOKEN: ''
+    ports: []
+    healthcheck:
+      disable: true
+    command: [uv, run, --no-sync, python, -m, ai_security_platform.jobs.worker]
+  triage-worker:
+    <<: *application
+    environment: *consumer-environment
+    ports: []
+    healthcheck:
+      disable: true
+    command: [uv, run, --no-sync, python, -m, ai_security_platform.jobs.triage_worker]
+
+volumes:
+  phase7-db:

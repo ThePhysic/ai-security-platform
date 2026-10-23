@@ -1,0 +1,219 @@
+{
+  "recorded_at": "2026-10-23T08:00:50.251805+00:00",
+  "python": "3.12.15",
+  "uv": "uv 0.13.5 (46776a95d 2026-10-21 x86_64-pc-windows-msvc)",
+  "postgresql": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "docker": {
+    "os": "linux",
+    "version": "29.9.1",
+    "endpoint": "npipe:////./pipe/dockerDesktopLinuxEngine"
+  },
+  "compose": "5.6.0",
+  "migration": "0004_triage_review",
+  "services": {
+    "api": {
+      "user": "10001:10001",
+      "readonly": true,
+      "caps": [
+        "ALL"
+      ],
+      "security": [
+        "no-new-privileges:true"
+      ],
+      "ports": {
+        "8000/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18081"
+          }
+        ]
+      },
+      "project": "asp-phase1-dev",
+      "mounts": [
+        {
+          "Type": "bind",
+          "Destination": "/spool",
+          "RW": false
+        }
+      ]
+    },
+    "worker": {
+      "user": "10001:10001",
+      "readonly": true,
+      "caps": [
+        "ALL"
+      ],
+      "security": [
+        "no-new-privileges:true"
+      ],
+      "ports": {},
+      "project": "asp-phase1-dev",
+      "mounts": [
+        {
+          "Type": "bind",
+          "Destination": "/spool",
+          "RW": false
+        }
+      ]
+    },
+    "triage-worker": {
+      "user": "10001:10001",
+      "readonly": true,
+      "caps": [
+        "ALL"
+      ],
+      "security": [
+        "no-new-privileges:true"
+      ],
+      "ports": {},
+      "project": "asp-phase1-dev",
+      "mounts": [
+        {
+          "Type": "bind",
+          "Destination": "/spool",
+          "RW": false
+        }
+      ]
+    },
+    "db": {
+      "user": "",
+      "readonly": false,
+      "caps": null,
+      "security": null,
+      "ports": {},
+      "project": "asp-phase1-dev",
+      "mounts": [
+        {
+          "Type": "volume",
+          "Destination": "/var/lib/postgresql/data",
+          "RW": true
+        }
+      ]
+    }
+  },
+  "checks": {
+    "real_intake_disabled": true,
+    "ready": true,
+    "public_authentication_required": true,
+    "api_restricted": true,
+    "api_no_daemon_client": true,
+    "api_no_private_build_files": true,
+    "api_no_daemon_environment": true,
+    "api_real_admission_disabled": true,
+    "api_hosted_disabled": true,
+    "api_no_provider_key": true,
+    "worker_restricted": true,
+    "worker_no_daemon_client": true,
+    "worker_no_private_build_files": true,
+    "worker_no_daemon_environment": true,
+    "worker_real_admission_disabled": true,
+    "worker_hosted_disabled": true,
+    "worker_no_provider_key": true,
+    "triage-worker_restricted": true,
+    "triage-worker_no_daemon_client": true,
+    "triage-worker_no_private_build_files": true,
+    "triage-worker_no_daemon_environment": true,
+    "triage-worker_real_admission_disabled": true,
+    "triage-worker_hosted_disabled": true,
+    "triage-worker_no_provider_key": true,
+    "database_not_published": true,
+    "api_loopback_only": true,
+    "no_scanner_containers": true,
+    "instructions_ignored": true,
+    "nothing_staged": true,
+    "worker_no_launcher_capability": true,
+    "triage-worker_no_launcher_capability": true,
+    "actual_credentials_absent_from_changed_files": true,
+    "expected_schema": true,
+    "all_retained_development_rows_unchanged": true
+  },
+  "retained_rows_before": {
+    "projects": 13,
+    "source_snapshots": 13,
+    "scan_runs": 28,
+    "scanner_runs": 56,
+    "jobs": 78,
+    "job_attempts": 87,
+    "findings": 1825,
+    "idempotency_requests": 50,
+    "audit_events": 280,
+    "scanner_invocations": 53,
+    "launcher_capabilities": 10,
+    "hosted_consents": 0,
+    "triage_runs": 22,
+    "triage_outcomes": 22,
+    "triage_provider_calls": 0,
+    "reviews": 5,
+    "review_revisions": 30
+  },
+  "retained_rows_after": {
+    "projects": 15,
+    "source_snapshots": 14,
+    "scan_runs": 30,
+    "scanner_runs": 60,
+    "jobs": 88,
+    "job_attempts": 97,
+    "findings": 1911,
+    "idempotency_requests": 58,
+    "audit_events": 320,
+    "scanner_invocations": 55,
+    "launcher_capabilities": 11,
+    "hosted_consents": 0,
+    "triage_runs": 28,
+    "triage_outcomes": 28,
+    "triage_provider_calls": 0,
+    "reviews": 7,
+    "review_revisions": 39
+  },
+  "passed": 34,
+  "failed": 0,
+  "skipped": 0,
+  "installed_distributions": {
+    "ai-security-platform": "0.1.0",
+    "alembic": "1.20.1",
+    "annotated-doc": "0.0.5",
+    "annotated-types": "0.8.0",
+    "anyio": "4.15.1",
+    "attrs": "26.1.0",
+    "certifi": "2026.10.19",
+    "click": "8.5.0",
+    "colorama": "0.4.6",
+    "fastapi": "0.161.0",
+    "greenlet": "3.5.6",
+    "h11": "0.16.0",
+    "httpcore": "1.0.9",
+    "httpx": "0.28.1",
+    "idna": "3.20",
+    "iniconfig": "2.3.1",
+    "jsonschema": "4.26.0",
+    "jsonschema-specifications": "2025.9.1",
+    "librt": "0.16.0",
+    "Mako": "1.4.3",
+    "MarkupSafe": "3.0.4",
+    "mypy": "1.20.2",
+    "mypy_extensions": "1.1.0",
+    "opentelemetry-api": "1.45.1",
+    "packaging": "26.3",
+    "pathspec": "1.1.1",
+    "pluggy": "1.7.0",
+    "psycopg": "3.3.6",
+    "psycopg-binary": "3.3.6",
+    "pydantic": "2.14.1",
+    "pydantic-settings": "2.16.1",
+    "pydantic_core": "2.50.1",
+    "Pygments": "2.21.0",
+    "pytest": "9.1.1",
+    "python-dotenv": "1.2.4",
+    "PyYAML": "6.0.3",
+    "referencing": "0.37.0",
+    "rpds-py": "2026.9.1",
+    "ruff": "0.17.2",
+    "SQLAlchemy": "2.0.55",
+    "starlette": "1.9.0",
+    "types-PyYAML": "6.0.12.20260906",
+    "typing-inspection": "0.4.4",
+    "typing_extensions": "4.16.0",
+    "tzdata": "2026.5",
+    "uvicorn": "0.54.0"
+  }
+}

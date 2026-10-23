@@ -1,0 +1,289 @@
+{
+  "checks": [
+    {
+      "command": "docker compose -p asp-phase1-test --profile test build tests",
+      "exit_code": 0
+    },
+    {
+      "command": "docker compose -p asp-phase1-test --profile test run --rm tests uv run --no-sync ruff check .",
+      "exit_code": 0
+    },
+    {
+      "command": "docker compose -p asp-phase1-test --profile test run --rm tests uv run --no-sync mypy src",
+      "exit_code": 0
+    },
+    {
+      "command": "docker compose -p asp-phase1-test --profile test run --rm tests uv run --no-sync pytest -q -s -p no:cacheprovider",
+      "exit_code": 0
+    }
+  ],
+  "pytest": {
+    "passed": 285,
+    "failed": 0,
+    "skipped": 0
+  },
+  "experiments": [
+    {
+      "experiment": 1,
+      "point": "after_claim",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 2,
+      "point": "after_claim",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 3,
+      "point": "after_claim",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 4,
+      "point": "after_claim",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 5,
+      "point": "after_claim",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 1,
+      "point": "after_output",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 2,
+      "point": "after_output",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 3,
+      "point": "after_output",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 4,
+      "point": "after_output",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 5,
+      "point": "after_output",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 1,
+      "point": "after_findings",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 2,
+      "point": "after_findings",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 3,
+      "point": "after_findings",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 4,
+      "point": "after_findings",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 5,
+      "point": "after_findings",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 1,
+      "point": "after_commit",
+      "job_generation": 1,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 2,
+      "point": "after_commit",
+      "job_generation": 1,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 3,
+      "point": "after_commit",
+      "job_generation": 1,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 4,
+      "point": "after_commit",
+      "job_generation": 1,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 5,
+      "point": "after_commit",
+      "job_generation": 1,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 1,
+      "point": "database_disconnect",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 2,
+      "point": "database_disconnect",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 3,
+      "point": "database_disconnect",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 4,
+      "point": "database_disconnect",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    },
+    {
+      "experiment": 5,
+      "point": "database_disconnect",
+      "job_generation": 2,
+      "scan_status": "succeeded",
+      "completion_events": 1,
+      "findings": 1,
+      "stale_publication": "rejected"
+    }
+  ],
+  "triage_experiments": [
+    {
+      "triage_experiment": "after_claim",
+      "outcomes": 1,
+      "completion_events": 1,
+      "scan_status": "succeeded",
+      "stale_publication": "rejected"
+    },
+    {
+      "triage_experiment": "after_output",
+      "outcomes": 1,
+      "completion_events": 1,
+      "scan_status": "succeeded",
+      "stale_publication": "rejected"
+    },
+    {
+      "triage_experiment": "after_outcome",
+      "outcomes": 1,
+      "completion_events": 1,
+      "scan_status": "succeeded",
+      "stale_publication": "rejected"
+    },
+    {
+      "triage_experiment": "after_commit",
+      "outcomes": 1,
+      "completion_events": 1,
+      "scan_status": "succeeded",
+      "stale_publication": "rejected"
+    },
+    {
+      "triage_experiment": "database_disconnect",
+      "outcomes": 1,
+      "completion_events": 1,
+      "scan_status": "succeeded",
+      "stale_publication": "rejected"
+    }
+  ]
+}

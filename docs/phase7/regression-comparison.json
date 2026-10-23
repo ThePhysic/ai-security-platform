@@ -1,0 +1,54 @@
+{
+  "checks": {
+    "quality_and_category_metrics_unchanged": true,
+    "stable_triage_dispositions_citations_and_support_unchanged": true,
+    "adversarial_outcomes_unchanged": true,
+    "agent_prompt_tools_and_provider_configuration_unchanged": true,
+    "prior_phase_documents_and_evidence_unchanged": true,
+    "frozen_evaluation_and_scanner_policies_unchanged": true,
+    "api_agent_scanner_job_and_schema_implementation_unchanged": true,
+    "protected_local_instructions_unchanged": true,
+    "protected_local_instructions_ignored": true,
+    "nothing_staged": true
+  },
+  "passed": 10,
+  "failed": 0,
+  "skipped": 0,
+  "nonsemantic_observation_changes": [
+    {
+      "case": "python-dependency-positive",
+      "repetition": 1,
+      "before_context_bytes": 3523,
+      "after_context_bytes": 3524,
+      "before_token_bound": 50056,
+      "after_token_bound": 50057
+    },
+    {
+      "case": "python-dependency-positive",
+      "repetition": 2,
+      "before_context_bytes": 3524,
+      "after_context_bytes": 3523,
+      "before_token_bound": 50057,
+      "after_token_bound": 50056
+    },
+    {
+      "case": "kubernetes-privilege-negative",
+      "repetition": 2,
+      "before_context_bytes": 3561,
+      "after_context_bytes": 3560,
+      "before_token_bound": 50256,
+      "after_token_bound": 50255
+    }
+  ],
+  "investigation": "The frozen methodology already excludes timing/context/token observations from stable_rows. Context retrieval orders fresh finding UUIDs, so reacquisition can select different bounded peer rule IDs. This explains possible usage variation; exact payload cause is an inference because raw evidence is deliberately not exported. All semantic/support/attack outcomes match; no labels or agent behavior changed.",
+  "review_1_resource_observation_changes": [
+    {
+      "case": "python-dependency-positive",
+      "repetition": 2,
+      "before_context_bytes": 3524,
+      "after_context_bytes": 3523,
+      "before_token_bound": 50057,
+      "after_token_bound": 50056
+    }
+  ]
+}

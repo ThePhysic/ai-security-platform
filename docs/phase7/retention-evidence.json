@@ -1,0 +1,24 @@
+{
+  "checks": {
+    "fresh_and_repeatable_clean_schema_at_expected_revision": true,
+    "clean_api_authentication_and_hosted_deny_default": true,
+    "quota_rejects_admission_without_deleting_referenced_source": true,
+    "real_database_freeze_blocks_concurrent_registration_table_writes": true,
+    "dry_run_preserves_expired_orphan_and_pending_source": true,
+    "apply_reclaims_only_unregistered_orphan_and_preserves_all_database_rows": true,
+    "reclamation_restores_capacity_without_overwriting_sources": true,
+    "clean_independent_worker_reads_restored_safe_spool_and_publishes_diagnostics": true,
+    "clean_independent_triage_worker_runs_offline_without_model_credentials": true
+  },
+  "passed": 9,
+  "failed": 0,
+  "skipped": 0,
+  "mode": "Actual PostgreSQL/NTFS/Docker processes; only retention age is advanced in the controlled test clock",
+  "production_retained_spool_touched": false,
+  "database_rows_deleted": 0,
+  "orphan_publications_removed": 1,
+  "registered_publications_removed": 0,
+  "final_spool_bytes": 1093,
+  "final_publications": 2,
+  "clean_scan_findings": "synthetic diagnostic markers; not genuine vulnerability detections"
+}

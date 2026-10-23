@@ -17,6 +17,7 @@ def main():
     parser.add_argument("--phase4", action="store_true")
     parser.add_argument("--phase5", action="store_true")
     parser.add_argument("--phase6", action="store_true")
+    parser.add_argument("--phase7", action="store_true")
     args = parser.parse_args()
     # No API call occurs here; the same fixed-profile resolver/boundary is exercised
     # with controlled fixtures, before public security-v1 admission is enabled.
@@ -24,7 +25,9 @@ def main():
         "http://127.0.0.1:18081",
         ROOT
         / (
-            ".local/phase6-fixtures/spool"
+            ".local/phase7-fixtures/spool"
+            if args.phase7
+            else ".local/phase6-fixtures/spool"
             if args.phase6
             else ".local/phase5-fixtures/spool"
             if args.phase5
@@ -178,7 +181,9 @@ def main():
     assert all(checks.values()), {key: value for key, value in checks.items() if not value}
     evidence.update({"passed": len(checks), "failed": 0, "skipped": 0})
     target = ROOT / (
-        "docs/phase6/scanner-regression.json"
+        "docs/phase7/scanner-regression.json"
+        if args.phase7
+        else "docs/phase6/scanner-regression.json"
         if args.phase6
         else "docs/phase5/scanner-regression.json"
         if args.phase5
