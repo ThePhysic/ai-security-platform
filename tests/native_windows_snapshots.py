@@ -45,6 +45,7 @@ def main():
     parser.add_argument("--phase2b", action="store_true")
     parser.add_argument("--phase3", action="store_true")
     parser.add_argument("--phase4", action="store_true")
+    parser.add_argument("--phase5", action="store_true")
     args = parser.parse_args()
     if os.name != "nt":
         raise SystemExit("Windows/NTFS validation must execute on Windows")
@@ -103,7 +104,9 @@ def main():
         ROOT
         / "docs"
         / (
-            "phase4"
+            "phase5"
+            if args.phase5
+            else "phase4"
             if args.phase4
             else "phase3"
             if args.phase3

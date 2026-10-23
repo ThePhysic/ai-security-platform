@@ -24,5 +24,6 @@ COPY evaluation ./evaluation
 COPY scripts ./scripts
 COPY Dockerfile compose.yaml .dockerignore ./
 COPY .github/workflows/ci.yml ./.github/workflows/ci.yml
+COPY .github/workflows/developer-guardrails.yml ./.github/workflows/developer-guardrails.yml
 USER 10001:10001
 CMD ["uv", "run", "--no-sync", "pytest", "-m", "postgres"]

@@ -1,0 +1,37 @@
+{
+  "phase": 5,
+  "checkpoint_5A": "PASS local scope",
+  "checkpoint_5B": "PASS local scope",
+  "G8": "PASS local scope",
+  "pytest": {
+    "passed": 255,
+    "failed": 0,
+    "skipped": 0
+  },
+  "clean_candidate_unit_api_passed": 145,
+  "ci_checks": 7,
+  "live_checks": 8,
+  "actual_live_cli_invocations": 27,
+  "real_scanner_checks": 16,
+  "isolation_checks": 31,
+  "native_ntfs_checks": 10,
+  "runtime_checks": 32,
+  "scan_crash_experiments": 25,
+  "triage_crash_experiments": 5,
+  "migration": "0004_triage_review",
+  "new_migrations": 0,
+  "new_indexes": 0,
+  "hosted_calls": 0,
+  "remote_workflows_executed": false,
+  "code_scanning_uploaded": false,
+  "real_admission_disabled": true,
+  "phase6_implemented": false,
+  "known_limits": [
+    "local shared-host microbenchmarks",
+    "deterministic and mocked provider scope only",
+    "CI artifacts replay genuine controlled observations, not a new checkout scan",
+    "no remote Actions or GitHub entitlement validation",
+    "frozen Kubernetes annotation errata and A13 advisory-quality limitation unchanged",
+    "heuristic secret redaction is incomplete"
+  ]
+}

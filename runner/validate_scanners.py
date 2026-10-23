@@ -15,10 +15,15 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--phase3", action="store_true")
     parser.add_argument("--phase4", action="store_true")
+    parser.add_argument("--phase5", action="store_true")
     args = parser.parse_args()
     # No API call occurs here; the same fixed-profile resolver/boundary is exercised
     # with controlled fixtures, before public security-v1 admission is enabled.
-    launcher = Launcher("http://127.0.0.1:18081", ROOT / ".local/phase2b-fixtures/spool", "unused")
+    launcher = Launcher(
+        "http://127.0.0.1:18081",
+        ROOT / (".local/phase5-fixtures/spool" if args.phase5 else ".local/phase2b-fixtures/spool"),
+        "unused",
+    )
     evidence = {"fixtures": {}, "checks": {}}
     checks = evidence["checks"]
     for label in ("positive", "clean"):
@@ -165,7 +170,9 @@ def main():
     assert all(checks.values()), {key: value for key, value in checks.items() if not value}
     evidence.update({"passed": len(checks), "failed": 0, "skipped": 0})
     target = ROOT / (
-        "docs/phase4/scanner-regression.json"
+        "docs/phase5/scanner-regression.json"
+        if args.phase5
+        else "docs/phase4/scanner-regression.json"
         if args.phase4
         else "docs/phase3/scanner-regression.json"
         if args.phase3

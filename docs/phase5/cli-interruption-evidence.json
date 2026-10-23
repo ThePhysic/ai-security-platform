@@ -1,0 +1,16 @@
+{
+  "checks": [
+    {
+      "command": "docker compose -p asp-phase1-test --profile test build tests",
+      "exit_code": 0
+    },
+    {
+      "command": "docker compose -p asp-phase1-test --profile test run --rm tests uv run --no-sync pytest tests/postgres/test_cli_process.py -q -p no:cacheprovider --tb=short",
+      "exit_code": 0
+    }
+  ],
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "scope": "additional independent CLI timeout and SIGINT process test; no scan mutation requests"
+}

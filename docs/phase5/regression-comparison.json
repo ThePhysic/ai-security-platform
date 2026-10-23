@@ -1,0 +1,12 @@
+{
+  "quality_category_metrics_unchanged": true,
+  "adversarial_outcomes_unchanged": true,
+  "prior_evaluation_rules_labels_reports_unchanged": true,
+  "timing_expected_to_vary": true,
+  "protected_instructions_unchanged": true,
+  "nothing_staged": true,
+  "evaluation_source_sha256": "3f6fb97c0c2929ce72f85255946bef35f2c8d494be270fcc26c9850ef3953427",
+  "passed": 6,
+  "failed": 0,
+  "skipped": 0
+}

@@ -1,0 +1,8 @@
+{
+  "rebuilt_final_runtime": true,
+  "retained_real_scan_export_findings": 85,
+  "actual_cli_sarif_exit": 1,
+  "scanners_invoked": false,
+  "hosted_calls": 0,
+  "api_worker_triage_recreated": true
+}

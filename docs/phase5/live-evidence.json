@@ -1,0 +1,419 @@
+{
+  "checks": {
+    "actual_cli_intake_idempotency_query_pagination_and_exports": true,
+    "actual_cli_pass_fail_incomplete_and_operational_codes": true,
+    "artifact_traversal_and_invalid_identity_denied": true,
+    "three_real_200_file_scans_through_cli_and_isolated_launcher": true,
+    "genuine_sarif_schema_source_mapping_determinism_and_redaction": true,
+    "json_byte_equivalent_facts_survive_actual_container_restarts": true,
+    "database_interruption_safe_unready_and_recovery": true,
+    "synthetic_and_local_credentials_absent_from_logs_and_exports": true
+  },
+  "passed": 8,
+  "failed": 0,
+  "skipped": 0,
+  "cli_commands": [
+    {
+      "command": "project-create",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "snapshot-create",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "snapshot-register",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "scan-submit",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "scan-submit",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "scan-submit",
+      "expected_exit": 2,
+      "actual_exit": 2
+    },
+    {
+      "command": "scan-wait",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "scan",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "policy",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "command": "policy",
+      "expected_exit": 2,
+      "actual_exit": 2
+    },
+    {
+      "command": "scan-status",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "findings",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "scan-history",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2
+    },
+    {
+      "command": "export",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "export",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "export",
+      "expected_exit": 2,
+      "actual_exit": 2
+    },
+    {
+      "command": "scan-status",
+      "expected_exit": 2,
+      "actual_exit": 2
+    },
+    {
+      "command": "scan-status",
+      "expected_exit": 2,
+      "actual_exit": 2
+    },
+    {
+      "command": "snapshot-create",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "snapshot-register",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "scan",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "command": "scan",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "command": "scan",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "command": "export",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "command": "export",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "command": "scan-status",
+      "expected_exit": 2,
+      "actual_exit": 2
+    }
+  ],
+  "real_workload": {
+    "files": 200,
+    "samples": [
+      {
+        "scan_id": "4196e2e7-4451-425d-ac32-b7539c41129c",
+        "cli_wall_seconds": 27.64100000000326,
+        "findings": 85,
+        "timings": {
+          "scan_ms": 22970.606,
+          "jobs": [
+            {
+              "queue_ms": 59.172,
+              "execution_ms": 10976.313,
+              "generation": 1
+            },
+            {
+              "queue_ms": 11109.02,
+              "execution_ms": 11861.586,
+              "generation": 1
+            }
+          ]
+        },
+        "scanner_runs": [
+          {
+            "id": "8e218869-fbcb-45a9-9145-cd13bb539aea",
+            "scanner_id": "semgrep",
+            "adapter_version": "real-1",
+            "status": "succeeded",
+            "coverage": {
+              "complete_execution": true,
+              "synthetic": false,
+              "source_files": 200,
+              "files_scanned": 192,
+              "warning_count": 0,
+              "excluded_files": 0,
+              "schema_version": 1,
+              "files_not_scanned": 8,
+              "excluded_directories": 0,
+              "policy_files_ignored": 4,
+              "complete_detection_claim": false,
+              "suppression_tokens_neutralized": 0,
+              "warnings": []
+            },
+            "error_code": null,
+            "synthetic": false,
+            "provenance": {
+              "view_policy": "audit-view-v1",
+              "image_digest": "sha256:08d17ceb2851b3e9eabb31ab966c6b6c98574473d3edca5b818e5c45473e9311",
+              "policy_digest": "12e58502b265a95d69709ae83cc4569c6b4d35b8d8873a6c51de5a57551e0fca",
+              "engine_version": "1.179.0",
+              "adapter_version": "real-1"
+            }
+          },
+          {
+            "id": "be5624c1-a61e-4d41-9822-c1831d8065b3",
+            "scanner_id": "trivy",
+            "adapter_version": "real-1",
+            "status": "succeeded",
+            "coverage": {
+              "complete_execution": true,
+              "synthetic": false,
+              "source_files": 200,
+              "files_scanned": 4,
+              "warning_count": 0,
+              "excluded_files": 0,
+              "schema_version": 1,
+              "files_not_scanned": 196,
+              "excluded_directories": 0,
+              "policy_files_ignored": 4,
+              "complete_detection_claim": false,
+              "suppression_tokens_neutralized": 1,
+              "warnings": []
+            },
+            "error_code": null,
+            "synthetic": false,
+            "provenance": {
+              "view_policy": "audit-view-v1",
+              "image_digest": "sha256:8d6faeff42dd93b2056c8ed084610fb22120f6c95a056a7edd41e89479ee585d",
+              "policy_digest": "71bcd0217e6dbc4facca3abcc72fbbbec71946a102153f5e95ab00caf8768082",
+              "engine_version": "Version: 0.76.1",
+              "adapter_version": "real-1",
+              "database_digest": "4566427d61ff4e2c565b331376b07e58afc5166efd4a78cdc8fd10ca657d2898",
+              "database_updated_at": "2026-10-22T19:14:47.059491+00:00",
+              "database_age_seconds": 32286
+            }
+          }
+        ]
+      },
+      {
+        "scan_id": "1a0b6c23-0ea4-493f-9db0-b68ac2fef5cc",
+        "cli_wall_seconds": 27.23399999999674,
+        "findings": 85,
+        "timings": {
+          "scan_ms": 22737.571,
+          "jobs": [
+            {
+              "queue_ms": 439.239,
+              "execution_ms": 10367.908,
+              "generation": 1
+            },
+            {
+              "queue_ms": 10866.761,
+              "execution_ms": 11870.81,
+              "generation": 1
+            }
+          ]
+        },
+        "scanner_runs": [
+          {
+            "id": "8593e0f8-6381-4898-bf62-eab6847e7225",
+            "scanner_id": "semgrep",
+            "adapter_version": "real-1",
+            "status": "succeeded",
+            "coverage": {
+              "complete_execution": true,
+              "synthetic": false,
+              "source_files": 200,
+              "files_scanned": 192,
+              "warning_count": 0,
+              "excluded_files": 0,
+              "schema_version": 1,
+              "files_not_scanned": 8,
+              "excluded_directories": 0,
+              "policy_files_ignored": 4,
+              "complete_detection_claim": false,
+              "suppression_tokens_neutralized": 0,
+              "warnings": []
+            },
+            "error_code": null,
+            "synthetic": false,
+            "provenance": {
+              "view_policy": "audit-view-v1",
+              "image_digest": "sha256:08d17ceb2851b3e9eabb31ab966c6b6c98574473d3edca5b818e5c45473e9311",
+              "policy_digest": "12e58502b265a95d69709ae83cc4569c6b4d35b8d8873a6c51de5a57551e0fca",
+              "engine_version": "1.179.0",
+              "adapter_version": "real-1"
+            }
+          },
+          {
+            "id": "46af8d2a-09de-47c3-8997-96fe796fcd34",
+            "scanner_id": "trivy",
+            "adapter_version": "real-1",
+            "status": "succeeded",
+            "coverage": {
+              "complete_execution": true,
+              "synthetic": false,
+              "source_files": 200,
+              "files_scanned": 4,
+              "warning_count": 0,
+              "excluded_files": 0,
+              "schema_version": 1,
+              "files_not_scanned": 196,
+              "excluded_directories": 0,
+              "policy_files_ignored": 4,
+              "complete_detection_claim": false,
+              "suppression_tokens_neutralized": 1,
+              "warnings": []
+            },
+            "error_code": null,
+            "synthetic": false,
+            "provenance": {
+              "view_policy": "audit-view-v1",
+              "image_digest": "sha256:8d6faeff42dd93b2056c8ed084610fb22120f6c95a056a7edd41e89479ee585d",
+              "policy_digest": "71bcd0217e6dbc4facca3abcc72fbbbec71946a102153f5e95ab00caf8768082",
+              "engine_version": "Version: 0.76.1",
+              "adapter_version": "real-1",
+              "database_digest": "4566427d61ff4e2c565b331376b07e58afc5166efd4a78cdc8fd10ca657d2898",
+              "database_updated_at": "2026-10-22T19:14:47.059491+00:00",
+              "database_age_seconds": 32313
+            }
+          }
+        ]
+      },
+      {
+        "scan_id": "91e95e27-3a08-4d4e-8613-5b2b9dbc1212",
+        "cli_wall_seconds": 25.547000000005937,
+        "findings": 85,
+        "timings": {
+          "scan_ms": 21428.05,
+          "jobs": [
+            {
+              "queue_ms": 138.515,
+              "execution_ms": 10382.884,
+              "generation": 1
+            },
+            {
+              "queue_ms": 10580.9,
+              "execution_ms": 10847.15,
+              "generation": 1
+            }
+          ]
+        },
+        "scanner_runs": [
+          {
+            "id": "a21ec663-32c9-43ce-86b6-442bc95153ed",
+            "scanner_id": "semgrep",
+            "adapter_version": "real-1",
+            "status": "succeeded",
+            "coverage": {
+              "complete_execution": true,
+              "synthetic": false,
+              "source_files": 200,
+              "files_scanned": 192,
+              "warning_count": 0,
+              "excluded_files": 0,
+              "schema_version": 1,
+              "files_not_scanned": 8,
+              "excluded_directories": 0,
+              "policy_files_ignored": 4,
+              "complete_detection_claim": false,
+              "suppression_tokens_neutralized": 0,
+              "warnings": []
+            },
+            "error_code": null,
+            "synthetic": false,
+            "provenance": {
+              "view_policy": "audit-view-v1",
+              "image_digest": "sha256:08d17ceb2851b3e9eabb31ab966c6b6c98574473d3edca5b818e5c45473e9311",
+              "policy_digest": "12e58502b265a95d69709ae83cc4569c6b4d35b8d8873a6c51de5a57551e0fca",
+              "engine_version": "1.179.0",
+              "adapter_version": "real-1"
+            }
+          },
+          {
+            "id": "ea88741f-c139-467a-a2ff-a07ae14bb702",
+            "scanner_id": "trivy",
+            "adapter_version": "real-1",
+            "status": "succeeded",
+            "coverage": {
+              "complete_execution": true,
+              "synthetic": false,
+              "source_files": 200,
+              "files_scanned": 4,
+              "warning_count": 0,
+              "excluded_files": 0,
+              "schema_version": 1,
+              "files_not_scanned": 196,
+              "excluded_directories": 0,
+              "policy_files_ignored": 4,
+              "complete_detection_claim": false,
+              "suppression_tokens_neutralized": 1,
+              "warnings": []
+            },
+            "error_code": null,
+            "synthetic": false,
+            "provenance": {
+              "view_policy": "audit-view-v1",
+              "image_digest": "sha256:8d6faeff42dd93b2056c8ed084610fb22120f6c95a056a7edd41e89479ee585d",
+              "policy_digest": "71bcd0217e6dbc4facca3abcc72fbbbec71946a102153f5e95ab00caf8768082",
+              "engine_version": "Version: 0.76.1",
+              "adapter_version": "real-1",
+              "database_digest": "4566427d61ff4e2c565b331376b07e58afc5166efd4a78cdc8fd10ca657d2898",
+              "database_updated_at": "2026-10-22T19:14:47.059491+00:00",
+              "database_age_seconds": 32340
+            }
+          }
+        ]
+      }
+    ],
+    "scan_samples": 3,
+    "job_samples": 6,
+    "concurrency": "one ordinary worker and serial trusted launcher",
+    "limitation": "local repeated observations; not a real-scanner scaling or production capacity claim"
+  },
+  "report_sha256": "8b03cba5c92d795d036808676049c7b856e779f6262340160b4f49b0f41c4414",
+  "hosted_calls": 0,
+  "real_admission_restored_disabled": true
+}

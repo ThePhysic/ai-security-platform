@@ -5,3 +5,4 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 evaluation/** text eol=lf
+tests/schemas/** text eol=lf

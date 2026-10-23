@@ -28,6 +28,7 @@ dev = [
   "mypy>=1.14,<2",
   "PyYAML>=6,<7",
   "types-PyYAML>=6,<7",
+  "jsonschema>=4.23,<5",
 ]
 
 [tool.ruff]
@@ -51,6 +52,7 @@ files = ["src"]
 testpaths = ["tests"]
 addopts = "--strict-markers -ra -p no:cacheprovider"
 markers = [
+  "reliability: real PostgreSQL workload and developer workflow recovery",
   "evaluation: frozen labelled corpus and expanded adversarial assessment",
   "agent: bounded triage, consent, confidentiality and human review",
   "snapshot: secure local source and spool boundaries",

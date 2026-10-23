@@ -1,0 +1,14 @@
+{
+  "physical_memory_bytes": 33515835392,
+  "cpu": "AMD Ryzen 9 7940HS w/ Radeon 780M Graphics     ",
+  "logical_processors": 16,
+  "os": "Microsoft Windows NT 10.0.26200.0",
+  "docker": {
+    "NCPU": 16,
+    "MemTotal": 16353488896,
+    "OSType": "linux",
+    "OperatingSystem": "Docker Desktop",
+    "KernelVersion": "6.18.54.1-microsoft-standard-WSL2",
+    "ServerVersion": "29.9.1"
+  }
+}

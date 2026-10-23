@@ -1,0 +1,412 @@
+{
+  "$defs": {
+    "FileReference": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "lines": {
+          "maximum": 1048576,
+          "minimum": 0,
+          "title": "Lines",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sha256",
+        "lines"
+      ],
+      "title": "FileReference",
+      "type": "object"
+    },
+    "ReportFinding": {
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "scan_run_id": {
+          "format": "uuid",
+          "title": "Scan Run Id",
+          "type": "string"
+        },
+        "scanner_run_id": {
+          "format": "uuid",
+          "title": "Scanner Run Id",
+          "type": "string"
+        },
+        "occurrence_key": {
+          "title": "Occurrence Key",
+          "type": "string"
+        },
+        "tracking_fingerprint": {
+          "title": "Tracking Fingerprint",
+          "type": "string"
+        },
+        "fingerprint_version": {
+          "title": "Fingerprint Version",
+          "type": "integer"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "severity": {
+          "title": "Severity",
+          "type": "string"
+        },
+        "original_severity": {
+          "title": "Original Severity",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "filepath": {
+          "title": "Filepath",
+          "type": "string"
+        },
+        "start_line": {
+          "title": "Start Line",
+          "type": "integer"
+        },
+        "end_line": {
+          "title": "End Line",
+          "type": "integer"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "synthetic": {
+          "default": true,
+          "title": "Synthetic",
+          "type": "boolean"
+        },
+        "evidence": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          },
+          "default": {},
+          "title": "Evidence",
+          "type": "object"
+        },
+        "scanner_id": {
+          "pattern": "^[a-z0-9-]{1,32}$",
+          "title": "Scanner Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "scan_run_id",
+        "scanner_run_id",
+        "occurrence_key",
+        "tracking_fingerprint",
+        "fingerprint_version",
+        "rule_id",
+        "category",
+        "severity",
+        "original_severity",
+        "description",
+        "filepath",
+        "start_line",
+        "end_line",
+        "created_at",
+        "scanner_id"
+      ],
+      "title": "ReportFinding",
+      "type": "object"
+    },
+    "ScanRead": {
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "project_id": {
+          "format": "uuid",
+          "title": "Project Id",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "format": "uuid",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "profile_id": {
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "profile_digest": {
+          "title": "Profile Digest",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/ScanStatus"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "started_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Started At"
+        },
+        "completed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Completed At"
+        },
+        "scanner_runs": {
+          "items": {
+            "$ref": "#/$defs/ScannerRead"
+          },
+          "title": "Scanner Runs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "project_id",
+        "snapshot_id",
+        "profile_id",
+        "profile_digest",
+        "status",
+        "created_at",
+        "started_at",
+        "completed_at"
+      ],
+      "title": "ScanRead",
+      "type": "object"
+    },
+    "ScanStatus": {
+      "enum": [
+        "queued",
+        "running",
+        "succeeded",
+        "partial",
+        "failed"
+      ],
+      "title": "ScanStatus",
+      "type": "string"
+    },
+    "ScannerRead": {
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "scanner_id": {
+          "title": "Scanner Id",
+          "type": "string"
+        },
+        "adapter_version": {
+          "title": "Adapter Version",
+          "type": "string"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "coverage": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            ]
+          },
+          "title": "Coverage",
+          "type": "object"
+        },
+        "error_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Error Code"
+        },
+        "synthetic": {
+          "default": true,
+          "title": "Synthetic",
+          "type": "boolean"
+        },
+        "provenance": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          },
+          "title": "Provenance",
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "scanner_id",
+        "adapter_version",
+        "status",
+        "coverage",
+        "error_code"
+      ],
+      "title": "ScannerRead",
+      "type": "object"
+    },
+    "SourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "snapshot_id": {
+          "format": "uuid",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "manifest_digest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Manifest Digest",
+          "type": "string"
+        },
+        "content_digest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Digest",
+          "type": "string"
+        },
+        "verified": {
+          "const": true,
+          "title": "Verified",
+          "type": "boolean"
+        },
+        "files": {
+          "additionalProperties": {
+            "$ref": "#/$defs/FileReference"
+          },
+          "maxProperties": 512,
+          "title": "Files",
+          "type": "object"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "manifest_digest",
+        "content_digest",
+        "verified",
+        "files"
+      ],
+      "title": "SourceReference",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "reporting_version": {
+      "const": "scanner-report-1",
+      "title": "Reporting Version",
+      "type": "string"
+    },
+    "scan": {
+      "$ref": "#/$defs/ScanRead"
+    },
+    "findings": {
+      "items": {
+        "$ref": "#/$defs/ReportFinding"
+      },
+      "maxItems": 1000,
+      "title": "Findings",
+      "type": "array"
+    },
+    "source": {
+      "$ref": "#/$defs/SourceReference"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 10,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "ai_opinions_applied": {
+      "const": false,
+      "title": "Ai Opinions Applied",
+      "type": "boolean"
+    },
+    "evaluation_labels_applied": {
+      "const": false,
+      "title": "Evaluation Labels Applied",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema_version",
+    "reporting_version",
+    "scan",
+    "findings",
+    "source",
+    "limitations",
+    "ai_opinions_applied",
+    "evaluation_labels_applied"
+  ],
+  "title": "Report",
+  "type": "object"
+}

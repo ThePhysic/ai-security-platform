@@ -15,8 +15,10 @@ from ai_security_platform.domain.errors import ApiError
 from ai_security_platform.domain.findings import FindingPage, FindingRead
 from ai_security_platform.domain.intake import ScanAccepted, ScanSubmission
 from ai_security_platform.domain.scans import ScannerRead, ScanPage, ScanRead, ScanStatus
+from ai_security_platform.reporting.core import build_json, sarif
+from ai_security_platform.snapshots.policy import SnapshotError
 from ai_security_platform.storage.intake import accept_scan
-from ai_security_platform.storage.models import Finding, Review, ScannerRun, ScanRun
+from ai_security_platform.storage.models import Finding, Review, ScannerRun, ScanRun, SourceSnapshot
 from ai_security_platform.storage.repositories import get_scan
 
 router = APIRouter(prefix="/api/v1/scan-runs", dependencies=[Depends(bearer_scheme)])
@@ -153,8 +155,9 @@ def findings(
 @router.get("/{scan_id}/export")
 def export_json(
     scan_id: UUID,
+    request: Request,
     session: Database,
-    format: Literal["json"] = "json",
+    format: Literal["json", "sarif"] = "json",
 ) -> JSONResponse:
     scan = read_scan(scan_id, session)
     rows = list(
@@ -167,11 +170,22 @@ def export_json(
     )
     if len(rows) > 1000:
         raise ApiError(409, "export_limit", "Use paginated findings for this scan")
+    metadata = session.get(SourceSnapshot, scan.snapshot_id)
+    if metadata is None or not metadata.verified or metadata.retention_state != "published":
+        raise ApiError(409, "export_evidence_unavailable", "Verified source unavailable")
+    key, manifest = metadata.spool_key, metadata.manifest_digest
+    values = [FindingRead.model_validate(row) for row in rows]
+    session.rollback()  # close the read transaction before filesystem verification
+    try:
+        source = request.app.state.snapshot_store.verify(key, manifest)
+        report = build_json(scan, values, source)
+        content = report if format == "json" else sarif(report)
+    except (ValueError, SnapshotError, OSError):
+        raise ApiError(
+            409, "export_evidence_invalid", "Report source or metadata unavailable"
+        ) from None
     return JSONResponse(
-        {
-            "schema_version": 1,
-            "scan": scan.model_dump(mode="json"),
-            "findings": [FindingRead.model_validate(row).model_dump(mode="json") for row in rows],
-        },
-        headers={"Content-Disposition": f'attachment; filename="asp-scan-{scan_id}.json"'},
+        content,
+        media_type="application/json" if format == "json" else "application/sarif+json",
+        headers={"Content-Disposition": f'attachment; filename="asp-scan-{scan_id}.{format}"'},
     )
