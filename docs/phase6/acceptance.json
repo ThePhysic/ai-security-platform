@@ -1,0 +1,87 @@
+{
+  "phase": "6",
+  "recorded_at": "2026-10-23T05:48:51.360646+00:00",
+  "checkpoints": {
+    "6A": "pass",
+    "6B": "pass",
+    "6C": "pass"
+  },
+  "gate": "G9",
+  "status": "pass",
+  "scope": "Local Windows/Docker Desktop Linux containers; actual Chromium and PostgreSQL; deterministic offline provider; scripted UI failure/hostile cases explicitly separated",
+  "required_checks_blocked": [],
+  "evidence": {
+    "browser-evidence.json": {
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0
+    },
+    "preview-evidence.json": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    "isolation-regression.json": {
+      "passed": 31,
+      "failed": 0,
+      "skipped": 0
+    },
+    "scanner-regression.json": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    },
+    "windows-filesystem-evidence.json": {
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    "frontend-evidence.json": {
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    "runtime-evidence.json": {
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0
+    },
+    "regression-comparison.json": {
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0
+    },
+    "frontend-command-evidence.json": {
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test-evidence.json": {
+      "passed": 256,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "scan_crash_retry_experiments": 25,
+  "triage_recovery_experiments": 5,
+  "counts_overlap": true,
+  "database_revision": "0004_triage_review",
+  "migrations_added": false,
+  "real_scanning_admission": false,
+  "hosted_admission": false,
+  "live_hosted_calls": 0,
+  "source_or_scanner_policy_changes": false,
+  "all_preexisting_development_rows_unchanged": true,
+  "test_database": "stopped; volume retained",
+  "frontend_url": "http://127.0.0.1:18082/",
+  "next_phase_implemented": false,
+  "next_phase_requires_separate_authorization": true,
+  "limitations": [
+    "Chromium only; focused accessibility checks are not WCAG certification",
+    "Trusted local browser/host and development toolchain; no production deployment claim",
+    "No live hosted-provider quality measurement",
+    "Limited deterministic rule support; two ungraded Kubernetes annotation bindings and A13 unsupported advisory remediation remain unchanged",
+    "Metrics describe loaded pages/selected finding; no global aggregate or security guarantee",
+    "Frozen scanner observations replayed for full quality regression; separate actual scanner checks rerun"
+  ]
+}

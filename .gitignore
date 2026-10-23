@@ -13,6 +13,8 @@ htmlcov/
 node_modules/
 dist/
 build/
+web/test-results/
+web/playwright-report/
 
 # Environment and credentials
 .env

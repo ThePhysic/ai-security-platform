@@ -1,0 +1,11 @@
+{
+  "quality_metrics_unchanged": true,
+  "adversarial_outcomes_unchanged": true,
+  "all_prior_phase_documents_evidence_unchanged": true,
+  "scanner_agent_and_backend_code_unchanged": true,
+  "protected_instructions_unchanged": true,
+  "nothing_staged": true,
+  "passed": 6,
+  "failed": 0,
+  "skipped": 0
+}

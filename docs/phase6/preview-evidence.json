@@ -1,0 +1,19 @@
+{
+  "scope": "Phase 6 Chromium; live and scripted modes separated",
+  "status": "passed",
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "browser": "Chromium 156.0.8078.4 / Playwright 1.64.1",
+  "credential_capture": false,
+  "screenshots": false,
+  "traces": false,
+  "videos": false,
+  "cases": [
+    {
+      "name": "[live] compiled production preview uses persisted records and a strict CSP without credential storage",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    }
+  ]
+}

@@ -24,11 +24,18 @@ def main():
     parser.add_argument("--phase3", action="store_true")
     parser.add_argument("--phase4", action="store_true")
     parser.add_argument("--phase5", action="store_true")
+    parser.add_argument("--phase6", action="store_true")
     parser.add_argument("--image")
     parser.add_argument("--key")
     parser.add_argument("--digest")
     args = parser.parse_args()
-    spool = ROOT / (".local/phase5-probes/spool" if args.phase5 else ".local/phase2b-probes/spool")
+    spool = ROOT / (
+        ".local/phase6-probes/spool"
+        if args.phase6
+        else ".local/phase5-probes/spool"
+        if args.phase5
+        else ".local/phase2b-probes/spool"
+    )
     boundary = DockerBoundary(spool)
     if args.orphan_child:
         profile = Profile(
@@ -117,7 +124,7 @@ def main():
             sys.executable,
             "-m",
             "runner.validate_isolation",
-            *(["--phase5"] if args.phase5 else []),
+            *(["--phase6"] if args.phase6 else ["--phase5"] if args.phase5 else []),
             "--orphan-child",
             "--image",
             image,
@@ -161,7 +168,9 @@ def main():
         "note": "Container proof only; authenticated lease handoff proof also required.",
     }
     target = ROOT / (
-        "docs/phase5"
+        "docs/phase6"
+        if args.phase6
+        else "docs/phase5"
         if args.phase5
         else "docs/phase4"
         if args.phase4
@@ -172,7 +181,7 @@ def main():
     target.mkdir(parents=True, exist_ok=True)
     target.joinpath(
         "isolation-regression.json"
-        if args.phase3 or args.phase4 or args.phase5
+        if args.phase3 or args.phase4 or args.phase5 or args.phase6
         else "isolation-evidence.json"
     ).write_text(json.dumps(evidence, indent=2) + "\n")
     print(json.dumps({"isolation_checks_passed": len(checks), "failed": 0, "skipped": 0}))

@@ -1,0 +1,47 @@
+{
+  "node": "v24.22.1",
+  "npm": "11.19.1",
+  "direct_dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "development_dependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.5"
+  },
+  "lock_sha256": "b9440f4ffa135ea9b102a1177b0386eb8845339d8e23b057d56d57d613d2d9ac",
+  "assets": {
+    "dist\\index.html": {
+      "bytes": 510,
+      "sha256": "e01b3b506a6e6436bf16c5733a2a435f412f162d21cc51b74cd720ea2f6f98f1"
+    },
+    "dist\\assets\\index-C5Yt9Ra5.js": {
+      "bytes": 256024,
+      "sha256": "49bb6fc62f2303b7842dbdd311bc7a3baca39192612a79d414691aacf98e6806"
+    },
+    "dist\\assets\\index-D_bAotjP.css": {
+      "bytes": 10431,
+      "sha256": "323d3bdf45d73cf3a701cc0dcd3ddc6d4607fa4d0718abed8318620ee838fbaf"
+    }
+  },
+  "checks": {
+    "no_actual_credentials_in_changed_files_or_build": true,
+    "no_persistent_credential_or_unsafe_dom_api": true,
+    "no_environment_values_in_client_source": true,
+    "exact_direct_dependency_pins_and_private_package": true,
+    "lock_matches_declared_dependencies": true,
+    "install_scripts_disabled": true,
+    "no_source_maps_or_private_build_files": true,
+    "authenticated_exact_frontend_origin_allowed": true,
+    "hosted_remains_disabled": true,
+    "actual_credentials_absent_from_container_logs": true
+  },
+  "passed": 10,
+  "failed": 0,
+  "skipped": 0,
+  "scope": "Known local credentials and maintained source; not universal secret detection or dependency safety"
+}

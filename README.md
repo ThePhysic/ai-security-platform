@@ -3,8 +3,8 @@
 Local security engineering and developer guardrails platform, prioritizing
 1Password AppSec work, then Brain Co secure AI workflows and Prophet backend reliability.
 
-**Status: Phase 5 implemented; G8 passes for its documented local scope.
-Phase 6 requires separate authorization.**
+**Status: Phase 6 implemented; G9 passes for its documented local scope.
+Phase 7 requires separate authorization.**
 
 Local immutable snapshot intake and durable PostgreSQL workers drive pinned Semgrep
 and Trivy through a separate trusted Windows launcher and isolated scanner containers.
@@ -15,6 +15,9 @@ Hosted triage is disabled; only mocked provider transport has been validated.
 The frozen offline benchmark preserves annotation errata, unsupported coverage and
 advisory-quality limitations alongside measured results.
 
+- [Phase 6 dashboard start, authentication and rollback](docs/phase6/RUNBOOK.md)
+- [Phase 6 completion and G9 evidence](docs/phase6/COMPLETION-REPORT.md)
+- [Phase 6 browser architecture and contracts](docs/phase6/ARCHITECTURE-AND-CONTRACTS.md)
 - [Phase 5 developer workflow and rollback](docs/phase5/RUNBOOK.md)
 - [Phase 5 completion, G8 and file inventory](docs/phase5/COMPLETION-REPORT.md)
 - [Phase 5 measured reliability and performance](docs/phase5/PERFORMANCE.md)
@@ -41,3 +44,5 @@ advisory-quality limitations alongside measured results.
 Development API: loopback only at http://127.0.0.1:18081.
 Credentials are generated into ignored local configuration;
 never publish credentials or resolved Compose configuration.
+
+Dashboard: http://127.0.0.1:18082 (local operator token, memory only).

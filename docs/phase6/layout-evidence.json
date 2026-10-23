@@ -1,0 +1,39 @@
+{
+  "scope": "Phase 6 Chromium; live and scripted modes separated",
+  "status": "passed",
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "browser": "Chromium 156.0.8078.4 / Playwright 1.64.1",
+  "credential_capture": false,
+  "screenshots": false,
+  "traces": false,
+  "videos": false,
+  "cases": [
+    {
+      "name": "[security] exact API origin, frontend origin and Host denials enforce local boundary",
+      "status": "passed",
+      "mode": "browser/security contract"
+    },
+    {
+      "name": "[scripted] hostile finding, path, Markdown and agent content remain inert and redacted",
+      "status": "passed",
+      "mode": "scripted transport in actual browser"
+    },
+    {
+      "name": "[live] history pagination, exact filters and metrics from loaded persisted records",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] partial scan preserves findings and exposes incomplete scanner coverage",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] responsive keyboard workflow and labels remain usable",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    }
+  ]
+}

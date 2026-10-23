@@ -1,0 +1,109 @@
+{
+  "scope": "Phase 6 Chromium; live and scripted modes separated",
+  "status": "passed",
+  "passed": 19,
+  "failed": 0,
+  "skipped": 0,
+  "browser": "Chromium 156.0.8078.4 / Playwright 1.64.1",
+  "credential_capture": false,
+  "screenshots": false,
+  "traces": false,
+  "videos": false,
+  "cases": [
+    {
+      "name": "[security] exact API origin, frontend origin and Host denials enforce local boundary",
+      "status": "passed",
+      "mode": "browser/security contract"
+    },
+    {
+      "name": "[scripted] hostile finding, path, Markdown and agent content remain inert and redacted",
+      "status": "passed",
+      "mode": "scripted transport in actual browser"
+    },
+    {
+      "name": "[scripted] pending triage polling reports actual states and safe provider failure",
+      "status": "passed",
+      "mode": "scripted transport in actual browser"
+    },
+    {
+      "name": "[scripted] unavailable triage and failed scanner never appear clean",
+      "status": "passed",
+      "mode": "scripted transport in actual browser"
+    },
+    {
+      "name": "[scripted] loading, unavailable API retry and empty filtered finding states",
+      "status": "passed",
+      "mode": "scripted transport in actual browser"
+    },
+    {
+      "name": "[security] frontend modules and artifacts cannot read private configuration or persist credentials",
+      "status": "passed",
+      "mode": "browser/security contract"
+    },
+    {
+      "name": "[security] malformed and oversized API responses fail visibly within bounds",
+      "status": "passed",
+      "mode": "browser/security contract"
+    },
+    {
+      "name": "[scripted] background pending-scan refresh preserves unsaved human draft and focus",
+      "status": "passed",
+      "mode": "scripted transport in actual browser"
+    },
+    {
+      "name": "[live] memory-only authentication, disconnect, reload and no implicit writes",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] invalid bearer is denied without exposing credentials",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] history pagination, exact filters and metrics from loaded persisted records",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] partial scan preserves findings and exposes incomplete scanner coverage",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] empty project and invalid identifiers have usable safe states",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] explicit deterministic triage has genuine evidence and no automatic human decision",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] synthetic diagnostic and insufficient-evidence abstention stay explicit",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] unsupported real vulnerability family abstains without inflating reasoning coverage",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] two sessions preserve conflicts, confirmed revisions, feedback and paginated immutable history",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] responsive keyboard workflow and labels remain usable",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    },
+    {
+      "name": "[live] hosted execution remains denied and no provider key is exposed",
+      "status": "passed",
+      "mode": "actual API/PostgreSQL/browser"
+    }
+  ]
+}
