@@ -1,7 +1,7 @@
 from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase
 
-EXPECTED_REVISION = "0001_foundation"
+EXPECTED_REVISION = "0002_orchestration"
 
 
 class Base(DeclarativeBase):

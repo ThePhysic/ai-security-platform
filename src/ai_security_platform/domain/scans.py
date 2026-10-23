@@ -2,7 +2,18 @@ from datetime import datetime
 from enum import StrEnum
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
+
+
+class ScannerRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: UUID
+    scanner_id: str
+    adapter_version: str
+    status: str
+    coverage: dict[str, int | str | bool]
+    error_code: str | None
+    synthetic: bool = True
 
 
 class ScanStatus(StrEnum):
@@ -24,3 +35,9 @@ class ScanRead(BaseModel):
     created_at: datetime
     started_at: datetime | None
     completed_at: datetime | None
+    scanner_runs: list[ScannerRead] = Field(default_factory=list)
+
+
+class ScanPage(BaseModel):
+    items: list[ScanRead]
+    next_cursor: str | None

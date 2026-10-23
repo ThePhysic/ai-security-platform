@@ -1,0 +1,18 @@
+{
+  "phase": "2A",
+  "checks": {
+    "native_cli_spool_to_container_registration": true,
+    "durable_acceptance_before_worker_start": true,
+    "queued_work_survives_actual_api_database_restarts": true,
+    "separate_worker_two_synthetic_scanners": true,
+    "findings_outcomes_survive_actual_container_restarts": true,
+    "readonly_spool_real_write_denial_nonroot_no_docker_daemon": true,
+    "same_worker_recovers_after_actual_database_outage": true,
+    "live_auth_host_origin_and_synthetic_secret_checks": true
+  },
+  "scan_id": "527ab78d-7424-4524-b61f-5c05a78c83cb",
+  "snapshot_key": "526fd02a60f94e7e81750af82b23327c",
+  "passed": 8,
+  "failed": 0,
+  "skipped": 0
+}

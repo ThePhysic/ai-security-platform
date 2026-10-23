@@ -50,7 +50,7 @@ def test_normalization_and_extra_fields():
         ProjectCreate(name="Example", ignored_secret=SENSITIVE)
 
 
-def test_only_four_application_tables():
+def test_only_approved_phase2a_application_tables():
     from ai_security_platform.storage import models  # noqa: F401
 
     assert set(Base.metadata.tables) == {
@@ -58,4 +58,9 @@ def test_only_four_application_tables():
         "source_snapshots",
         "scan_runs",
         "audit_events",
+        "scanner_runs",
+        "jobs",
+        "job_attempts",
+        "findings",
+        "idempotency_requests",
     }

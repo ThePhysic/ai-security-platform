@@ -8,12 +8,33 @@ from sqlalchemy import delete, text
 from sqlalchemy.orm import Session
 
 from ai_security_platform.config import Settings
-from ai_security_platform.storage.models import AuditEvent, Project, ScanRun, SourceSnapshot
+from ai_security_platform.storage.models import (
+    AuditEvent,
+    Finding,
+    IdempotencyRequest,
+    Job,
+    JobAttempt,
+    Project,
+    ScannerRun,
+    ScanRun,
+    SourceSnapshot,
+)
 from ai_security_platform.storage.session import build_engine
 from tests.conftest import TOKEN
 from tests.db_guard import assert_disposable
 
 ROOT = Path(__file__).resolve().parents[2]
+MODEL_ORDER = (
+    IdempotencyRequest,
+    Finding,
+    JobAttempt,
+    Job,
+    ScannerRun,
+    AuditEvent,
+    ScanRun,
+    SourceSnapshot,
+    Project,
+)
 
 
 @pytest.fixture(scope="session")
@@ -42,11 +63,11 @@ def pg_runtime():
 def pg_session(pg_runtime):
     engine, _, _ = pg_runtime
     with Session(engine, expire_on_commit=False) as session:
-        for model in (AuditEvent, ScanRun, SourceSnapshot, Project):
+        for model in MODEL_ORDER:
             session.execute(delete(model))
         session.commit()
         yield session
         session.rollback()
-        for model in (AuditEvent, ScanRun, SourceSnapshot, Project):
+        for model in MODEL_ORDER:
             session.execute(delete(model))
         session.commit()

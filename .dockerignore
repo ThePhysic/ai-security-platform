@@ -27,6 +27,8 @@ AGENTS.md
 **/.env
 **/.env.*
 .venv
+.local
+.cache
 **/__pycache__
 **/*.pyc
 secrets

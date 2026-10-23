@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 
 from ai_security_platform.api.app import create_app
 from ai_security_platform.storage import repositories
+from ai_security_platform.storage.base import EXPECTED_REVISION
 from ai_security_platform.storage.models import AuditEvent, Project, ScanRun, SourceSnapshot
 from tests.conftest import TOKEN
 
@@ -56,6 +57,11 @@ def test_migration_lifecycle_and_no_drift(pg_runtime):
         "scan_runs",
         "audit_events",
         "alembic_version",
+        "scanner_runs",
+        "jobs",
+        "job_attempts",
+        "findings",
+        "idempotency_requests",
     }
 
 
@@ -192,7 +198,10 @@ def test_real_readiness_wrong_schema(pg_runtime):
             assert client.get("/health").status_code == 200
     finally:
         with engine.begin() as connection:
-            connection.execute(text("UPDATE alembic_version SET version_num='0001_foundation'"))
+            connection.execute(
+                text("UPDATE alembic_version SET version_num=:revision"),
+                {"revision": EXPECTED_REVISION},
+            )
 
 
 def test_downgrade_refused_without_marker(pg_runtime, monkeypatch):

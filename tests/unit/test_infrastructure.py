@@ -31,18 +31,27 @@ def test_compose_policy():
     compose = yaml.safe_load((ROOT / "compose.yaml").read_text())
     assert compose["name"] == "asp-phase1"
     services = compose["services"]
-    assert set(services) == {"api", "db", "test-db", "tests"}
+    assert set(services) == {"api", "db", "worker", "test-db", "tests"}
     assert services["api"]["ports"][0].startswith("127.0.0.1:")
     for name in ("db", "test-db"):
         assert "ports" not in services[name]
         assert "@sha256:" in services[name]["image"]
     assert services["test-db"]["volumes"] == ["test-db:/var/lib/postgresql/data"]
     assert services["test-db"]["environment"]["POSTGRES_DB"] == "asp_phase1_test"
-    for name in ("api", "tests"):
+    for name in ("api", "worker", "tests"):
         assert services[name]["read_only"]
         assert services[name]["cap_drop"] == ["ALL"]
         assert "no-new-privileges:true" in services[name]["security_opt"]
-        assert "volumes" not in services[name]
+        if name == "tests":
+            assert "volumes" not in services[name]
+        else:
+            assert services[name]["mem_limit"] == "256m"
+            assert services[name]["cpus"] == 1.0 and services[name]["pids_limit"] == 64
+            assert len(services[name]["volumes"]) == 1
+            mount = services[name]["volumes"][0]
+            assert mount["target"] == "/spool" and mount["read_only"]
+            assert mount["bind"]["create_host_path"] is False
+    assert "ports" not in services["worker"]
     assert "ASP_DB_PASSWORD" not in services["tests"]["environment"]
     assert "docker.sock" not in str(services)
     assert "docker_engine" not in str(services)
@@ -71,8 +80,9 @@ def test_ci_permissions_and_required_checks():
             assert re.fullmatch(r"actions/checkout@[0-9a-f]{40}", step["uses"])
             assert step["with"]["persist-credentials"] is False
     commands = "\n".join(step.get("run", "") for step in steps)
-    for marker in ("unit", "api", "postgres"):
+    for marker in ("unit", "api", "orchestration"):
         assert f"pytest -m {marker}" in commands
+    assert 'pytest -m "postgres and not orchestration"' in commands
     assert "ruff check" in commands and "mypy src" in commands
     assert "pull_request_target" not in (ROOT / ".github/workflows/ci.yml").read_text()
     assert "down -v" not in commands

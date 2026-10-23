@@ -1,4 +1,4 @@
-name: Phase 1 foundation
+name: Platform foundation and durable execution
 on:
   push:
   pull_request:
@@ -29,7 +29,9 @@ jobs:
       - name: API checks
         run: docker compose --profile test run --rm tests uv run --no-sync pytest -m api -p no:cacheprovider
       - name: Real PostgreSQL checks
-        run: docker compose --profile test run --rm tests uv run --no-sync pytest -m postgres -p no:cacheprovider
+        run: docker compose --profile test run --rm tests uv run --no-sync pytest -m "postgres and not orchestration" -p no:cacheprovider
+      - name: Separate-process orchestration and 25 crash experiments
+        run: docker compose --profile test run --rm tests uv run --no-sync pytest -m orchestration -p no:cacheprovider
       - name: Stop only this job's disposable test database
         if: always()
         run: docker compose --profile test stop test-db

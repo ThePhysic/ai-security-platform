@@ -1,0 +1,10 @@
+{
+  "database": "asp_dev",
+  "before_revision": "0001_foundation",
+  "after_revision": "0002_orchestration",
+  "retained_counts_before": "3|0|0|3",
+  "retained_counts_after": "3|0|0|3",
+  "backup": ".local/backups/phase2a-before-c629148a7580483a89e599094d764237.dump",
+  "backup_bytes": 12771,
+  "destructive_migration": false
+}

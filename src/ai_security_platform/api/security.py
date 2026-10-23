@@ -84,7 +84,8 @@ class BoundaryMiddleware:
                     len(methods) != 1
                     or methods[0] not in {b"GET", b"POST"}
                     or len(requested) > 1
-                    or not header_names <= {"authorization", "content-type", "x-request-id"}
+                    or not header_names
+                    <= {"authorization", "content-type", "x-request-id", "idempotency-key"}
                 ):
                     await reject(403, "preflight_denied", "Preflight is not allowed")
                     return
@@ -96,7 +97,7 @@ class BoundaryMiddleware:
                             (b"access-control-allow-methods", b"GET, POST"),
                             (
                                 b"access-control-allow-headers",
-                                b"authorization, content-type, x-request-id",
+                                b"authorization, content-type, x-request-id, idempotency-key",
                             ),
                         ],
                     }

@@ -9,6 +9,7 @@ import pytest
 from sqlalchemy.exc import OperationalError
 
 from ai_security_platform.storage import repositories
+from ai_security_platform.storage.base import EXPECTED_REVISION
 from tests.conftest import SENSITIVE, TOKEN
 
 pytestmark = pytest.mark.api
@@ -116,19 +117,22 @@ def test_scan_metadata_contract(client, auth, monkeypatch):
 
 @pytest.mark.parametrize(
     "path",
-    ["/api/v1/scan-runs", "/api/v1/source-snapshots", "/api/v1/findings", "/docs", "/openapi.json"],
+    ["/api/v1/findings", "/api/v1/triage-runs", "/docs", "/openapi.json"],
 )
 def test_future_routes_are_absent(client, auth, path):
     assert client.post(path, headers=auth, json={}).status_code == 404
 
 
-def test_openapi_is_only_phase1(app):
+def test_openapi_preserves_phase1_and_only_adds_phase2a(app):
     assert set(app.openapi()["paths"]) == {
         "/health",
         "/ready",
         "/api/v1/projects",
         "/api/v1/projects/{project_id}",
         "/api/v1/scan-runs/{scan_id}",
+        "/api/v1/scan-runs",
+        "/api/v1/source-snapshots",
+        "/api/v1/scan-runs/{scan_id}/findings",
     }
 
 
@@ -174,7 +178,7 @@ def test_dependency_unavailable_and_schema_mismatch(app, client, logs):
     result = engine.connect.return_value.__enter__.return_value.execute.return_value
     result.scalars.return_value = ["wrong_revision"]
     assert client.get("/ready").json()["code"] == "schema_unavailable"
-    result.scalars.return_value = ["0001_foundation"]
+    result.scalars.return_value = [EXPECTED_REVISION]
     assert client.get("/ready").status_code == 200
 
 

@@ -17,6 +17,9 @@ dependencies = [
   "uvicorn>=0.34,<1",
 ]
 
+[project.scripts]
+asp = "ai_security_platform.cli.main:main"
+
 [dependency-groups]
 dev = [
   "pytest>=8.3,<10",
@@ -44,6 +47,8 @@ files = ["src"]
 testpaths = ["tests"]
 addopts = "--strict-markers -ra -p no:cacheprovider"
 markers = [
+  "snapshot: secure local source and spool boundaries",
+  "orchestration: real PostgreSQL concurrency, fencing and recovery",
   "unit: configuration, contracts and infrastructure policy",
   "api: isolated HTTP contracts without a live database",
   "postgres: real disposable PostgreSQL migrations and persistence",

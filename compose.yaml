@@ -23,14 +23,25 @@ services:
     environment:
       ASP_DATABASE_URL: postgresql+psycopg://asp_owner:${ASP_DB_PASSWORD:?Required}@db:5432/asp_dev
       ASP_API_TOKEN: ${ASP_API_TOKEN:?Required}
+      ASP_SNAPSHOT_SPOOL: /spool
       ASP_ALLOWED_HOSTS: '["127.0.0.1:${ASP_API_PORT:-18081}","localhost:${ASP_API_PORT:-18081}","127.0.0.1:8000","localhost:8000"]'
       ASP_ALLOWED_ORIGINS: '["http://127.0.0.1:${ASP_API_PORT:-18081}","http://localhost:${ASP_API_PORT:-18081}"]'
     ports:
       - "127.0.0.1:${ASP_API_PORT:-18081}:8000"
+    volumes: &snapshot-reader-mount
+      - type: bind
+        source: ./.local/snapshot-spool
+        target: /spool
+        read_only: true
+        bind:
+          create_host_path: false
     depends_on:
       db:
         condition: service_healthy
     read_only: true
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 64
     tmpfs:
       - /tmp:rw,noexec,nosuid,size=64m
     cap_drop: [ALL]
@@ -40,6 +51,29 @@ services:
       interval: 3s
       timeout: 4s
       retries: 20
+  worker:
+    profiles: [workers]
+    build:
+      context: .
+      target: runtime
+    command: ["uv", "run", "--no-sync", "python", "-m", "ai_security_platform.jobs.worker"]
+    environment:
+      ASP_DATABASE_URL: postgresql+psycopg://asp_owner:${ASP_DB_PASSWORD:?Required}@db:5432/asp_dev
+      ASP_API_TOKEN: ${ASP_API_TOKEN:?Required}
+      ASP_SNAPSHOT_SPOOL: /spool
+    volumes: *snapshot-reader-mount
+    depends_on:
+      db:
+        condition: service_healthy
+    read_only: true
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 64
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
   test-db:
     profiles: [test]
     image: *db-image
