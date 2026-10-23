@@ -11,6 +11,7 @@ from ai_security_platform.api.routes import (
     projects,
     scan_runs,
     snapshots,
+    triage,
 )
 from ai_security_platform.api.security import BoundaryMiddleware
 from ai_security_platform.config import Settings, load_settings
@@ -31,7 +32,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         engine.dispose()
 
     app = FastAPI(
-        title="AI Security Platform — Phase 2A (synthetic adapters)",
+        title="AI Security Platform",
         version="0.1.0",
         docs_url=None,
         redoc_url=None,
@@ -56,4 +57,5 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(snapshots.router)
     app.include_router(launcher.router)
     app.include_router(findings.router)
+    app.include_router(triage.router)
     return app

@@ -67,4 +67,10 @@ def test_only_approved_application_tables():
         "idempotency_requests",
         "scanner_invocations",
         "launcher_capabilities",
+        "hosted_consents",
+        "triage_runs",
+        "triage_outcomes",
+        "triage_provider_calls",
+        "reviews",
+        "review_revisions",
     }

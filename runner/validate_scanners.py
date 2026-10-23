@@ -1,5 +1,6 @@
 """Real containers and genuine outputs, only maintained inert labelled fixtures."""
 
+import argparse
 import json
 from collections import Counter
 from uuid import uuid4
@@ -11,6 +12,9 @@ from runner.launcher import Launcher
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--phase3", action="store_true")
+    args = parser.parse_args()
     # No API call occurs here; the same fixed-profile resolver/boundary is exercised
     # with controlled fixtures, before public security-v1 admission is enabled.
     launcher = Launcher("http://127.0.0.1:18081", ROOT / ".local/phase2b-fixtures/spool", "unused")
@@ -159,7 +163,13 @@ def main():
         )
     assert all(checks.values()), {key: value for key, value in checks.items() if not value}
     evidence.update({"passed": len(checks), "failed": 0, "skipped": 0})
-    (ROOT / "docs/phase2b/scanner-evidence.json").write_text(json.dumps(evidence, indent=2) + "\n")
+    target = ROOT / (
+        "docs/phase3/scanner-regression.json"
+        if args.phase3
+        else "docs/phase2b/scanner-evidence.json"
+    )
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(evidence, indent=2) + "\n")
 
 
 if __name__ == "__main__":

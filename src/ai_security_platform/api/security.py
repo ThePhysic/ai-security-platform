@@ -77,6 +77,13 @@ class BoundaryMiddleware:
                 await reject(403, "origin_denied", "Origin is not allowed")
                 return
             if scope["method"] == "OPTIONS" and origin_values:
+                allowed_methods = [b"GET", b"POST"]
+                if scope["path"].startswith("/api/v1/findings/") and scope["path"].endswith(
+                    "/review"
+                ):
+                    allowed_methods.append(b"PUT")
+                if scope["path"].startswith("/api/v1/hosted-consents/"):
+                    allowed_methods.append(b"DELETE")
                 methods = headers.get(b"access-control-request-method", [])
                 requested = headers.get(b"access-control-request-headers", [])
                 header_names = (
@@ -86,7 +93,7 @@ class BoundaryMiddleware:
                 )
                 if (
                     len(methods) != 1
-                    or methods[0] not in {b"GET", b"POST"}
+                    or methods[0] not in allowed_methods
                     or len(requested) > 1
                     or not header_names
                     <= {"authorization", "content-type", "x-request-id", "idempotency-key"}
@@ -98,7 +105,7 @@ class BoundaryMiddleware:
                         "type": "http.response.start",
                         "status": 204,
                         "headers": [
-                            (b"access-control-allow-methods", b"GET, POST"),
+                            (b"access-control-allow-methods", b", ".join(allowed_methods)),
                             (
                                 b"access-control-allow-headers",
                                 b"authorization, content-type, x-request-id, idempotency-key",

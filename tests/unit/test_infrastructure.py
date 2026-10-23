@@ -31,14 +31,14 @@ def test_compose_policy():
     compose = yaml.safe_load((ROOT / "compose.yaml").read_text())
     assert compose["name"] == "asp-phase1"
     services = compose["services"]
-    assert set(services) == {"api", "db", "worker", "test-db", "tests"}
+    assert set(services) == {"api", "db", "worker", "triage-worker", "test-db", "tests"}
     assert services["api"]["ports"][0].startswith("127.0.0.1:")
     for name in ("db", "test-db"):
         assert "ports" not in services[name]
         assert "@sha256:" in services[name]["image"]
     assert services["test-db"]["volumes"] == ["test-db:/var/lib/postgresql/data"]
     assert services["test-db"]["environment"]["POSTGRES_DB"] == "asp_phase1_test"
-    for name in ("api", "worker", "tests"):
+    for name in ("api", "worker", "triage-worker", "tests"):
         assert services[name]["read_only"]
         assert services[name]["cap_drop"] == ["ALL"]
         assert "no-new-privileges:true" in services[name]["security_opt"]

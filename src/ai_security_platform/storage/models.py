@@ -77,7 +77,12 @@ class Job(Base):
     __table_args__ = (
         UniqueConstraint("scanner_run_id", name="uq_job_scanner"),
         UniqueConstraint("id", "scanner_run_id", name="uq_job_scanner_identity"),
-        CheckConstraint("operation = 'scan'", name="operation"),
+        UniqueConstraint("triage_run_id", name="uq_job_triage"),
+        CheckConstraint(
+            "(operation = 'scan' AND scanner_run_id IS NOT NULL AND triage_run_id IS NULL) OR "
+            "(operation = 'triage' AND scanner_run_id IS NULL AND triage_run_id IS NOT NULL)",
+            name="operation",
+        ),
         CheckConstraint(
             "state IN ('queued','running','retry_pending','succeeded','terminal_failed')",
             name="state",
@@ -97,7 +102,10 @@ class Job(Base):
         CheckConstraint("request_id ~ '^[A-Za-z0-9_-]{1,64}$'", name="request_id"),
     )
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
-    scanner_run_id: Mapped[UUID] = mapped_column(ForeignKey("scanner_runs.id"))
+    scanner_run_id: Mapped[UUID | None] = mapped_column(ForeignKey("scanner_runs.id"))
+    triage_run_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("triage_runs.id", use_alter=True, name="fk_jobs_triage_run_id_triage_runs")
+    )
     operation: Mapped[str] = mapped_column(String(16), default="scan")
     state: Mapped[str] = mapped_column(String(32), default="queued")
     generation: Mapped[int] = mapped_column(Integer, default=0)
@@ -152,6 +160,7 @@ class JobAttempt(Base):
 class Finding(Base):
     __tablename__ = "findings"
     __table_args__ = (
+        UniqueConstraint("scan_run_id", "id", name="uq_finding_scan_identity"),
         ForeignKeyConstraint(
             ["scan_run_id", "scanner_run_id"], ["scanner_runs.scan_run_id", "scanner_runs.id"]
         ),
@@ -250,18 +259,21 @@ class IdempotencyRequest(Base):
     __table_args__ = (
         UniqueConstraint("scope", "key", name="uq_idempotency_scope_key"),
         CheckConstraint("payload_hash ~ '^[0-9a-f]{64}$'", name="payload_hash"),
+        CheckConstraint("(scan_run_id IS NULL) != (triage_run_id IS NULL)", name="one_target"),
     )
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     scope: Mapped[str] = mapped_column(String(64))
     key: Mapped[str] = mapped_column(String(128))
     payload_hash: Mapped[str] = mapped_column(String(64))
-    scan_run_id: Mapped[UUID] = mapped_column(ForeignKey("scan_runs.id"))
+    scan_run_id: Mapped[UUID | None] = mapped_column(ForeignKey("scan_runs.id"))
+    triage_run_id: Mapped[UUID | None] = mapped_column(ForeignKey("triage_runs.id"))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class SourceSnapshot(Base):
     __tablename__ = "source_snapshots"
     __table_args__ = (
+        UniqueConstraint("id", "manifest_digest", name="uq_snapshot_manifest_identity"),
         UniqueConstraint("project_id", "id", name="uq_snapshot_project_id"),
         UniqueConstraint(
             "project_id", "content_digest", "manifest_version", name="uq_snapshot_content"
@@ -297,6 +309,7 @@ class SourceSnapshot(Base):
 class ScanRun(Base):
     __tablename__ = "scan_runs"
     __table_args__ = (
+        UniqueConstraint("id", "snapshot_id", name="uq_scan_snapshot_identity"),
         ForeignKeyConstraint(
             ["project_id", "snapshot_id"], ["source_snapshots.project_id", "source_snapshots.id"]
         ),
@@ -336,13 +349,19 @@ class AuditEvent(Base):
             "(event_type = 'project.created' AND object_type = 'project') OR "
             "(event_type = 'snapshot.registered' AND object_type = 'source_snapshot') OR "
             "(event_type = 'scan.accepted' AND object_type = 'scan') OR "
+            "(event_type IN ('triage.accepted','triage.send_reserved') AND "
+            "object_type = 'triage') OR "
+            "(event_type IN ('consent.created','consent.revoked') AND object_type = 'consent') OR "
+            "(event_type = 'review.updated' AND object_type = 'review') OR "
             "(event_type IN ('job.claimed','job.succeeded','job.retry_pending',"
             "'job.failed','job.expired') AND object_type = 'job')",
             name="event_allowlist",
         ),
         CheckConstraint(
-            "(actor = 'local_operator' AND component = 'api' AND event_type NOT LIKE 'job.%') OR "
-            "(actor = 'worker' AND component = 'worker' AND event_type LIKE 'job.%')",
+            "(actor = 'local_operator' AND component = 'api' AND event_type NOT LIKE 'job.%' "
+            "AND event_type != 'triage.send_reserved') OR "
+            "(actor = 'worker' AND component = 'worker' AND "
+            "(event_type LIKE 'job.%' OR event_type = 'triage.send_reserved'))",
             name="actor_allowlist",
         ),
         CheckConstraint("request_id ~ '^[A-Za-z0-9_-]{1,64}$'", name="request_id"),
@@ -363,4 +382,180 @@ class AuditEvent(Base):
     event_metadata: Mapped[dict[str, Any]] = mapped_column(
         "metadata", JSONB, default=dict, server_default=text("'{}'::jsonb")
     )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class HostedConsent(Base):
+    __tablename__ = "hosted_consents"
+    __table_args__ = (
+        UniqueConstraint("operation_id", name="uq_consent_operation"),
+        ForeignKeyConstraint(
+            ["scan_run_id", "finding_id"], ["findings.scan_run_id", "findings.id"]
+        ),
+        ForeignKeyConstraint(
+            ["scan_run_id", "snapshot_id"], ["scan_runs.id", "scan_runs.snapshot_id"]
+        ),
+        ForeignKeyConstraint(
+            ["snapshot_id", "manifest_digest"],
+            ["source_snapshots.id", "source_snapshots.manifest_digest"],
+        ),
+        CheckConstraint("config_digest ~ '^[0-9a-f]{64}$'", name="config_digest"),
+        CheckConstraint(
+            (
+                "jsonb_typeof(data_categories) = 'array' AND "
+                "octet_length(data_categories::text) <= 256"
+            ),
+            name="categories",
+        ),
+        CheckConstraint("operator = 'local_operator'", name="operator"),
+    )
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    operation_id: Mapped[UUID] = mapped_column()
+    finding_id: Mapped[UUID] = mapped_column()
+    scan_run_id: Mapped[UUID] = mapped_column()
+    snapshot_id: Mapped[UUID] = mapped_column()
+    manifest_digest: Mapped[str] = mapped_column(String(64))
+    config_digest: Mapped[str] = mapped_column(String(64))
+    data_categories: Mapped[list[str]] = mapped_column(JSONB)
+    operator: Mapped[str] = mapped_column(String(32), default="local_operator")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class TriageRun(Base):
+    __tablename__ = "triage_runs"
+    __table_args__ = (
+        UniqueConstraint("id", "finding_id", name="uq_triage_finding_identity"),
+        ForeignKeyConstraint(
+            ["scan_run_id", "finding_id"], ["findings.scan_run_id", "findings.id"]
+        ),
+        ForeignKeyConstraint(
+            ["scan_run_id", "snapshot_id"], ["scan_runs.id", "scan_runs.snapshot_id"]
+        ),
+        ForeignKeyConstraint(
+            ["snapshot_id", "manifest_digest"],
+            ["source_snapshots.id", "source_snapshots.manifest_digest"],
+        ),
+        CheckConstraint("provider IN ('deterministic-v1','openai-v1')", name="provider"),
+        CheckConstraint(
+            "status IN ('queued','running','succeeded','unavailable','failed')", name="status"
+        ),
+        CheckConstraint("config_digest ~ '^[0-9a-f]{64}$'", name="config_digest"),
+        CheckConstraint("(provider = 'openai-v1') = (consent_id IS NOT NULL)", name="consent"),
+    )
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    finding_id: Mapped[UUID] = mapped_column()
+    scan_run_id: Mapped[UUID] = mapped_column()
+    snapshot_id: Mapped[UUID] = mapped_column()
+    manifest_digest: Mapped[str] = mapped_column(String(64))
+    provider: Mapped[str] = mapped_column(String(32))
+    config_digest: Mapped[str] = mapped_column(String(64))
+    prompt_version: Mapped[str] = mapped_column(String(32))
+    tools_version: Mapped[str] = mapped_column(String(32))
+    policy_version: Mapped[str] = mapped_column(String(32))
+    consent_id: Mapped[UUID | None] = mapped_column(ForeignKey("hosted_consents.id"))
+    status: Mapped[str] = mapped_column(String(16), default="queued")
+    error_code: Mapped[str | None] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class TriageOutcome(Base):
+    __tablename__ = "triage_outcomes"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["job_id", "generation"], ["job_attempts.job_id", "job_attempts.generation"]
+        ),
+        CheckConstraint(
+            "jsonb_typeof(result) = 'object' AND octet_length(result::text) <= 16384", name="result"
+        ),
+        CheckConstraint(
+            "jsonb_typeof(trace) = 'array' AND octet_length(trace::text) <= 4096", name="trace"
+        ),
+        CheckConstraint(
+            "jsonb_typeof(usage) = 'object' AND octet_length(usage::text) <= 2048", name="usage"
+        ),
+    )
+    triage_run_id: Mapped[UUID] = mapped_column(ForeignKey("triage_runs.id"), primary_key=True)
+    job_id: Mapped[UUID] = mapped_column(ForeignKey("jobs.id"))
+    generation: Mapped[int] = mapped_column(Integer)
+    result: Mapped[dict[str, Any]] = mapped_column(JSONB)
+    trace: Mapped[list[dict[str, Any]]] = mapped_column(JSONB)
+    usage: Mapped[dict[str, Any]] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class ProviderCall(Base):
+    __tablename__ = "triage_provider_calls"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["job_id", "generation"], ["job_attempts.job_id", "job_attempts.generation"]
+        ),
+        UniqueConstraint("job_id", "generation", "sequence", name="uq_triage_provider_sequence"),
+        CheckConstraint(
+            "sequence BETWEEN 1 AND 10 AND reserved_micro_usd BETWEEN 0 AND 50000", name="bounds"
+        ),
+    )
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    triage_run_id: Mapped[UUID] = mapped_column(ForeignKey("triage_runs.id"))
+    job_id: Mapped[UUID] = mapped_column(ForeignKey("jobs.id"))
+    generation: Mapped[int] = mapped_column(Integer)
+    sequence: Mapped[int] = mapped_column(Integer)
+    consent_id: Mapped[UUID] = mapped_column(ForeignKey("hosted_consents.id"))
+    reserved_micro_usd: Mapped[int] = mapped_column(Integer)
+    reserved_tokens: Mapped[int] = mapped_column(Integer)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class Review(Base):
+    __tablename__ = "reviews"
+    __table_args__ = (
+        CheckConstraint("revision > 0", name="revision"),
+        CheckConstraint(
+            (
+                "disposition IN ('confirmed','false_positive','investigate','accep"
+                "ted_risk','remediation_planned')"
+            ),
+            name="disposition",
+        ),
+        CheckConstraint("char_length(note) <= 2000", name="note"),
+    )
+    finding_id: Mapped[UUID] = mapped_column(ForeignKey("findings.id"), primary_key=True)
+    revision: Mapped[int] = mapped_column(Integer)
+    disposition: Mapped[str] = mapped_column(String(32))
+    note: Mapped[str] = mapped_column(String(2000))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class ReviewRevision(Base):
+    __tablename__ = "review_revisions"
+    __table_args__ = (
+        UniqueConstraint("finding_id", "revision", name="uq_review_revision"),
+        ForeignKeyConstraint(
+            ["triage_run_id", "finding_id"], ["triage_runs.id", "triage_runs.finding_id"]
+        ),
+        CheckConstraint("revision > 0", name="revision"),
+        CheckConstraint(
+            (
+                "disposition IN ('confirmed','false_positive','investigate','accep"
+                "ted_risk','remediation_planned')"
+            ),
+            name="disposition",
+        ),
+        CheckConstraint(
+            "char_length(note) <= 2000 AND reviewer = 'local_operator'", name="content"
+        ),
+        CheckConstraint(
+            "feedback IS NULL OR feedback IN ('agree','disagree','uncertain')", name="feedback"
+        ),
+    )
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    finding_id: Mapped[UUID] = mapped_column(ForeignKey("findings.id"))
+    revision: Mapped[int] = mapped_column(Integer)
+    disposition: Mapped[str] = mapped_column(String(32))
+    note: Mapped[str] = mapped_column(String(2000))
+    reviewer: Mapped[str] = mapped_column(String(32), default="local_operator")
+    triage_run_id: Mapped[UUID | None] = mapped_column()
+    feedback: Mapped[str | None] = mapped_column(String(16))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

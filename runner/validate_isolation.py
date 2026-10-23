@@ -21,6 +21,7 @@ def boundary_digest() -> str:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--orphan-child", action="store_true")
+    parser.add_argument("--phase3", action="store_true")
     parser.add_argument("--image")
     parser.add_argument("--key")
     parser.add_argument("--digest")
@@ -156,9 +157,11 @@ def main():
         "skipped": 0,
         "note": "Container proof only; authenticated lease handoff proof also required.",
     }
-    target = ROOT / "docs/phase2b"
+    target = ROOT / ("docs/phase3" if args.phase3 else "docs/phase2b")
     target.mkdir(parents=True, exist_ok=True)
-    target.joinpath("isolation-evidence.json").write_text(json.dumps(evidence, indent=2) + "\n")
+    target.joinpath(
+        "isolation-regression.json" if args.phase3 else "isolation-evidence.json"
+    ).write_text(json.dumps(evidence, indent=2) + "\n")
     print(json.dumps({"isolation_checks_passed": len(checks), "failed": 0, "skipped": 0}))
 
 

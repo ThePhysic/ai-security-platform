@@ -40,6 +40,8 @@ class Lease:
     scanner_id: str
     snapshot_key: str
     manifest_digest: str
+    operation: str = "scan"
+    triage_run_id: UUID | None = None
 
 
 class Controller:
@@ -65,7 +67,7 @@ class Controller:
     @staticmethod
     def owned(job: Job, lease: Lease, now: datetime) -> bool:
         return (
-            job.operation == "scan"
+            job.operation == lease.operation
             and job.state == "running"
             and job.generation == lease.generation
             and job.lease_token == lease.token
@@ -80,6 +82,7 @@ class Controller:
             job = session.scalars(
                 select(Job)
                 .where(
+                    Job.operation == "scan",
                     Job.state.in_(["queued", "retry_pending"]),
                     Job.next_attempt_at <= func.clock_timestamp(),
                     Job.attempts < Job.max_attempts,
@@ -306,7 +309,11 @@ class Controller:
         with self.factory.begin() as session:
             job = session.scalars(
                 select(Job)
-                .where(Job.state == "running", Job.lease_expires_at <= func.clock_timestamp())
+                .where(
+                    Job.operation == "scan",
+                    Job.state == "running",
+                    Job.lease_expires_at <= func.clock_timestamp(),
+                )
                 .order_by(Job.lease_expires_at, Job.id)
                 .limit(1)
                 .with_for_update(skip_locked=True)

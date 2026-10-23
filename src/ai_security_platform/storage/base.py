@@ -1,7 +1,7 @@
 from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase
 
-EXPECTED_REVISION = "0003_scanner_handoff"
+EXPECTED_REVISION = "0004_triage_review"
 
 
 class Base(DeclarativeBase):

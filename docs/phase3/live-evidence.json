@@ -1,0 +1,91 @@
+{
+  "checks": {
+    "real_scanner_finding_multistep_offline_triage": true,
+    "idempotent_http_replay": true,
+    "secret_finding_redacted_and_abstains": true,
+    "hosted_denied_without_enabled_scoped_consent": true,
+    "concurrent_http_review_one_success_one_stale_conflict": true,
+    "immutable_history_and_explicit_human_feedback": true,
+    "actual_container_restart_persistence": true,
+    "scan_scanner_and_finding_content_unchanged": true,
+    "containers_restricted_no_daemon_or_hosted_credentials": true,
+    "synthetic_and_actual_credentials_absent_from_logs_and_evidence": true
+  },
+  "operations": {
+    "assessment": {
+      "id": "2f49ee84-efb6-45ee-8269-9d6af948d565",
+      "status": "succeeded",
+      "assessment": "needs_review",
+      "citation_kinds": [
+        "finding",
+        "source",
+        "rule",
+        "coverage"
+      ],
+      "usage": {
+        "tool_calls": 5,
+        "duration_ms": 243,
+        "context_bytes": 3650,
+        "provider_calls": 6,
+        "billing_measured": false,
+        "token_upper_bound": 50432,
+        "reserved_micro_usd": 0
+      },
+      "manifest_digest": "26fd9001aaa9ff97fe162bd2dd002f1cd6871339f6f7b7e5ad7bfc2a516255ae"
+    },
+    "abstention": {
+      "id": "fb818460-b0fa-43c9-8f76-6fb078b8ce85",
+      "assessment": "abstain",
+      "reason": "insufficient_evidence"
+    }
+  },
+  "services": {
+    "api": {
+      "user": "10001:10001",
+      "readonly": true,
+      "caps": [
+        "ALL"
+      ],
+      "security": [
+        "no-new-privileges:true"
+      ],
+      "ports": {
+        "8000/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18081"
+          }
+        ]
+      }
+    },
+    "worker": {
+      "user": "10001:10001",
+      "readonly": true,
+      "caps": [
+        "ALL"
+      ],
+      "security": [
+        "no-new-privileges:true"
+      ],
+      "ports": {}
+    },
+    "triage-worker": {
+      "user": "10001:10001",
+      "readonly": true,
+      "caps": [
+        "ALL"
+      ],
+      "security": [
+        "no-new-privileges:true"
+      ],
+      "ports": {}
+    }
+  },
+  "retained_scan_content_before": "e8d5df29c64b32887f13c28156290a08|8c4ddfca2ae956ddd88fd1165b83296c|c5973d34dd868dfddbb5b7eebaa3874f",
+  "retained_scan_content_after": "e8d5df29c64b32887f13c28156290a08|8c4ddfca2ae956ddd88fd1165b83296c|c5973d34dd868dfddbb5b7eebaa3874f",
+  "hosted_calls": 0,
+  "real_scanning_enabled": false,
+  "passed": 10,
+  "failed": 0,
+  "skipped": 0
+}

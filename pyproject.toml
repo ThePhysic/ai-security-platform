@@ -50,6 +50,7 @@ files = ["src"]
 testpaths = ["tests"]
 addopts = "--strict-markers -ra -p no:cacheprovider"
 markers = [
+  "agent: bounded triage, consent, confidentiality and human review",
   "snapshot: secure local source and spool boundaries",
   "orchestration: real PostgreSQL concurrency, fencing and recovery",
   "unit: configuration, contracts and infrastructure policy",

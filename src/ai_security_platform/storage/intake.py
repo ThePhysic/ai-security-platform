@@ -35,7 +35,7 @@ def audit(
     *,
     generation: int | None = None,
 ) -> None:
-    worker = event.startswith("job.")
+    worker = event.startswith("job.") or event == "triage.send_reserved"
     session.add(
         AuditEvent(
             event_type=event,

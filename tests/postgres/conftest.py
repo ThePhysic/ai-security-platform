@@ -67,11 +67,30 @@ def pg_runtime():
 def pg_session(pg_runtime):
     engine, _, _ = pg_runtime
     with Session(engine, expire_on_commit=False) as session:
+        clear_triage(session)
         for model in MODEL_ORDER:
             session.execute(delete(model))
         session.commit()
         yield session
         session.rollback()
+        clear_triage(session)
         for model in MODEL_ORDER:
             session.execute(delete(model))
         session.commit()
+
+
+def clear_triage(session):
+    # Runtime fixture already verifies the exact disposable database/user.
+    # TRUNCATE is deliberately used only here; DELETE/UPDATE history remain denied.
+    session.execute(text("TRUNCATE review_revisions"))
+    for table in ("triage_provider_calls", "triage_outcomes", "reviews", "idempotency_requests"):
+        session.execute(text("DELETE FROM " + table))
+    session.execute(
+        text(
+            "DELETE FROM job_attempts WHERE job_id IN (SELECT id FROM jobs "
+            "WHERE operation='triage')"
+        )
+    )
+    session.execute(text("DELETE FROM jobs WHERE operation='triage'"))
+    session.execute(text("DELETE FROM triage_runs"))
+    session.execute(text("DELETE FROM hosted_consents"))

@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "scanner_policy_digest": "12e58502b265a95d69709ae83cc4569c6b4d35b8d8873a6c51de5a57551e0fca",
+  "source_rules_sha256": "6db7c443dce4928da2f7cca847634aad75ab36535ba79611185cedc2abe11a3f",
+  "definitions": {
+    "platform.python.eval": {
+      "id": "platform.python.eval",
+      "languages": [
+        "python"
+      ],
+      "message": "Dynamic Python evaluation requires security review.",
+      "severity": "ERROR",
+      "pattern": "eval(...)",
+      "metadata": {
+        "cwe": "CWE-95"
+      }
+    },
+    "platform.python.shell": {
+      "id": "platform.python.shell",
+      "languages": [
+        "python"
+      ],
+      "message": "Shell invocation with shell enabled requires security review.",
+      "severity": "ERROR",
+      "pattern": "subprocess.$FUNC(..., shell=True, ...)",
+      "metadata": {
+        "cwe": "CWE-78"
+      }
+    },
+    "platform.python.sql-format": {
+      "id": "platform.python.sql-format",
+      "languages": [
+        "python"
+      ],
+      "message": "Formatted SQL requires parameterization review.",
+      "severity": "ERROR",
+      "pattern-either": [
+        {
+          "pattern": "$DB.execute($QUERY % $VALUE, ...)"
+        },
+        {
+          "pattern": "$DB.execute(f\"...\", ...)"
+        }
+      ],
+      "metadata": {
+        "cwe": "CWE-89"
+      }
+    },
+    "platform.ci.write-all": {
+      "id": "platform.ci.write-all",
+      "languages": [
+        "yaml"
+      ],
+      "message": "Workflow permissions should be explicitly minimized.",
+      "severity": "WARNING",
+      "pattern": "permissions: write-all",
+      "metadata": {
+        "cwe": "CWE-269"
+      }
+    },
+    "platform.ci.mutable-action": {
+      "id": "platform.ci.mutable-action",
+      "languages": [
+        "yaml"
+      ],
+      "message": "Actions should use immutable reviewed commit references.",
+      "severity": "WARNING",
+      "pattern-regex": "(?m)^\\s*-\\s*uses:\\s*[A-Za-z0-9_.-]+/[A-Za-z0-9_./-]+@(?![0-9a-f]{40}(?:\\s|$))[A-Za-z0-9_.-]+",
+      "metadata": {
+        "cwe": "CWE-829"
+      }
+    },
+    "platform.javascript.eval": {
+      "id": "platform.javascript.eval",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "message": "Dynamic JavaScript evaluation requires security review.",
+      "severity": "ERROR",
+      "pattern": "eval(...)",
+      "metadata": {
+        "cwe": "CWE-95"
+      }
+    },
+    "platform.javascript.exec": {
+      "id": "platform.javascript.exec",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "message": "Process execution requires injection review.",
+      "severity": "WARNING",
+      "pattern-either": [
+        {
+          "pattern": "child_process.exec(...)"
+        },
+        {
+          "pattern": "exec(...)"
+        }
+      ],
+      "metadata": {
+        "cwe": "CWE-78"
+      }
+    },
+    "platform.javascript.sql-concat": {
+      "id": "platform.javascript.sql-concat",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "message": "Concatenated SQL requires parameterization review.",
+      "severity": "ERROR",
+      "pattern": "$DB.query($SQL + $INPUT, ...)",
+      "metadata": {
+        "cwe": "CWE-89"
+      }
+    }
+  }
+}

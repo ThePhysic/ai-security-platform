@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import func, select, tuple_
 from sqlalchemy.orm import Session
 
+from ai_security_platform.agent.contracts import Disposition
 from ai_security_platform.api.dependencies import get_session
 from ai_security_platform.api.pagination import pack_cursor, unpack_cursor
 from ai_security_platform.api.security import bearer_scheme
@@ -15,7 +16,7 @@ from ai_security_platform.domain.findings import FindingPage, FindingRead
 from ai_security_platform.domain.intake import ScanAccepted, ScanSubmission
 from ai_security_platform.domain.scans import ScannerRead, ScanPage, ScanRead, ScanStatus
 from ai_security_platform.storage.intake import accept_scan
-from ai_security_platform.storage.models import Finding, ScannerRun, ScanRun
+from ai_security_platform.storage.models import Finding, Review, ScannerRun, ScanRun
 from ai_security_platform.storage.repositories import get_scan
 
 router = APIRouter(prefix="/api/v1/scan-runs", dependencies=[Depends(bearer_scheme)])
@@ -95,6 +96,7 @@ def findings(
     severity: Literal["UNKNOWN", "INFO", "LOW", "MEDIUM", "HIGH", "CRITICAL"] | None = None,
     scanner: Annotated[str | None, Query(pattern=r"^[a-z0-9-]{1,32}$")] = None,
     rule_id: Annotated[str | None, Query(max_length=128)] = None,
+    review: Disposition | Literal["unreviewed"] | None = None,
     cursor: Annotated[str | None, Query(max_length=2048)] = None,
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
 ) -> FindingPage:
@@ -109,6 +111,12 @@ def findings(
     }
     secret = request.app.state.settings.api_token.get_secret_value()
     query = select(Finding).where(Finding.scan_run_id == scan_id)
+    if review is not None:
+        filters["review"] = review
+        query = query.outerjoin(Review, Review.finding_id == Finding.id)
+        query = query.where(
+            Review.finding_id.is_(None) if review == "unreviewed" else Review.disposition == review
+        )
     if severity is not None:
         query = query.where(Finding.severity == severity)
     if scanner is not None:

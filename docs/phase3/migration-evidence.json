@@ -1,0 +1,34 @@
+{
+  "database": "asp_dev",
+  "before_revision": "0003_scanner_handoff",
+  "after_revision": "0004_triage_review",
+  "tables": [
+    "projects",
+    "source_snapshots",
+    "scan_runs",
+    "audit_events",
+    "scanner_runs",
+    "jobs",
+    "job_attempts",
+    "findings",
+    "idempotency_requests",
+    "scanner_invocations",
+    "launcher_capabilities"
+  ],
+  "counts_before": "10|10|23|153|46|46|55|1566|23|47|9",
+  "counts_after": "10|10|23|153|46|46|55|1566|23|47|9",
+  "retained_content_digests_before": "e8d5df29c64b32887f13c28156290a08|c5973d34dd868dfddbb5b7eebaa3874f|ca1bba64089a58545ade77ed50cf5c4b|8c4ddfca2ae956ddd88fd1165b83296c|f3e652f7d9ee4124b9f376e44eae9bde",
+  "retained_content_digests_after": "e8d5df29c64b32887f13c28156290a08|c5973d34dd868dfddbb5b7eebaa3874f|ca1bba64089a58545ade77ed50cf5c4b|8c4ddfca2ae956ddd88fd1165b83296c|f3e652f7d9ee4124b9f376e44eae9bde",
+  "digest_order": [
+    "scan_runs",
+    "findings",
+    "source_snapshots",
+    "scanner_runs",
+    "audit_events"
+  ],
+  "backup": ".local/backups/phase3-before-3f1adfd44665478091b5fde506748283.dump",
+  "backup_bytes": 437643,
+  "real_admission_enabled": false,
+  "hosted_enabled": false,
+  "spool_modified": false
+}
