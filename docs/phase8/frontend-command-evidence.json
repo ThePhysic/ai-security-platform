@@ -1,0 +1,19 @@
+{
+  "checks": [
+    {
+      "command": "npm.cmd ci --ignore-scripts --no-audit",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run build",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd test -- --grep \"security|scripted|memory-only|invalid bearer|partial scan|empty project|responsive keyboard|hosted execution|optional-module regression\"",
+      "exit_code": 0
+    }
+  ],
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0
+}

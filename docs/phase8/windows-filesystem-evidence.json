@@ -1,0 +1,19 @@
+{
+  "platform": "Windows NTFS",
+  "checks": {
+    "native_publish_and_verify": true,
+    "hardlink": true,
+    "alternate_stream": true,
+    "open_writer_denied": true,
+    "junction_child": true,
+    "junction_root": true,
+    "file_symlink": true,
+    "directory_symlink": true,
+    "parent_traversal": true,
+    "published_cleanup_protected": true
+  },
+  "passed": 10,
+  "failed": 0,
+  "blocked": [],
+  "skipped": 0
+}

@@ -1,0 +1,312 @@
+{
+  "files": [
+    {
+      "action": "modified",
+      "path": "README.md",
+      "reason": "Current flagship and optional-extension status"
+    },
+    {
+      "action": "created",
+      "path": "compose.phase8-demo.yaml",
+      "reason": "Optional overlay or isolated synthetic demonstration resources"
+    },
+    {
+      "action": "created",
+      "path": "compose.phase8.yaml",
+      "reason": "Optional overlay or isolated synthetic demonstration resources"
+    },
+    {
+      "action": "modified",
+      "path": "docs/PROJECT_BRIEF.md",
+      "reason": "Current flagship and optional-extension status"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/ARCHITECTURE-AND-CONTRACTS.md",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/COMMANDS.md",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/COMPLETION-REPORT.md",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/FILES.md",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/RUNBOOK.md",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/SCENARIOS.md",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/THREAT-MODEL.md",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/VALIDATION.md",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/acceptance.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/browser-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/disable-config-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/environment-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/file-inventory.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/final-focused-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/frontend-command-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/isolation-regression.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/performance-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/rebuild-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/recovery-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/scanner-regression.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/shutdown-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/soc-postgres-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/state-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/static-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/test-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/triage-adversarial-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "created",
+      "path": "docs/phase8/windows-filesystem-evidence.json",
+      "reason": "Phase 8 contracts, evidence, operations or completion documentation"
+    },
+    {
+      "action": "modified",
+      "path": "runner/validate_isolation.py",
+      "reason": "Separate Phase 8 regression destinations; preserve earlier evidence"
+    },
+    {
+      "action": "modified",
+      "path": "runner/validate_scanners.py",
+      "reason": "Separate Phase 8 regression destinations; preserve earlier evidence"
+    },
+    {
+      "action": "created",
+      "path": "scripts/validate_phase8.py",
+      "reason": "Reproducible scoped validation and separate evidence"
+    },
+    {
+      "action": "created",
+      "path": "scripts/validate_phase8_browser.py",
+      "reason": "Reproducible scoped validation and separate evidence"
+    },
+    {
+      "action": "created",
+      "path": "scripts/validate_phase8_environment.py",
+      "reason": "Reproducible scoped validation and separate evidence"
+    },
+    {
+      "action": "created",
+      "path": "scripts/validate_phase8_rebuild.py",
+      "reason": "Reproducible scoped validation and separate evidence"
+    },
+    {
+      "action": "created",
+      "path": "scripts/validate_phase8_state.py",
+      "reason": "Reproducible scoped validation and separate evidence"
+    },
+    {
+      "action": "modified",
+      "path": "src/ai_security_platform/api/app.py",
+      "reason": "Default-false optional setting and conditional route mount"
+    },
+    {
+      "action": "modified",
+      "path": "src/ai_security_platform/config.py",
+      "reason": "Default-false optional setting and conditional route mount"
+    },
+    {
+      "action": "modified",
+      "path": "src/ai_security_platform/jobs/controller.py",
+      "reason": "Shared ownership predicates with preserved AppSec behavior"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/jobs/ownership.py",
+      "reason": "Shared ownership predicates with preserved AppSec behavior"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/__init__.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/alembic.ini",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/api.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/cli.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/contracts.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/controller.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/correlation.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/migrations/env.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/migrations/versions/soc_0001.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/models.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/scenarios.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/store.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "created",
+      "path": "src/ai_security_platform/soc/worker.py",
+      "reason": "Self-contained synthetic ingestion, correlation, review and orchestration"
+    },
+    {
+      "action": "modified",
+      "path": "tests/native_windows_snapshots.py",
+      "reason": "Separate Phase 8 regression destinations; preserve earlier evidence"
+    },
+    {
+      "action": "created",
+      "path": "tests/postgres/test_soc.py",
+      "reason": "SOC tests or read-only AppSec browser regression tooling"
+    },
+    {
+      "action": "created",
+      "path": "tests/unit/test_soc_contracts.py",
+      "reason": "SOC tests or read-only AppSec browser regression tooling"
+    },
+    {
+      "action": "modified",
+      "path": "web/playwright.config.ts",
+      "reason": "SOC tests or read-only AppSec browser regression tooling"
+    },
+    {
+      "action": "modified",
+      "path": "web/tests/helpers.ts",
+      "reason": "SOC tests or read-only AppSec browser regression tooling"
+    },
+    {
+      "action": "created",
+      "path": "web/tests/phase8readonly.spec.ts",
+      "reason": "SOC tests or read-only AppSec browser regression tooling"
+    }
+  ],
+  "created": 51,
+  "modified": 10,
+  "git_write_operations": false
+}

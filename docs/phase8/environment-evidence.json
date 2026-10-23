@@ -1,0 +1,102 @@
+{
+  "checks": {
+    "real_cli_api_worker_scenarios_and_replay": true,
+    "analyst_history_and_stale_conflict": true,
+    "actual_container_restart_persistence": true,
+    "unauthenticated_denied": true,
+    "origin_denied": true,
+    "container_privilege_and_capability_separation": true,
+    "disabled_routes_absent": true,
+    "disabled_flagship_ready": true,
+    "disable_preserves_soc_history": true
+  },
+  "scenarios": [
+    {
+      "scenario": "auth-burst",
+      "run_id": "3da58908-572e-535e-8ba5-292bed9608b9",
+      "status": "succeeded",
+      "investigations": 1,
+      "evidence_state": "matched",
+      "idempotent_cli_replay": true
+    },
+    {
+      "scenario": "session-grant",
+      "run_id": "4d46aa30-9587-5cc1-add6-fd3e3a6bff5a",
+      "status": "succeeded",
+      "investigations": 1,
+      "evidence_state": "matched",
+      "idempotent_cli_replay": true
+    },
+    {
+      "scenario": "clean",
+      "run_id": "7bb1adaa-64f1-5280-a8ce-c5cd9094f18a",
+      "status": "succeeded",
+      "investigations": 0,
+      "evidence_state": null,
+      "idempotent_cli_replay": true
+    },
+    {
+      "scenario": "incomplete",
+      "run_id": "c1005b96-16c4-5824-b8db-aa3cc46b8989",
+      "status": "succeeded",
+      "investigations": 1,
+      "evidence_state": "incomplete",
+      "idempotent_cli_replay": true
+    }
+  ],
+  "records": "8|4|3|1",
+  "containers": {
+    "api": {
+      "user": "10001:10001",
+      "mounts": [],
+      "ports": {
+        "8000/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18089"
+          }
+        ]
+      },
+      "read_only": true
+    },
+    "soc-worker": {
+      "user": "10001:10001",
+      "mounts": [],
+      "ports": {},
+      "read_only": true
+    },
+    "db": {
+      "user": "",
+      "mounts": [
+        {
+          "destination": "/var/lib/postgresql/data",
+          "writable": true
+        }
+      ],
+      "ports": {},
+      "read_only": false
+    }
+  },
+  "commands": [
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo config --quiet",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo build api",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo up -d --wait db",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo run --rm --no-deps api uv run --no-sync alembic upgrade head",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo run --rm --no-deps api uv run --no-sync alembic -c src/ai_security_platform/soc/alembic.ini upgrade head",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo up -d --wait --no-build api soc-worker",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo exec -T db psql -U asp_soc_demo -d asp_phase8_demo -At -c SELECT (SELECT count(*) FROM soc.security_events),(SELECT count(*) FROM soc.correlation_runs),(SELECT count(*) FROM soc.investigations),(SELECT count(*) FROM soc.analyst_feedback)",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo restart db api soc-worker",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo exec -T db psql -U asp_soc_demo -d asp_phase8_demo -At -c SELECT (SELECT count(*) FROM soc.security_events),(SELECT count(*) FROM soc.correlation_runs),(SELECT count(*) FROM soc.investigations),(SELECT count(*) FROM soc.analyst_feedback)",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo ps -q api",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo ps -q soc-worker",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo ps -q db",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo stop soc-worker",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo up -d --wait --no-build api",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo exec -T db psql -U asp_soc_demo -d asp_phase8_demo -At -c SELECT (SELECT count(*) FROM soc.security_events),(SELECT count(*) FROM soc.correlation_runs),(SELECT count(*) FROM soc.investigations),(SELECT count(*) FROM soc.analyst_feedback)",
+    "docker compose [private env] -f compose.phase8-demo.yaml -p asp-phase8-demo stop api soc-worker db"
+  ],
+  "passed": 9,
+  "failed": 0,
+  "skipped": 0,
+  "final_state": "stopped; disposable demo volume retained"
+}

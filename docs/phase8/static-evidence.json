@@ -1,0 +1,23 @@
+{
+  "checks": [
+    {
+      "command": "uv --cache-dir .cache/phase8-uv lock --check --offline",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/Scripts/ruff.exe check .",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/Scripts/mypy.exe src",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0
+}

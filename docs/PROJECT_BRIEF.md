@@ -33,5 +33,8 @@ use the completed Matroid Visual Inspection Platform.
 Phase 7 completes the local flagship within the documented G10/M4 trust and validation
 scope. See [the final completion report](phase7/COMPLETION-REPORT.md),
 [operations runbook](phase7/RUNBOOK.md) and [threat model](phase7/THREAT-MODEL.md).
-Real scanning and hosted AI remain disabled by default. Optional Phase 8 and the separate
-Matroid audit require their own authorization; no public deployment is implied.
+Real scanning and hosted AI remain disabled by default. The separately authorized
+[optional Phase 8](phase8/COMPLETION-REPORT.md) adds bounded synthetic identity/IAM
+ingestion and deterministic investigation; it is disabled by default and independently
+removable. AppSec remains the primary product. The separate Matroid audit still requires
+authorization; no public deployment or live SOC integration is implied.

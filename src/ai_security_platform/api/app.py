@@ -58,4 +58,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(launcher.router)
     app.include_router(findings.router)
     app.include_router(triage.router)
+    if settings.soc_enabled:
+        # No optional module imports or schema checks on the flagship path.
+        from ai_security_platform.soc.api import router as soc_router
+
+        app.include_router(soc_router)
     return app

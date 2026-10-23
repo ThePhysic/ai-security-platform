@@ -14,6 +14,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session, sessionmaker
 
 from ai_security_platform.config import Settings
+from ai_security_platform.jobs.ownership import clear_lease, owned
 from ai_security_platform.scanners.contracts import AdapterResult
 from ai_security_platform.scanners.real import validate_provenance, validate_result
 from ai_security_platform.snapshots.store import VerifiedSnapshot
@@ -66,16 +67,7 @@ class Controller:
 
     @staticmethod
     def owned(job: Job, lease: Lease, now: datetime) -> bool:
-        return (
-            job.operation == lease.operation
-            and job.state == "running"
-            and job.generation == lease.generation
-            and job.lease_token == lease.token
-            and job.lease_expires_at is not None
-            and job.lease_expires_at > now
-            and job.attempt_deadline is not None
-            and job.attempt_deadline > now
-        )
+        return owned(job, lease, now)
 
     def claim(self) -> Lease | None:
         with self.factory.begin() as session:
@@ -150,10 +142,7 @@ class Controller:
 
     @staticmethod
     def clear_lease(job: Job) -> None:
-        job.lease_token = None
-        job.lease_expires_at = None
-        job.heartbeat_at = None
-        job.attempt_deadline = None
+        clear_lease(job)
 
     @staticmethod
     def aggregate(session: Session, scanner: ScannerRun, parent: ScanRun, now: datetime) -> None:

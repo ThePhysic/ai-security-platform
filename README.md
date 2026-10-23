@@ -3,8 +3,9 @@
 Local security engineering and developer guardrails platform, prioritizing
 1Password AppSec work, then Brain Co secure AI workflows and Prophet backend reliability.
 
-**Status: Phase 7 implemented; G10/M4 pass for the documented local scope.
-Optional Phase 8 and the separate Matroid audit require their own authorization.**
+**Status: flagship Phases 0–7 complete within the documented local G10/M4 scope.
+Optional Phase 8 is implemented for synthetic local scenarios and disabled by default.
+The separate Matroid audit still requires authorization.**
 
 Local immutable snapshot intake and durable PostgreSQL workers drive pinned Semgrep
 and Trivy through a separate trusted Windows launcher and isolated scanner containers.
@@ -16,6 +17,8 @@ The frozen offline benchmark preserves annotation errata, unsupported coverage a
 advisory-quality limitations alongside measured results.
 
 - [Final local quick start, maintenance and rollback](docs/phase7/RUNBOOK.md)
+- [Optional synthetic SOC extension: completion and limits](docs/phase8/COMPLETION-REPORT.md)
+- [Optional SOC demonstration, disablement and recovery](docs/phase8/RUNBOOK.md)
 - [Phase 7 completion and G10/M4 evidence](docs/phase7/COMPLETION-REPORT.md)
 - [Final architecture and trust boundaries](docs/phase7/ARCHITECTURE.md)
 - [Final threat review and findings](docs/phase7/THREAT-MODEL.md)

@@ -1,0 +1,56 @@
+# Isolated synthetic demonstration; retained AppSec development resources are not mounted.
+services:
+  db:
+    image: postgres:17.11-bookworm@sha256:858bb5e98eed02eb8cafbcdc007f9a65d1b613972028944a8ec2133ccaf80d27
+    environment:
+      POSTGRES_DB: asp_phase8_demo
+      POSTGRES_USER: asp_soc_demo
+      POSTGRES_PASSWORD: ${ASP_SOC_DB_PASSWORD:?Private demo configuration required}
+    volumes:
+      - soc-demo-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U asp_soc_demo -d asp_phase8_demo"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  api: &consumer
+    image: asp-phase8/platform:local
+    build:
+      context: .
+      target: runtime
+    environment: &environment
+      ASP_DATABASE_URL: postgresql+psycopg://asp_soc_demo:${ASP_SOC_DB_PASSWORD:?Required}@db:5432/asp_phase8_demo
+      ASP_API_TOKEN: ${ASP_SOC_API_TOKEN:?Required}
+      ASP_SOC_ENABLED: ${ASP_SOC_ENABLED:-false}
+      ASP_HOSTED_ENABLED: "false"
+      ASP_REAL_SCANNING_ENABLED: "false"
+      ASP_TRIAGE_ENABLED: "false"
+      ASP_ALLOWED_HOSTS: '["127.0.0.1:18089","localhost:18089","127.0.0.1:8000"]'
+      ASP_ALLOWED_ORIGINS: '["http://127.0.0.1:18089"]'
+    ports:
+      - "127.0.0.1:18089:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    read_only: true
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 64
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/ready', timeout=3).close()"]
+      interval: 3s
+      timeout: 4s
+      retries: 20
+  soc-worker:
+    <<: *consumer
+    ports: []
+    environment: *environment
+    command: ["uv", "run", "--no-sync", "python", "-m", "ai_security_platform.soc.worker"]
+    healthcheck:
+      disable: true
+volumes:
+  soc-demo-db:

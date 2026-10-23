@@ -1,0 +1,82 @@
+{
+  "phase": 8,
+  "scope": "optional local synthetic extension; no hosted/live/remote integrations",
+  "checkpoints": {
+    "8A": "pass",
+    "8B": "pass",
+    "8C": "pass"
+  },
+  "optional_revision": "soc_0001",
+  "public_revision": "0004_triage_review",
+  "default_enabled": false,
+  "retained_development_soc_migrated": false,
+  "required_blocked": [],
+  "failed": 0,
+  "skipped": 0,
+  "counts_overlap": true,
+  "evidence": {
+    "backend": {
+      "passed": 319,
+      "failed": 0,
+      "skipped": 0,
+      "file": "test-evidence.json"
+    },
+    "final_affected": {
+      "passed": 209,
+      "failed": 0,
+      "skipped": 0,
+      "file": "final-focused-evidence.json"
+    },
+    "isolation": {
+      "passed": 31,
+      "file": "isolation-regression.json"
+    },
+    "genuine_scanners": {
+      "passed": 16,
+      "file": "scanner-regression.json"
+    },
+    "windows": {
+      "passed": 10,
+      "file": "windows-filesystem-evidence.json"
+    },
+    "browser": {
+      "passed": 15,
+      "file": "browser-evidence.json"
+    },
+    "environment": {
+      "passed": 9,
+      "file": "environment-evidence.json"
+    },
+    "clean_build": {
+      "passed": 4,
+      "file": "rebuild-evidence.json"
+    },
+    "preservation": {
+      "passed": 17,
+      "file": "state-evidence.json"
+    },
+    "disabled_configuration": {
+      "passed": 3,
+      "file": "disable-config-evidence.json"
+    },
+    "static": {
+      "passed": 4,
+      "file": "static-evidence.json"
+    },
+    "shutdown": {
+      "passed": 3,
+      "file": "shutdown-evidence.json"
+    }
+  },
+  "limitations": [
+    "synthetic formats and two deterministic rules only",
+    "shared trusted database owner; no enterprise tenancy",
+    "conservative reference retention; quotas fail closed",
+    "SOC volume persistence is not matched backup/restore proof",
+    "keyset pagination is not an MVCC snapshot",
+    "heuristic note redaction is not complete DLP",
+    "A13 advisory semantics and two ungraded Kubernetes bindings remain unchanged"
+  ],
+  "authorization_boundary": "stop after Phase 8; no Matroid audit or remote writes",
+  "final_services": "stopped; images refreshed, volumes and private configuration retained"
+}

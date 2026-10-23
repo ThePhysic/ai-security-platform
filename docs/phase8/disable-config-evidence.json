@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "optional_overlay_config_valid": true,
+    "disabled_worker_refuses_start_before_database_access": true,
+    "disabled_error_contains_no_credential": true
+  },
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0
+}

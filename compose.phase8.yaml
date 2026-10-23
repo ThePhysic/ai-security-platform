@@ -1,0 +1,28 @@
+# Optional overlay. No SOC code or migration is needed by the default Compose stack.
+services:
+  api:
+    environment:
+      ASP_SOC_ENABLED: ${ASP_SOC_ENABLED:-false}
+  soc-worker:
+    profiles: [soc]
+    build:
+      context: .
+      target: runtime
+    command: ["uv", "run", "--no-sync", "python", "-m", "ai_security_platform.soc.worker"]
+    environment:
+      ASP_DATABASE_URL: postgresql+psycopg://asp_owner:${ASP_DB_PASSWORD:?Required}@db:5432/asp_dev
+      ASP_API_TOKEN: ${ASP_API_TOKEN:?Required}
+      ASP_SOC_ENABLED: ${ASP_SOC_ENABLED:-false}
+      ASP_HOSTED_ENABLED: "false"
+      ASP_REAL_SCANNING_ENABLED: "false"
+    depends_on:
+      db:
+        condition: service_healthy
+    read_only: true
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 64
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]

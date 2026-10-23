@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "asp-phase1-dev_no_running_services": true,
+    "asp-phase1-test_no_running_services": true,
+    "asp-phase8-demo_no_running_services": true
+  },
+  "volumes_removed": false,
+  "unrelated_resources_modified": false,
+  "retained_data_preserved": true,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0
+}

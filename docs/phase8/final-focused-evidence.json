@@ -1,0 +1,7 @@
+{
+  "command": "docker compose -p asp-phase1-test --profile test run --rm tests uv run --no-sync pytest -q -s tests/unit tests/api tests/postgres/test_soc.py",
+  "passed": 209,
+  "failed": 0,
+  "skipped": 0,
+  "purpose": "Final migration location, schema-only autogeneration, evidence timeline and nonempty AppSec preservation assertions"
+}

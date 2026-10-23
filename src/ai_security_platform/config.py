@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     real_scanning_enabled: bool = False
     triage_enabled: bool = True
     hosted_enabled: bool = False
+    soc_enabled: bool = False
     real_attempt_seconds: float = Field(default=180, ge=60, le=300)
     scanner_registry: Path = Path("policies/scanners.lock.json")
     allowed_hosts: list[str] = ["127.0.0.1:8000", "localhost:8000"]
