@@ -1,0 +1,12 @@
+{
+  "version": "annotation-errata-1",
+  "frozen_manifest_unchanged": true,
+  "excluded_from_formal_quality_metrics": [
+    "kubernetes-privilege-positive",
+    "kubernetes-privilege-negative"
+  ],
+  "reason": "Original KSV-001 target was resolved to KSV-0001, which checks privilege escalation, not the privileged field labelled in these fixtures. A true escalation finding must not be called a false positive for a different field. Preserve both frozen labels and observations, mark their binding ungraded, and propose a separately versioned future correction.",
+  "upstream_semantic_reference": "https://avd.aquasec.com/misconfig/kubernetes/general/avd-ksv-0017/",
+  "future_target_for_separate_version": "KSV-0017",
+  "original_expected_detectability_comparison_retained": true
+}

@@ -1,0 +1,751 @@
+{
+  "version": "appsec-corpus-1",
+  "label_version": "source-review-1",
+  "split_policy": "fixed alternating category/polarity, 14 development and 14 held_out; frozen before observations; product unchanged",
+  "unit": "one named primary target per repository; incidental alerts reported separately",
+  "materialization": "synthetic-key-slot-1; no target execution or package installation",
+  "cases": [
+    {
+      "id": "python-eval-positive",
+      "category": "python-eval",
+      "split": "development",
+      "files_sha256": {
+        "app.py": "97b28ae1387546b82f1d5b8bfb6a46c73f00d172069bc174e82ed365b8104b31"
+      },
+      "security_label": "weakness_present",
+      "scanner": "semgrep",
+      "target_rule": "platform.python.eval",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "needs_review",
+      "required_disposition_if_alerted": "needs_review",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Caller-controlled expression reaches eval.",
+      "required_evidence": [
+        "app.py",
+        "caller-controlled versus fixed literal argument"
+      ],
+      "remediation_terms": [
+        "parser",
+        "allowlist"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "python-eval-negative",
+      "category": "python-eval",
+      "split": "held_out",
+      "files_sha256": {
+        "app.py": "9f7207264a1a3aadf7c798e05ad4675347c7ac46718505d4b7427a6b6b8fad4d"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "semgrep",
+      "target_rule": "platform.python.eval",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "likely_false_positive",
+      "required_disposition_if_alerted": "likely_false_positive",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "Only a fixed arithmetic literal is evaluated; broad syntax rule is expected to alert.",
+      "required_evidence": [
+        "app.py",
+        "caller-controlled versus fixed literal argument"
+      ],
+      "remediation_terms": [
+        "parser",
+        "allowlist"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "typescript-eval-positive",
+      "category": "typescript-eval",
+      "split": "held_out",
+      "files_sha256": {
+        "app.ts": "9b89be9745b6e9f2bab17c5bad63dfd5e9bd9a80992430f7ff737060cf00cd49"
+      },
+      "security_label": "weakness_present",
+      "scanner": "semgrep",
+      "target_rule": "platform.javascript.eval",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "needs_review",
+      "required_disposition_if_alerted": "needs_review",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Caller expression reaches TypeScript eval.",
+      "required_evidence": [
+        "app.ts",
+        "eval argument and input origin"
+      ],
+      "remediation_terms": [
+        "parsing",
+        "allowlist"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "typescript-eval-negative",
+      "category": "typescript-eval",
+      "split": "development",
+      "files_sha256": {
+        "app.ts": "5a43bc73e351d8eea5492026cd3a55d80d4925c6d9f8b1c0da70e2100c959b66"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "semgrep",
+      "target_rule": "platform.javascript.eval",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "likely_false_positive",
+      "required_disposition_if_alerted": "likely_false_positive",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "Fixed arithmetic literal cannot contain caller-controlled code; deliberate near miss.",
+      "required_evidence": [
+        "app.ts",
+        "eval argument and input origin"
+      ],
+      "remediation_terms": [
+        "parsing",
+        "allowlist"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "python-sql-positive",
+      "category": "python-sql",
+      "split": "development",
+      "files_sha256": {
+        "app.py": "3eb7249e6dc1385110506ae510d80a3ef960abd2e5578ddb289387269d11ef25"
+      },
+      "security_label": "weakness_present",
+      "scanner": "semgrep",
+      "target_rule": "platform.python.sql-format",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "needs_review",
+      "required_disposition_if_alerted": "needs_review",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Unquoted caller input is interpolated into SQL syntax.",
+      "required_evidence": [
+        "app.py",
+        "SQL construction and binding at execute"
+      ],
+      "remediation_terms": [
+        "parameters",
+        "identifiers"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "python-sql-negative",
+      "category": "python-sql",
+      "split": "held_out",
+      "files_sha256": {
+        "app.py": "c2c769e314028d6fc075b4bc769661a46d20280877e8d690c03a7568c7ef3793"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "semgrep",
+      "target_rule": "platform.python.sql-format",
+      "coverage_supported": true,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "SQL shape is fixed and values are driver parameters.",
+      "required_evidence": [
+        "app.py",
+        "SQL construction and binding at execute"
+      ],
+      "remediation_terms": [
+        "parameters",
+        "identifiers"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "javascript-sql-positive",
+      "category": "javascript-sql",
+      "split": "held_out",
+      "files_sha256": {
+        "app.js": "e08b240bdb40bb0020c74d0249a70587eb26032bbbf525d9b14df3e9561bc0ab"
+      },
+      "security_label": "weakness_present",
+      "scanner": "semgrep",
+      "target_rule": "platform.javascript.sql-concat",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "needs_review",
+      "required_disposition_if_alerted": "needs_review",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Caller value is concatenated into SQL.",
+      "required_evidence": [
+        "app.js",
+        "query argument and parameter list"
+      ],
+      "remediation_terms": [
+        "parameters",
+        "identifiers"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "javascript-sql-negative",
+      "category": "javascript-sql",
+      "split": "development",
+      "files_sha256": {
+        "app.js": "e30c3d2fbd19b1285e4c80279894d54ecd4bd43c5e2d7c9145ea2e302129c965"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "semgrep",
+      "target_rule": "platform.javascript.sql-concat",
+      "coverage_supported": true,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "Driver placeholders separate values from SQL syntax.",
+      "required_evidence": [
+        "app.js",
+        "query argument and parameter list"
+      ],
+      "remediation_terms": [
+        "parameters",
+        "identifiers"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "python-shell-positive",
+      "category": "python-shell",
+      "split": "development",
+      "files_sha256": {
+        "app.py": "a3665974d6a6dc59e6bf43d9af12a054349cdb055074b93a746504e54175261d"
+      },
+      "security_label": "weakness_present",
+      "scanner": "semgrep",
+      "target_rule": "platform.python.shell",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "needs_review",
+      "required_disposition_if_alerted": "needs_review",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Caller input reaches shell interpretation.",
+      "required_evidence": [
+        "app.py",
+        "shell flag and argument construction"
+      ],
+      "remediation_terms": [
+        "shell",
+        "validate"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "python-shell-negative",
+      "category": "python-shell",
+      "split": "held_out",
+      "files_sha256": {
+        "app.py": "6020b6994e055a7e08626c339bb0c1e538105274ee30fa20f0e0ac850524ff7c"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "semgrep",
+      "target_rule": "platform.python.shell",
+      "coverage_supported": true,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "Fixed executable, argument list and -- avoid shell and option interpretation.",
+      "required_evidence": [
+        "app.py",
+        "shell flag and argument construction"
+      ],
+      "remediation_terms": [
+        "shell",
+        "validate"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "javascript-shell-positive",
+      "category": "javascript-shell",
+      "split": "held_out",
+      "files_sha256": {
+        "app.js": "7bc45d4b6ecae45af5a58d56bb2278d725efe68bbb5d36c7057023fb8a75b1ef"
+      },
+      "security_label": "weakness_present",
+      "scanner": "semgrep",
+      "target_rule": "platform.javascript.exec",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "needs_review",
+      "required_disposition_if_alerted": "needs_review",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Untrusted argument is interpreted by a shell.",
+      "required_evidence": [
+        "app.js",
+        "exec versus execFile and argument control"
+      ],
+      "remediation_terms": [
+        "shell",
+        "validate"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "javascript-shell-negative",
+      "category": "javascript-shell",
+      "split": "development",
+      "files_sha256": {
+        "app.js": "37ab31b05d19e7600ae53200da3e3efad76d591a37c47178a71245e7a1147075"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "semgrep",
+      "target_rule": "platform.javascript.exec",
+      "coverage_supported": true,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "execFile uses a fixed executable and distinct arguments.",
+      "required_evidence": [
+        "app.js",
+        "exec versus execFile and argument control"
+      ],
+      "remediation_terms": [
+        "shell",
+        "validate"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "python-dependency-positive",
+      "category": "python-dependency",
+      "split": "development",
+      "files_sha256": {
+        "requirements.txt": "00efb72aa7482d7fdfc3f8deda230c77e3a695aca9e4d6c1a2a0e934a459803a"
+      },
+      "security_label": "weakness_present",
+      "scanner": "trivy",
+      "target_rule": "CVE-2023-36053",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "abstain",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Django 4.2.0 predates the 4.2.3 fix for CVE-2023-36053.",
+      "required_evidence": [
+        "requirements.txt",
+        "installed and advisory fixed version, applicability requires human review"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "python-dependency-negative",
+      "category": "python-dependency",
+      "split": "held_out",
+      "files_sha256": {
+        "requirements.txt": "85e300a5716d442e7eb9d6f789d9e93f57db4889dd636b8e2e4ac4371969b318"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "trivy",
+      "target_rule": "CVE-2023-36053",
+      "coverage_supported": true,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "4.2.3 contains this advisory fix; other later Django advisories may still apply. This is not a globally clean dependency label.",
+      "required_evidence": [
+        "requirements.txt",
+        "installed and advisory fixed version, applicability requires human review"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "javascript-dependency-positive",
+      "category": "javascript-dependency",
+      "split": "held_out",
+      "files_sha256": {
+        "package.json": "bb43cc685d19cf7dd23d1ea3a13ddd3a65adcac8f3d4be12fe20dbddf9b904be",
+        "package-lock.json": "56d527efe5855c9619beec1f9e1945a27b3339e97b2e59bf79699dc6a1fb11d5"
+      },
+      "security_label": "weakness_present",
+      "scanner": "trivy",
+      "target_rule": "CVE-2021-44906",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "abstain",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Old minimist has the named prototype-pollution advisory.",
+      "required_evidence": [
+        "package-lock.json",
+        "advisory version range and locked package"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "javascript-dependency-negative",
+      "category": "javascript-dependency",
+      "split": "development",
+      "files_sha256": {
+        "package.json": "ae13d247325a22c4290e0b7a9d7cc50ed9000697ea10b18b276d6f659273aa6c",
+        "package-lock.json": "90cf1268c51eb78ad66358cc0686dd66600d93b1c89e27e5fba02a4c1b0e3d75"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "trivy",
+      "target_rule": "CVE-2021-44906",
+      "coverage_supported": true,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "minimist 1.2.8 is beyond the named advisory fixed version; no universal safety claim.",
+      "required_evidence": [
+        "package-lock.json",
+        "advisory version range and locked package"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "secret-positive",
+      "category": "secret",
+      "split": "development",
+      "files_sha256": {
+        "credentials.txt": "1f21eeccf0b914aa95f3e2bf92149dad962ced149f027f0962db9220a4bd25b8"
+      },
+      "security_label": "weakness_present",
+      "scanner": "trivy",
+      "target_rule": "secret.aws-access-key-id",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "abstain",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "The evaluation materializer inserts an unusable synthetic key-shaped value into this location.",
+      "required_evidence": [
+        "credentials.txt",
+        "redacted location and secret-rule metadata only"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "secret-negative",
+      "category": "secret",
+      "split": "held_out",
+      "files_sha256": {
+        "credentials.txt": "051998f24dc01d809c2e857175afd1bfcfe8cb4efd68dc2d30bc2c480955b515"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "trivy",
+      "target_rule": "secret.aws-access-key-id",
+      "coverage_supported": true,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "Placeholder has no key-shaped secret value.",
+      "required_evidence": [
+        "credentials.txt",
+        "redacted location and secret-rule metadata only"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "docker-root-positive",
+      "category": "docker-root",
+      "split": "held_out",
+      "files_sha256": {
+        "Dockerfile": "027cfd8a3029343035fcc6f9d00ed5353f4e47cf3e22bb88770a4e0d1da1de23"
+      },
+      "security_label": "weakness_present",
+      "scanner": "trivy",
+      "target_rule": "DS-0002",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "abstain",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Container default user is privileged root; configuration risk, not a demonstrated exploit.",
+      "required_evidence": [
+        "Dockerfile",
+        "effective USER instruction"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "docker-root-negative",
+      "category": "docker-root",
+      "split": "development",
+      "files_sha256": {
+        "Dockerfile": "f6acd191bf8dc2942d132dd0bf1d3f0d5da25bb0ee494f194e567d5f831f04a0"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "trivy",
+      "target_rule": "DS-0002",
+      "coverage_supported": true,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "Explicit non-root UID addresses this target; other checks remain independent.",
+      "required_evidence": [
+        "Dockerfile",
+        "effective USER instruction"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "kubernetes-privilege-positive",
+      "category": "kubernetes-privilege",
+      "split": "development",
+      "files_sha256": {
+        "pod.yaml": "9557e7503912cbdf839341bd075c9c9169a1e1a37c5e64aea8fbfdd2681c8653"
+      },
+      "security_label": "weakness_present",
+      "scanner": "trivy",
+      "target_rule": "KSV-001",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "abstain",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Privileged container setting broadens host authority.",
+      "required_evidence": [
+        "pod.yaml",
+        "privileged field"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "kubernetes-privilege-negative",
+      "category": "kubernetes-privilege",
+      "split": "held_out",
+      "files_sha256": {
+        "pod.yaml": "225f941b4528ecfe62e836ae4201fe89d3aa2eec17bb4152681fb9e44f92b8c0"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "trivy",
+      "target_rule": "KSV-001",
+      "coverage_supported": true,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "Explicit false removes this particular permission; missing hardening may produce incidental alerts.",
+      "required_evidence": [
+        "pod.yaml",
+        "privileged field"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "ci-permissions-positive",
+      "category": "ci-permissions",
+      "split": "held_out",
+      "files_sha256": {
+        ".github/workflows/check.yml": "9b845015c05188a8486a0c838093806c77b0ad7bef62c766e4e49db497b25ba5"
+      },
+      "security_label": "weakness_present",
+      "scanner": "semgrep",
+      "target_rule": "platform.ci.write-all",
+      "coverage_supported": true,
+      "expected_detected": true,
+      "expected_triage": "needs_review",
+      "required_disposition_if_alerted": "needs_review",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Workflow grants write-all and mutable action reference; no workflow is run.",
+      "required_evidence": [
+        ".github/workflows/check.yml",
+        "permissions and action reference"
+      ],
+      "remediation_terms": [
+        "permissions"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "ci-permissions-negative",
+      "category": "ci-permissions",
+      "split": "development",
+      "files_sha256": {
+        ".github/workflows/check.yml": "e4692a67663739ed26bd95d09c0773386bd3a8bdf567438a8fa4d606b4525304"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "semgrep",
+      "target_rule": "platform.ci.write-all",
+      "coverage_supported": true,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "Explicit read permission and immutable-shaped action reference remove these targets; commit authenticity is not claimed.",
+      "required_evidence": [
+        ".github/workflows/check.yml",
+        "permissions and action reference"
+      ],
+      "remediation_terms": [
+        "permissions"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "authorization-positive",
+      "category": "authorization",
+      "split": "development",
+      "files_sha256": {
+        "app.py": "7f5a06e623238f52d8fda3db328159208525df68e2f03681872d70a8519a172d"
+      },
+      "security_label": "weakness_present",
+      "scanner": "semgrep",
+      "target_rule": "manual.authorization",
+      "coverage_supported": false,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Object lookup has no owner authorization under the declared single-account access policy.",
+      "required_evidence": [
+        "app.py",
+        "object ownership and access policy"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "authorization-negative",
+      "category": "authorization",
+      "split": "held_out",
+      "files_sha256": {
+        "app.py": "89c11577561cd606ff98852db049fd604d903704cc46430c0b4b75af63473951"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "semgrep",
+      "target_rule": "manual.authorization",
+      "coverage_supported": false,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "Owner equality is checked before return under the stated authenticated-request assumption.",
+      "required_evidence": [
+        "app.py",
+        "object ownership and access policy"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "deserialization-path-positive",
+      "category": "deserialization-path",
+      "split": "held_out",
+      "files_sha256": {
+        "app.py": "8b18153f26b554690ff72316333f99b11b7b85cbc6350a17bd463009262f277a"
+      },
+      "security_label": "weakness_present",
+      "scanner": "semgrep",
+      "target_rule": "manual.deserialization",
+      "coverage_supported": false,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "confirmed",
+      "label_rationale": "Untrusted pickle may execute code; decoded path is unconstrained. Neither target is covered by the eight-rule policy.",
+      "required_evidence": [
+        "app.py",
+        "deserialization trust and permitted path set"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    },
+    {
+      "id": "deserialization-path-negative",
+      "category": "deserialization-path",
+      "split": "development",
+      "files_sha256": {
+        "app.py": "0438d01f736e19aeaf6345c844c40caf4c421db275865e7abfb5d796ce2e6aa3"
+      },
+      "security_label": "target_weakness_absent",
+      "scanner": "semgrep",
+      "target_rule": "manual.deserialization",
+      "coverage_supported": false,
+      "expected_detected": false,
+      "expected_triage": "not_invoked",
+      "required_disposition_if_alerted": "abstain",
+      "reviewer_disposition": "false_positive",
+      "label_rationale": "Data-only JSON and a fixed allowlist constrain decoding and filesystem selection under trusted-root assumptions.",
+      "required_evidence": [
+        "app.py",
+        "deserialization trust and permitted path set"
+      ],
+      "remediation_terms": [
+        "human"
+      ],
+      "limitations": "Labels concern the named target only. Incidental alerts are unlabelled, not automatically false positives. No application is executed.",
+      "provenance": "First-party synthetic inert fixture, Phase 4 corpus v1; reviewed from source semantics before scanner observations."
+    }
+  ]
+}

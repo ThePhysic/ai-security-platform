@@ -20,6 +20,7 @@ FROM runtime AS tests
 USER root
 RUN uv sync --frozen --no-editable
 COPY tests ./tests
+COPY evaluation ./evaluation
 COPY scripts ./scripts
 COPY Dockerfile compose.yaml .dockerignore ./
 COPY .github/workflows/ci.yml ./.github/workflows/ci.yml

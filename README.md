@@ -3,8 +3,8 @@
 Local security engineering and developer guardrails platform, prioritizing
 1Password AppSec work, then Brain Co secure AI workflows and Prophet backend reliability.
 
-**Status: Phase 3 implemented; see its completion report for G6 evidence.
-Phase 4 requires separate authorization.**
+**Status: Phase 4 implemented; see its completion report for G7 scope and limitations.
+Phase 5 requires separate authorization.**
 
 Local immutable snapshot intake and durable PostgreSQL workers drive pinned Semgrep
 and Trivy through a separate trusted Windows launcher and isolated scanner containers.
@@ -12,8 +12,14 @@ Real scan admission defaults to disabled and requires verified local isolation p
 a live launcher. Deterministic fake adapters remain available for diagnostics.
 Bounded offline triage and revision-checked human review use independent durable jobs.
 Hosted triage is disabled; only mocked provider transport has been validated.
+The frozen offline benchmark preserves annotation errata, unsupported coverage and
+advisory-quality limitations alongside measured results.
 
 - [Current triage/review setup and safe rollback](docs/phase3/RUNBOOK.md)
+- [Phase 4 evaluation results and limitations](docs/phase4/EVALUATION-SUMMARY.md)
+- [Phase 4 completion and G7 evidence](docs/phase4/COMPLETION-REPORT.md)
+- [Versioned corpus and evaluation methodology](evaluation/README.md)
+- [Evaluation reproduction and rollback](docs/phase4/RUNBOOK.md)
 - [Phase 3 completion and G6 limitations](docs/phase3/COMPLETION-REPORT.md)
 - [Agent boundaries, consent and API/schema contracts](docs/phase3/ARCHITECTURE-AND-CONTRACTS.md)
 - [Real scanner workflow](docs/phase2b/RUNBOOK.md)

@@ -12,6 +12,8 @@
 !alembic.ini
 !tests/
 !tests/**
+!evaluation/
+!evaluation/**
 !scripts/
 !scripts/**
 !Dockerfile

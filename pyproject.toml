@@ -33,6 +33,7 @@ dev = [
 [tool.ruff]
 target-version = "py312"
 line-length = 100
+extend-exclude = ["evaluation/fixtures"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
@@ -50,6 +51,7 @@ files = ["src"]
 testpaths = ["tests"]
 addopts = "--strict-markers -ra -p no:cacheprovider"
 markers = [
+  "evaluation: frozen labelled corpus and expanded adversarial assessment",
   "agent: bounded triage, consent, confidentiality and human review",
   "snapshot: secure local source and spool boundaries",
   "orchestration: real PostgreSQL concurrency, fencing and recovery",

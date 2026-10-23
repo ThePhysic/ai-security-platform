@@ -14,6 +14,7 @@ from runner.launcher import Launcher
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--phase3", action="store_true")
+    parser.add_argument("--phase4", action="store_true")
     args = parser.parse_args()
     # No API call occurs here; the same fixed-profile resolver/boundary is exercised
     # with controlled fixtures, before public security-v1 admission is enabled.
@@ -164,7 +165,9 @@ def main():
     assert all(checks.values()), {key: value for key, value in checks.items() if not value}
     evidence.update({"passed": len(checks), "failed": 0, "skipped": 0})
     target = ROOT / (
-        "docs/phase3/scanner-regression.json"
+        "docs/phase4/scanner-regression.json"
+        if args.phase4
+        else "docs/phase3/scanner-regression.json"
         if args.phase3
         else "docs/phase2b/scanner-evidence.json"
     )

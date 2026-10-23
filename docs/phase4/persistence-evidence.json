@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "authenticated_retained_resource_reads": true,
+    "authentication_enforced": true,
+    "host_enforced": true,
+    "origin_enforced": true,
+    "request_size_enforced": true,
+    "actual_api_worker_restarts_preserve_resources": true,
+    "actual_db_unavailability_health_ready": true,
+    "actual_db_restart_preserves_resources": true,
+    "all_17_retained_tables_unchanged": true,
+    "logs_and_errors_contain_no_test_or_actual_credentials": true
+  },
+  "passed": 10,
+  "failed": 0,
+  "skipped": 0,
+  "resource_types": [
+    "project",
+    "scan",
+    "finding",
+    "triage",
+    "review",
+    "review_revisions"
+  ],
+  "retained_table_count": 17,
+  "created_or_modified_records": 0,
+  "live_hosted_calls": 0,
+  "restarted_services": [
+    "api",
+    "worker",
+    "triage-worker",
+    "db"
+  ],
+  "recorded_at": "2026-10-23T03:33:28.970658+00:00"
+}

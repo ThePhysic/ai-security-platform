@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: inert-evaluation
+spec:
+  containers:
+    - name: app
+      image: example.invalid/inert:v1
+      securityContext:
+        privileged: true

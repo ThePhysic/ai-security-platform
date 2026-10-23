@@ -44,6 +44,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--phase2b", action="store_true")
     parser.add_argument("--phase3", action="store_true")
+    parser.add_argument("--phase4", action="store_true")
     args = parser.parse_args()
     if os.name != "nt":
         raise SystemExit("Windows/NTFS validation must execute on Windows")
@@ -101,7 +102,15 @@ def main():
     output = (
         ROOT
         / "docs"
-        / ("phase3" if args.phase3 else "phase2b" if args.phase2b else "phase2a")
+        / (
+            "phase4"
+            if args.phase4
+            else "phase3"
+            if args.phase3
+            else "phase2b"
+            if args.phase2b
+            else "phase2a"
+        )
         / "windows-filesystem-evidence.json"
     )
     output.parent.mkdir(parents=True, exist_ok=True)
