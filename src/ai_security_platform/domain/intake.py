@@ -27,7 +27,7 @@ class ScanSubmission(BaseModel):
     model_config = ConfigDict(extra="forbid")
     project_id: UUID
     snapshot_id: UUID
-    profile_id: Literal["fake-v1"]
+    profile_id: Literal["fake-v1", "security-v1"]
 
 
 class ScanAccepted(BaseModel):

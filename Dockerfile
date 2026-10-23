@@ -10,6 +10,7 @@ RUN uv sync --frozen --no-dev --no-install-project
 COPY src ./src
 COPY alembic.ini ./
 COPY migrations ./migrations
+COPY policies ./policies
 RUN uv sync --frozen --no-dev --no-editable
 USER 10001:10001
 EXPOSE 8000

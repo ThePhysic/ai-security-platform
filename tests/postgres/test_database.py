@@ -62,6 +62,8 @@ def test_migration_lifecycle_and_no_drift(pg_runtime):
         "job_attempts",
         "findings",
         "idempotency_requests",
+        "scanner_invocations",
+        "launcher_capabilities",
     }
 
 

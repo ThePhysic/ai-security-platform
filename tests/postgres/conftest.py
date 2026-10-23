@@ -14,7 +14,9 @@ from ai_security_platform.storage.models import (
     IdempotencyRequest,
     Job,
     JobAttempt,
+    LauncherCapability,
     Project,
+    ScannerInvocation,
     ScannerRun,
     ScanRun,
     SourceSnapshot,
@@ -25,6 +27,8 @@ from tests.db_guard import assert_disposable
 
 ROOT = Path(__file__).resolve().parents[2]
 MODEL_ORDER = (
+    LauncherCapability,
+    ScannerInvocation,
     IdempotencyRequest,
     Finding,
     JobAttempt,

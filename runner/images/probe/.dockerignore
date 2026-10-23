@@ -1,0 +1,8 @@
+**
+!Dockerfile
+!probe.py
+AGENTS.md
+**/AGENTS.md
+.local
+.env
+.git

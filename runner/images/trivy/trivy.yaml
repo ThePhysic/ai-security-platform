@@ -1,0 +1,10 @@
+# Platform audit configuration. No source-controlled configuration is loaded.
+disable-telemetry: true
+scan:
+  scanners: [vuln, secret, misconfig]
+  offline-scan: true
+  skip-version-check: true
+  show-suppressed: true
+misconfiguration:
+  scanners: [dockerfile, kubernetes]
+  skip-check-update: true

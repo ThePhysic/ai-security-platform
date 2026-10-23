@@ -1,0 +1,22 @@
+{
+  "database": "asp_dev",
+  "before_revision": "0002_orchestration",
+  "after_revision": "0003_scanner_handoff",
+  "tables": [
+    "projects",
+    "source_snapshots",
+    "scan_runs",
+    "audit_events",
+    "scanner_runs",
+    "jobs",
+    "job_attempts",
+    "findings",
+    "idempotency_requests"
+  ],
+  "counts_before": "5|2|4|27|8|8|8|8|4",
+  "counts_after": "5|2|4|27|8|8|8|8|4",
+  "backup": ".local/backups/phase2b-before-3f5cef1aeba943eb877fa8afb24597b9.dump",
+  "backup_bytes": 36001,
+  "real_admission_enabled": false,
+  "retained_spool_modified": false
+}

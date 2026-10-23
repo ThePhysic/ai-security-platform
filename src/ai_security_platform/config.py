@@ -20,6 +20,10 @@ class Settings(BaseSettings):
 
     database_url: SecretStr = Field(repr=False)
     api_token: SecretStr = Field(repr=False)
+    launcher_token: SecretStr | None = Field(default=None, repr=False)
+    real_scanning_enabled: bool = False
+    real_attempt_seconds: float = Field(default=180, ge=60, le=300)
+    scanner_registry: Path = Path("policies/scanners.lock.json")
     allowed_hosts: list[str] = ["127.0.0.1:8000", "localhost:8000"]
     allowed_origins: list[str] = ["http://127.0.0.1:8000", "http://localhost:8000"]
     request_body_limit: int = Field(default=16384, ge=128, le=65536)
@@ -42,7 +46,24 @@ class Settings(BaseSettings):
             or self.attempt_seconds < self.lease_seconds
         ):
             raise ValueError("Heartbeat must precede lease expiry within the hard deadline")
+        if (
+            self.launcher_token is not None
+            and self.launcher_token.get_secret_value() == self.api_token.get_secret_value()
+        ):
+            raise ValueError("Independent launcher capability required")
         return self
+
+    @field_validator("launcher_token", mode="before")
+    @classmethod
+    def optional_launcher_token(cls, value: object) -> object:
+        return None if value == "" else value
+
+    @field_validator("launcher_token")
+    @classmethod
+    def separate_launcher_token(cls, value: SecretStr | None) -> SecretStr | None:
+        if value is not None:
+            cls.strong_token(value)
+        return value
 
     @field_validator("database_url")
     @classmethod

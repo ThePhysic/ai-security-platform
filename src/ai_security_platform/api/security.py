@@ -72,6 +72,10 @@ class BoundaryMiddleware:
             if origin_values and (len(origin_values) != 1 or not cors_allowed):
                 await reject(403, "origin_denied", "Origin is not allowed")
                 return
+            internal = scope["path"].startswith("/internal/v1/launcher")
+            if internal and origin_values:
+                await reject(403, "origin_denied", "Origin is not allowed")
+                return
             if scope["method"] == "OPTIONS" and origin_values:
                 methods = headers.get(b"access-control-request-method", [])
                 requested = headers.get(b"access-control-request-headers", [])
@@ -110,16 +114,26 @@ class BoundaryMiddleware:
                 await reject(413, "header_too_large", "Authorization header exceeds limit")
                 return
             if not public:
-                expected = b"Bearer " + self.settings.api_token.get_secret_value().encode("ascii")
-                if len(auth) != 1 or not hmac.compare_digest(auth[0], expected):
+                token = self.settings.launcher_token if internal else self.settings.api_token
+                expected = (
+                    b"Bearer " + token.get_secret_value().encode("ascii")
+                    if token is not None
+                    else b""
+                )
+                if token is None or len(auth) != 1 or not hmac.compare_digest(auth[0], expected):
                     await reject(401, "unauthorized", "Bearer authentication required")
                     return
+            body_limit = (
+                524288
+                if scope["path"].endswith("/result") and internal
+                else self.settings.request_body_limit
+            )
             lengths = headers.get(b"content-length", [])
             if lengths:
                 if len(lengths) != 1 or not re.fullmatch(rb"[0-9]{1,12}", lengths[0]):
                     await reject(400, "invalid_length", "Invalid request length")
                     return
-                if int(lengths[0]) > self.settings.request_body_limit:
+                if int(lengths[0]) > body_limit:
                     await reject(413, "body_too_large", "Request body exceeds limit")
                     return
             if lengths and b"transfer-encoding" in headers:
@@ -134,7 +148,7 @@ class BoundaryMiddleware:
                     if message["type"] != "http.request":
                         continue
                     chunk = message.get("body", b"")
-                    if len(body) + len(chunk) > self.settings.request_body_limit:
+                    if len(body) + len(chunk) > body_limit:
                         await reject(413, "body_too_large", "Request body exceeds limit")
                         return
                     body.extend(chunk)

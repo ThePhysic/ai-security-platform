@@ -24,6 +24,8 @@ services:
       ASP_DATABASE_URL: postgresql+psycopg://asp_owner:${ASP_DB_PASSWORD:?Required}@db:5432/asp_dev
       ASP_API_TOKEN: ${ASP_API_TOKEN:?Required}
       ASP_SNAPSHOT_SPOOL: /spool
+      ASP_LAUNCHER_TOKEN: ${ASP_LAUNCHER_TOKEN:-}
+      ASP_REAL_SCANNING_ENABLED: ${ASP_REAL_SCANNING_ENABLED:-false}
       ASP_ALLOWED_HOSTS: '["127.0.0.1:${ASP_API_PORT:-18081}","localhost:${ASP_API_PORT:-18081}","127.0.0.1:8000","localhost:8000"]'
       ASP_ALLOWED_ORIGINS: '["http://127.0.0.1:${ASP_API_PORT:-18081}","http://localhost:${ASP_API_PORT:-18081}"]'
     ports:
@@ -61,6 +63,7 @@ services:
       ASP_DATABASE_URL: postgresql+psycopg://asp_owner:${ASP_DB_PASSWORD:?Required}@db:5432/asp_dev
       ASP_API_TOKEN: ${ASP_API_TOKEN:?Required}
       ASP_SNAPSHOT_SPOOL: /spool
+      ASP_REAL_SCANNING_ENABLED: ${ASP_REAL_SCANNING_ENABLED:-false}
     volumes: *snapshot-reader-mount
     depends_on:
       db:

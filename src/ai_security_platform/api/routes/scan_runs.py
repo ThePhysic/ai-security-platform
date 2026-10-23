@@ -3,6 +3,7 @@ from typing import Annotated, Literal
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Header, Query, Request, Response
+from fastapi.responses import JSONResponse
 from sqlalchemy import func, select, tuple_
 from sqlalchemy.orm import Session
 
@@ -138,4 +139,31 @@ def findings(
     )
     return FindingPage(
         items=[FindingRead.model_validate(row) for row in items], next_cursor=next_cursor
+    )
+
+
+@router.get("/{scan_id}/export")
+def export_json(
+    scan_id: UUID,
+    session: Database,
+    format: Literal["json"] = "json",
+) -> JSONResponse:
+    scan = read_scan(scan_id, session)
+    rows = list(
+        session.scalars(
+            select(Finding)
+            .where(Finding.scan_run_id == scan_id)
+            .order_by(Finding.created_at, Finding.id)
+            .limit(1001)
+        )
+    )
+    if len(rows) > 1000:
+        raise ApiError(409, "export_limit", "Use paginated findings for this scan")
+    return JSONResponse(
+        {
+            "schema_version": 1,
+            "scan": scan.model_dump(mode="json"),
+            "findings": [FindingRead.model_validate(row).model_dump(mode="json") for row in rows],
+        },
+        headers={"Content-Disposition": f'attachment; filename="asp-scan-{scan_id}.json"'},
     )

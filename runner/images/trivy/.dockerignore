@@ -1,0 +1,11 @@
+**
+!Dockerfile
+!wrapper.py
+!trivy.yaml
+!secret.yaml
+!empty.ignore
+AGENTS.md
+**/AGENTS.md
+.local
+.env
+.git

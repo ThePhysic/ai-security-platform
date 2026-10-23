@@ -1,5 +1,6 @@
 """Mandatory Windows/NTFS proofs; never counted as Linux skips."""
 
+import argparse
 import json
 import os
 import subprocess
@@ -40,6 +41,9 @@ def junction(link, target):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--phase2b", action="store_true")
+    args = parser.parse_args()
     if os.name != "nt":
         raise SystemExit("Windows/NTFS validation must execute on Windows")
     base = ROOT / ".cache" / "native-snapshots"
@@ -93,7 +97,12 @@ def main():
             lambda: store._remove_stage(store.root / "published" / snap.manifest.snapshot_key)
         )
         assert all(checks.values())
-    output = ROOT / "docs" / "phase2a" / "windows-filesystem-evidence.json"
+    output = (
+        ROOT
+        / "docs"
+        / ("phase2b" if args.phase2b else "phase2a")
+        / "windows-filesystem-evidence.json"
+    )
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(
         json.dumps(

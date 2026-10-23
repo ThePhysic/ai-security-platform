@@ -20,12 +20,19 @@ def main() -> None:
     if ignored.returncode != 0:
         raise SystemExit("Refusing to create configuration: .env must be ignored")
     if target.exists():
-        print("Existing .env preserved; no credential values read or displayed.")
+        # Forward-compatible local bootstrap; never replace existing credentials.
+        from dotenv import dotenv_values
+
+        if not dotenv_values(target).get("ASP_LAUNCHER_TOKEN"):
+            with target.open("a", encoding="utf-8", newline="\n") as stream:
+                stream.write("\nASP_LAUNCHER_TOKEN=" + secrets.token_urlsafe(48) + "\n")
+        print("Existing configuration preserved; independent launcher capability ensured.")
         return
     values = {
         "ASP_DB_PASSWORD": secrets.token_urlsafe(48),
         "ASP_TEST_DB_PASSWORD": secrets.token_urlsafe(48),
         "ASP_API_TOKEN": secrets.token_urlsafe(48),
+        "ASP_LAUNCHER_TOKEN": secrets.token_urlsafe(48),
         "ASP_API_PORT": "18081",
     }
     descriptor = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)

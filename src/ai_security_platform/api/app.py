@@ -4,7 +4,14 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from ai_security_platform.api.errors import ErrorResponse, register_handlers
-from ai_security_platform.api.routes import health, projects, scan_runs, snapshots
+from ai_security_platform.api.routes import (
+    findings,
+    health,
+    launcher,
+    projects,
+    scan_runs,
+    snapshots,
+)
 from ai_security_platform.api.security import BoundaryMiddleware
 from ai_security_platform.config import Settings, load_settings
 from ai_security_platform.logging import configure_logging
@@ -47,4 +54,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(projects.router)
     app.include_router(scan_runs.router)
     app.include_router(snapshots.router)
+    app.include_router(launcher.router)
+    app.include_router(findings.router)
     return app

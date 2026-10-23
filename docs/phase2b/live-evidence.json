@@ -1,0 +1,136 @@
+{
+  "checks": {
+    "real_admission_denied_without_launcher": true,
+    "real_pipeline_publishes_sanitized_findings_and_versions": true,
+    "real_scan_idempotency_detail_json_export": true,
+    "real_results_survive_api_worker_database_restarts": true,
+    "same_launcher_worker_recover_after_database_restart": true,
+    "actual_launcher_kill_orphan_reconcile_and_worker_retry": true,
+    "real_lease_expiry_cancels_retries_and_rejects_stale_staging": true,
+    "genuine_parser_failure_preserves_partial_findings": true,
+    "ordinary_api_worker_have_no_daemon_mount": true,
+    "synthetic_and_actual_credentials_absent_from_all_logs": true
+  },
+  "scans": {
+    "positive": {
+      "id": "aee0b325-5ea3-46d7-bc0f-eda4ee0fd572",
+      "status": "succeeded",
+      "findings": 86,
+      "scanners": [
+        {
+          "id": "semgrep",
+          "status": "succeeded",
+          "coverage": {
+            "warnings": [],
+            "synthetic": false,
+            "source_files": 14,
+            "files_scanned": 4,
+            "warning_count": 0,
+            "excluded_files": 0,
+            "schema_version": 1,
+            "files_not_scanned": 10,
+            "complete_execution": true,
+            "excluded_directories": 0,
+            "policy_files_ignored": 5,
+            "complete_detection_claim": false,
+            "suppression_tokens_neutralized": 0
+          },
+          "provenance": {
+            "view_policy": "audit-view-v1",
+            "image_digest": "sha256:08d17ceb2851b3e9eabb31ab966c6b6c98574473d3edca5b818e5c45473e9311",
+            "policy_digest": "12e58502b265a95d69709ae83cc4569c6b4d35b8d8873a6c51de5a57551e0fca",
+            "engine_version": "1.179.0",
+            "adapter_version": "real-1"
+          }
+        },
+        {
+          "id": "trivy",
+          "status": "succeeded",
+          "coverage": {
+            "warnings": [],
+            "synthetic": false,
+            "source_files": 14,
+            "files_scanned": 5,
+            "warning_count": 0,
+            "excluded_files": 0,
+            "schema_version": 1,
+            "files_not_scanned": 9,
+            "complete_execution": true,
+            "excluded_directories": 0,
+            "policy_files_ignored": 5,
+            "complete_detection_claim": false,
+            "suppression_tokens_neutralized": 1
+          },
+          "provenance": {
+            "view_policy": "audit-view-v1",
+            "image_digest": "sha256:8d6faeff42dd93b2056c8ed084610fb22120f6c95a056a7edd41e89479ee585d",
+            "policy_digest": "71bcd0217e6dbc4facca3abcc72fbbbec71946a102153f5e95ab00caf8768082",
+            "engine_version": "Version: 0.76.1",
+            "adapter_version": "real-1",
+            "database_digest": "4566427d61ff4e2c565b331376b07e58afc5166efd4a78cdc8fd10ca657d2898",
+            "database_updated_at": "2026-10-22T19:14:47.059491+00:00",
+            "database_age_seconds": 22051
+          }
+        }
+      ]
+    },
+    "partial": {
+      "id": "23188df9-a3b2-4738-be64-13bf8d39147d",
+      "status": "partial",
+      "findings": 87,
+      "scanners": [
+        {
+          "id": "semgrep",
+          "status": "failed",
+          "error_code": "incomplete_coverage",
+          "coverage": {
+            "warnings": [
+              "scanner_errors",
+              "scanner_exit_failure"
+            ],
+            "synthetic": false,
+            "source_files": 15,
+            "files_scanned": 5,
+            "warning_count": 2,
+            "excluded_files": 0,
+            "schema_version": 1,
+            "files_not_scanned": 10,
+            "complete_execution": false,
+            "excluded_directories": 0,
+            "policy_files_ignored": 5,
+            "complete_detection_claim": false,
+            "suppression_tokens_neutralized": 0
+          }
+        },
+        {
+          "id": "trivy",
+          "status": "succeeded",
+          "error_code": null,
+          "coverage": {
+            "warnings": [],
+            "synthetic": false,
+            "source_files": 15,
+            "files_scanned": 5,
+            "warning_count": 0,
+            "excluded_files": 0,
+            "schema_version": 1,
+            "files_not_scanned": 10,
+            "complete_execution": true,
+            "excluded_directories": 0,
+            "policy_files_ignored": 5,
+            "complete_detection_claim": false,
+            "suppression_tokens_neutralized": 1
+          }
+        }
+      ]
+    }
+  },
+  "real_expiry": {
+    "winning_generation": 2,
+    "completion_events": 1,
+    "stale_result_status": 409
+  },
+  "passed": 10,
+  "failed": 0,
+  "skipped": 0
+}

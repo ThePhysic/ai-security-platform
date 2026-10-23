@@ -1,16 +1,21 @@
-"""Separate durable worker. Only fixed fake adapters are available in Phase 2A."""
+"""Durable worker: fixed diagnostic adapters or lease-fenced host scanner handoff."""
 
 import signal
+import time
 from contextlib import suppress
 from threading import Event, Thread
 
+from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 
 from ai_security_platform.config import load_settings
 from ai_security_platform.jobs.controller import Controller, Lease, LeaseLost
+from ai_security_platform.scanners.contracts import AdapterResult
 from ai_security_platform.scanners.fake import scan
 from ai_security_platform.snapshots.policy import SnapshotError
 from ai_security_platform.snapshots.store import SnapshotStore
+from ai_security_platform.storage.launcher import dispatch
+from ai_security_platform.storage.models import ScannerInvocation
 from ai_security_platform.storage.readiness import DatabaseReadiness
 from ai_security_platform.storage.session import build_engine, session_factory
 
@@ -42,7 +47,30 @@ def execute(controller: Controller, lease: Lease, store: SnapshotStore) -> None:
             if not lost.is_set():
                 controller.fail(lease, "snapshot_unavailable", permanent=True)
             return
-        result = scan(lease.scanner_id, source)
+        if lease.scanner_id.startswith("fake-"):
+            result = scan(lease.scanner_id, source)
+        else:
+            identifier = dispatch(controller, lease)
+            staged = None
+            deadline = time.monotonic() + controller.settings.real_attempt_seconds
+            while time.monotonic() < deadline and not lost.is_set():
+                with controller.factory() as session:
+                    staged = session.scalar(
+                        select(ScannerInvocation.result).where(ScannerInvocation.id == identifier)
+                    )
+                if staged is not None:
+                    break
+                time.sleep(controller.settings.poll_seconds)
+            if lost.is_set() or staged is None:
+                return  # no token revival; recovery owns the eventual expiration
+            if "error_code" in staged:
+                controller.fail(
+                    lease,
+                    staged["error_code"],
+                    permanent=staged["error_code"] != "launcher_unavailable",
+                )
+                return
+            result = AdapterResult.model_validate(staged)
         if not lost.is_set():
             controller.finish(lease, result, source)
     except LeaseLost:

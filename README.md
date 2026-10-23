@@ -3,13 +3,19 @@
 Local security engineering and developer guardrails platform, prioritizing
 1Password AppSec work, then Brain Co secure AI workflows and Prophet backend reliability.
 
-**Status: Phase 2A complete; G2/G3 passed local validation. Phase 2B is not authorized.**
+**Status: Phase 2B implemented; see its completion report for G4/G5 evidence.
+Phase 3 requires separate authorization.**
 
-Local snapshot intake and durable PostgreSQL workers extend the authenticated foundation.
-Only deterministic synthetic marker adapters are available. Real scanners, scanner
-launchers, AI, review and a UI require later authorization.
+Local immutable snapshot intake and durable PostgreSQL workers drive pinned Semgrep
+and Trivy through a separate trusted Windows launcher and isolated scanner containers.
+Real scan admission defaults to disabled and requires verified local isolation plus
+a live launcher. Deterministic fake adapters remain available for diagnostics.
 
-- [Current setup, snapshot workflow and safe rollback](docs/phase2a/RUNBOOK.md)
+- [Current setup, real scanner workflow and safe rollback](docs/phase2b/RUNBOOK.md)
+- [Phase 2B completion, gates and limitations](docs/phase2b/COMPLETION-REPORT.md)
+- [Launcher and scanner security boundary](docs/phase2b/ARCHITECTURE.md)
+- [API/schema changes](docs/phase2b/API-AND-SCHEMA.md)
+- [Phase 2A historical snapshot workflow](docs/phase2a/RUNBOOK.md)
 - [Phase 2A completion, gates and file inventory](docs/phase2a/COMPLETION-REPORT.md)
 - [Phase 1 historical setup](docs/phase1/RUNBOOK.md)
 - [Phase 1 completion report and file inventory](docs/phase1/COMPLETION-REPORT.md)

@@ -1,0 +1,9 @@
+**
+!Dockerfile
+!wrapper.py
+!rules.yaml
+AGENTS.md
+**/AGENTS.md
+.local
+.env
+.git

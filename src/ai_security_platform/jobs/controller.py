@@ -15,6 +15,7 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from ai_security_platform.config import Settings
 from ai_security_platform.scanners.contracts import AdapterResult
+from ai_security_platform.scanners.real import validate_provenance, validate_result
 from ai_security_platform.snapshots.store import VerifiedSnapshot
 from ai_security_platform.storage.intake import audit
 from ai_security_platform.storage.models import (
@@ -99,7 +100,12 @@ class Controller:
             job.worker_id = self.worker_id
             job.lease_token = uuid4()
             job.heartbeat_at = now
-            job.attempt_deadline = now + timedelta(seconds=self.settings.attempt_seconds)
+            duration = (
+                self.settings.attempt_seconds
+                if scanner.synthetic
+                else self.settings.real_attempt_seconds
+            )
+            job.attempt_deadline = now + timedelta(seconds=duration)
             job.lease_expires_at = min(
                 now + timedelta(seconds=self.settings.lease_seconds), job.attempt_deadline
             )
@@ -168,11 +174,14 @@ class Controller:
     ) -> None:
         # Re-validate even an in-process adapter. All untrusted result checks precede locking.
         result = AdapterResult.model_validate(result.model_dump())
+        validate_result(result, source)
+        validate_provenance(result, self.settings.scanner_registry)
         if (
             result.scanner_id != lease.scanner_id
             or source.manifest.snapshot_key != lease.snapshot_key
             or source.manifest_digest != lease.manifest_digest
-            or result.files_scanned != len(source.files)
+            or result.files_scanned > len(source.files)
+            or (lease.scanner_id.startswith("fake-") and result.files_scanned != len(source.files))
         ):
             raise ValueError("invalid_result")
         for finding in result.findings:
@@ -204,16 +213,25 @@ class Controller:
                 raise LeaseLost("lease_lost")
             job.state = "succeeded"
             self.clear_lease(job)
-            scanner.status = "succeeded"
+            scanner.status = "succeeded" if result.complete else "failed"
+            scanner.error_code = None if result.complete else "incomplete_coverage"
+            scanner.provenance = result.provenance
             scanner.completed_at = now
             scanner.winning_generation = lease.generation
             scanner.coverage = {
                 "schema_version": 1,
-                "synthetic": True,
+                "synthetic": scanner.synthetic,
                 "files_scanned": result.files_scanned,
                 "excluded_files": result.excluded_files,
                 "excluded_directories": result.excluded_directories,
                 "complete_detection_claim": False,
+                "complete_execution": result.complete,
+                "warning_count": len(result.warnings),
+                "warnings": result.warnings,
+                "source_files": len(source.files),
+                "files_not_scanned": len(source.files) - result.files_scanned,
+                "policy_files_ignored": result.policy_files_ignored,
+                "suppression_tokens_neutralized": result.suppression_tokens_neutralized,
             }
             attempt = session.scalars(
                 select(JobAttempt).where(
@@ -265,7 +283,16 @@ class Controller:
         audit(session, event, "job", job.id, job.request_id, generation=job.generation)
 
     def fail(self, lease: Lease, code: str, *, permanent: bool = False) -> None:
-        if code not in {"snapshot_unavailable", "invalid_result", "execution_failed"}:
+        if code not in {
+            "snapshot_unavailable",
+            "invalid_result",
+            "execution_failed",
+            "database_unavailable",
+            "database_stale",
+            "output_limit",
+            "execution_timeout",
+            "launcher_unavailable",
+        }:
             raise ValueError("invalid_error_code")
         with self.factory.begin() as session:
             job = session.scalars(select(Job).where(Job.id == lease.job_id).with_for_update()).one()

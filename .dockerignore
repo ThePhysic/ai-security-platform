@@ -5,6 +5,8 @@
 !.python-version
 !src/
 !src/**
+!policies/
+!policies/**
 !migrations/
 !migrations/**
 !alembic.ini

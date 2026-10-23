@@ -45,6 +45,10 @@ class ScannerRun(Base):
             "jsonb_typeof(coverage) = 'object' AND octet_length(coverage::text) <= 4096",
             name="coverage",
         ),
+        CheckConstraint(
+            "jsonb_typeof(provenance) = 'object' AND octet_length(provenance::text) <= 4096",
+            name="provenance",
+        ),
     )
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     scan_run_id: Mapped[UUID] = mapped_column(ForeignKey("scan_runs.id"))
@@ -59,6 +63,13 @@ class ScannerRun(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    provenance: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, default=dict, server_default=text("'{}'::jsonb")
+    )
+
+    @property
+    def synthetic(self) -> bool:
+        return self.scanner_id.startswith("fake-")
 
 
 class Job(Base):
@@ -159,6 +170,10 @@ class Finding(Base):
         ),
         CheckConstraint("start_line > 0 AND end_line >= start_line", name="range"),
         CheckConstraint("filepath ~ '^[A-Za-z0-9_./-]{1,240}$'", name="filepath"),
+        CheckConstraint(
+            "jsonb_typeof(evidence) = 'object' AND octet_length(evidence::text) <= 2048",
+            name="evidence",
+        ),
     )
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     scan_run_id: Mapped[UUID] = mapped_column()
@@ -177,6 +192,53 @@ class Finding(Base):
     start_line: Mapped[int] = mapped_column(Integer)
     end_line: Mapped[int] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    evidence: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, default=dict, server_default=text("'{}'::jsonb")
+    )
+    synthetic: Mapped[bool] = mapped_column(Boolean, default=True, server_default=text("true"))
+
+
+class ScannerInvocation(Base):
+    __tablename__ = "scanner_invocations"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["job_id", "generation"], ["job_attempts.job_id", "job_attempts.generation"]
+        ),
+        UniqueConstraint("job_id", "generation", name="uq_invocation_generation"),
+        CheckConstraint("state IN ('pending','running','returned')", name="state"),
+        CheckConstraint(
+            "(state = 'returned' AND result IS NOT NULL) OR "
+            "(state != 'returned' AND result IS NULL)",
+            name="result_shape",
+        ),
+        CheckConstraint(
+            "result IS NULL OR (jsonb_typeof(result) = 'object' "
+            "AND octet_length(result::text) <= 524288)",
+            name="result_bound",
+        ),
+    )
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    job_id: Mapped[UUID] = mapped_column()
+    generation: Mapped[int] = mapped_column(Integer)
+    lease_token: Mapped[UUID] = mapped_column()
+    state: Mapped[str] = mapped_column(String(16), default="pending")
+    launcher_id: Mapped[UUID | None] = mapped_column()
+    result: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class LauncherCapability(Base):
+    __tablename__ = "launcher_capabilities"
+    __table_args__ = (
+        CheckConstraint(
+            "registry_digest ~ '^[0-9a-f]{64}$' AND gate_digest ~ '^[0-9a-f]{64}$'",
+            name="digests",
+        ),
+    )
+    id: Mapped[UUID] = mapped_column(primary_key=True)
+    registry_digest: Mapped[str] = mapped_column(String(64))
+    gate_digest: Mapped[str] = mapped_column(String(64))
+    seen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
 
 Index("ix_findings_scan_severity_id", Finding.scan_run_id, Finding.severity, Finding.id)

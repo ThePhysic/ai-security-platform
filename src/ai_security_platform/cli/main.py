@@ -49,7 +49,7 @@ def call_api(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(prog="asp", description="Phase 2A local synthetic workflow")
+    parser = argparse.ArgumentParser(prog="asp", description="Local immutable-snapshot scanning")
     parser.add_argument("--api", default="http://127.0.0.1:18081")
     commands = parser.add_subparsers(dest="command", required=True)
     init = commands.add_parser("spool-init")
@@ -70,6 +70,7 @@ def main() -> None:
     submit.add_argument("--project", required=True)
     submit.add_argument("--snapshot", required=True)
     submit.add_argument("--idempotency-key", required=True)
+    submit.add_argument("--profile", choices=["fake-v1", "security-v1"], default="fake-v1")
     status = commands.add_parser("scan-status")
     status.add_argument("id")
     history = commands.add_parser("scan-history")
@@ -92,7 +93,7 @@ def main() -> None:
                 "snapshot_key": source.manifest.snapshot_key,
                 "manifest_digest": source.manifest_digest,
                 "files": len(source.files),
-                "synthetic_scanning_only": True,
+                "scanning_requires_profile_admission": True,
             }
         elif args.command == "snapshot-cleanup-staging":
             removed = SnapshotStore(args.spool, require_readonly=False).cleanup_staging()
@@ -116,7 +117,7 @@ def main() -> None:
                 {
                     "project_id": args.project,
                     "snapshot_id": args.snapshot,
-                    "profile_id": "fake-v1",
+                    "profile_id": args.profile,
                 },
                 args.idempotency_key,
             )

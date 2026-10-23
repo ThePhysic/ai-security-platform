@@ -133,6 +133,8 @@ def test_openapi_preserves_phase1_and_only_adds_phase2a(app):
         "/api/v1/scan-runs",
         "/api/v1/source-snapshots",
         "/api/v1/scan-runs/{scan_id}/findings",
+        "/api/v1/findings/{finding_id}",
+        "/api/v1/scan-runs/{scan_id}/export",
     }
 
 

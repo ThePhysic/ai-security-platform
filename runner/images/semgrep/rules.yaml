@@ -1,0 +1,61 @@
+rules:
+  - id: platform.python.eval
+    languages: [python]
+    message: Dynamic Python evaluation requires security review.
+    severity: ERROR
+    pattern: eval(...)
+    metadata:
+      cwe: CWE-95
+  - id: platform.python.shell
+    languages: [python]
+    message: Shell invocation with shell enabled requires security review.
+    severity: ERROR
+    pattern: subprocess.$FUNC(..., shell=True, ...)
+    metadata:
+      cwe: CWE-78
+  - id: platform.python.sql-format
+    languages: [python]
+    message: Formatted SQL requires parameterization review.
+    severity: ERROR
+    pattern-either:
+      - pattern: $DB.execute($QUERY % $VALUE, ...)
+      - pattern: $DB.execute(f"...", ...)
+    metadata:
+      cwe: CWE-89
+  - id: platform.ci.write-all
+    languages: [yaml]
+    message: Workflow permissions should be explicitly minimized.
+    severity: WARNING
+    pattern: "permissions: write-all"
+    metadata:
+      cwe: CWE-269
+  - id: platform.ci.mutable-action
+    languages: [yaml]
+    message: Actions should use immutable reviewed commit references.
+    severity: WARNING
+    pattern-regex: '(?m)^\s*-\s*uses:\s*[A-Za-z0-9_.-]+/[A-Za-z0-9_./-]+@(?![0-9a-f]{40}(?:\s|$))[A-Za-z0-9_.-]+'
+    metadata:
+      cwe: CWE-829
+  - id: platform.javascript.eval
+    languages: [javascript, typescript]
+    message: Dynamic JavaScript evaluation requires security review.
+    severity: ERROR
+    pattern: eval(...)
+    metadata:
+      cwe: CWE-95
+  - id: platform.javascript.exec
+    languages: [javascript, typescript]
+    message: Process execution requires injection review.
+    severity: WARNING
+    pattern-either:
+      - pattern: child_process.exec(...)
+      - pattern: exec(...)
+    metadata:
+      cwe: CWE-78
+  - id: platform.javascript.sql-concat
+    languages: [javascript, typescript]
+    message: Concatenated SQL requires parameterization review.
+    severity: ERROR
+    pattern: $DB.query($SQL + $INPUT, ...)
+    metadata:
+      cwe: CWE-89

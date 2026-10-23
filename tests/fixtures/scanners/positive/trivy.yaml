@@ -1,0 +1,3 @@
+scanners: []
+skip-dirs: ["."]
+ignore-unfixed: true

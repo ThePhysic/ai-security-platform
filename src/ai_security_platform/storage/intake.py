@@ -9,8 +9,10 @@ from ai_security_platform.config import Settings
 from ai_security_platform.domain.errors import ApiError
 from ai_security_platform.domain.intake import ScanSubmission, SnapshotRegistration
 from ai_security_platform.scanners.contracts import PROFILE_DIGEST, SCANNERS
+from ai_security_platform.scanners.registry import load_registry, registry_digest
 from ai_security_platform.snapshots.policy import SnapshotError, canonical, digest
 from ai_security_platform.snapshots.store import SnapshotStore
+from ai_security_platform.storage.launcher import capability_available
 from ai_security_platform.storage.models import (
     AuditEvent,
     IdempotencyRequest,
@@ -167,6 +169,21 @@ def accept_scan(
                 or snapshot.expires_at <= now
             ):
                 raise ApiError(409, "snapshot_unavailable", "Snapshot is not eligible")
+            scanners = SCANNERS
+            profile_digest = PROFILE_DIGEST
+            if body.profile_id == "security-v1":
+                if not settings.real_scanning_enabled:
+                    raise ApiError(503, "scanner_unavailable", "Scanner capability unavailable")
+                try:
+                    registry = load_registry(settings.scanner_registry)
+                    profile_digest = registry_digest(registry)
+                except (OSError, KeyError, ValueError):
+                    raise ApiError(
+                        503, "scanner_unavailable", "Scanner capability unavailable"
+                    ) from None
+                if not capability_available(session, profile_digest):
+                    raise ApiError(503, "launcher_unavailable", "Scanner launcher unavailable")
+                scanners = ("semgrep", "trivy")
             pending = session.scalar(
                 select(func.count())
                 .select_from(Job)
@@ -177,19 +194,24 @@ def accept_scan(
                     Job.state.in_(("queued", "running", "retry_pending")),
                 )
             )
-            if (pending or 0) + len(SCANNERS) > settings.pending_jobs_per_project:
+            if (pending or 0) + len(scanners) > settings.pending_jobs_per_project:
                 raise ApiError(429, "capacity_exceeded", "Scan capacity exceeded", retryable=True)
             scan = ScanRun(
                 project_id=body.project_id,
                 snapshot_id=body.snapshot_id,
                 profile_id=body.profile_id,
-                profile_digest=PROFILE_DIGEST,
+                profile_digest=profile_digest,
                 status="queued",
             )
             session.add(scan)
             session.flush()
-            for scanner_id in SCANNERS:
-                scanner = ScannerRun(scan_run_id=scan.id, scanner_id=scanner_id, status="queued")
+            for scanner_id in scanners:
+                scanner = ScannerRun(
+                    scan_run_id=scan.id,
+                    scanner_id=scanner_id,
+                    status="queued",
+                    adapter_version="fake-1" if scanner_id.startswith("fake-") else "real-1",
+                )
                 session.add(scanner)
                 session.flush()
                 session.add(Job(scanner_run_id=scanner.id, request_id=request_id))

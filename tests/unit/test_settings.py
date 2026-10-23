@@ -13,6 +13,8 @@ pytestmark = pytest.mark.unit
     "changes",
     [
         {"api_token": "short"},
+        {"launcher_token": TOKEN},
+        {"launcher_token": "short"},
         {"database_url": "sqlite://"},
         {"database_url": "postgresql+psycopg://u:p@localhost/db?sslmode=disable"},
         {"allowed_hosts": ["*"]},
@@ -50,7 +52,7 @@ def test_normalization_and_extra_fields():
         ProjectCreate(name="Example", ignored_secret=SENSITIVE)
 
 
-def test_only_approved_phase2a_application_tables():
+def test_only_approved_application_tables():
     from ai_security_platform.storage import models  # noqa: F401
 
     assert set(Base.metadata.tables) == {
@@ -63,4 +65,6 @@ def test_only_approved_phase2a_application_tables():
         "job_attempts",
         "findings",
         "idempotency_requests",
+        "scanner_invocations",
+        "launcher_capabilities",
     }

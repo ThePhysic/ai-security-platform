@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
@@ -22,7 +21,8 @@ class FindingRead(BaseModel):
     start_line: int
     end_line: int
     created_at: datetime
-    synthetic: Literal[True] = True
+    synthetic: bool = True
+    evidence: dict[str, str | int] = {}
 
 
 class FindingPage(BaseModel):

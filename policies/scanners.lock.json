@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "upstream": {
+    "semgrep": "semgrep/semgrep@sha256:93963d9295a366f59e4850127b1550400ee7b388f04fe144e4a1f6325d96e01b",
+    "trivy": "aquasec/trivy@sha256:790fd66d1697395d8693d1acaa1ea702406a20f109b6fc7bac8db623eca6c06c"
+  },
+  "scanners": {
+    "semgrep": {
+      "image": "sha256:08d17ceb2851b3e9eabb31ab966c6b6c98574473d3edca5b818e5c45473e9311",
+      "executable": "/usr/bin/semgrep",
+      "version": "1.179.0",
+      "policy_files": {
+        ".dockerignore": "d707b6159e066b8538d017f7309ed311c89e77f35bd611de3b2c04dccb9039f5",
+        "Dockerfile": "3bb0d33f19fe7b87c5ddc7cd6d9b836396ef402e0d0d70282197774e15277de8",
+        "rules.yaml": "6db7c443dce4928da2f7cca847634aad75ab36535ba79611185cedc2abe11a3f",
+        "wrapper.py": "15dd40dddce8c4444b20b4c390b7b684683587c5e38668ff6d5911e650df88c7"
+      },
+      "policy_digest": "12e58502b265a95d69709ae83cc4569c6b4d35b8d8873a6c51de5a57551e0fca",
+      "adapter_version": "real-1",
+      "executable_sha256": "418846853224d55bc0b3049db10b562b7c83e27c28892c4721dc66f4c69ebf4b",
+      "engine_sha256": "791c2d288a935ca584d9a3509aef57b1dc37cca12940d76070ba224b6ad046ed"
+    },
+    "trivy": {
+      "image": "sha256:8d6faeff42dd93b2056c8ed084610fb22120f6c95a056a7edd41e89479ee585d",
+      "executable": "/usr/local/bin/trivy",
+      "version": "Version: 0.76.1",
+      "policy_files": {
+        ".dockerignore": "4497af7d2406fdf92a93e105439ad3991ef8b3c4f13767cee99b407b68d4a385",
+        "Dockerfile": "1cfd75aebd97f69489446951993dcce1e29117a8f444374e84668aad56e050d2",
+        "empty.ignore": "93e0d6d6f15f18b9930949ce2b6c868c30ebda013099d3553df9a2f5dc260691",
+        "secret.yaml": "2952aecb3faa7d687d2d010facc253b193a9dc0900dc6cbf0b2187793b5cd0fa",
+        "trivy.yaml": "1a5595879579faee516c827075808d5f7cef887ce4888da1105d6945400645c9",
+        "wrapper.py": "15dd40dddce8c4444b20b4c390b7b684683587c5e38668ff6d5911e650df88c7"
+      },
+      "policy_digest": "71bcd0217e6dbc4facca3abcc72fbbbec71946a102153f5e95ab00caf8768082",
+      "adapter_version": "real-1",
+      "executable_sha256": "d1dfca6ae10a1ad4540bb94e64f0510077c47008920a9b554986b39dca573d83",
+      "engine_sha256": "d1dfca6ae10a1ad4540bb94e64f0510077c47008920a9b554986b39dca573d83"
+    }
+  },
+  "database": {
+    "asset_key": "f31e5ee312124f2abafd6aeaabdf45f1",
+    "files": {
+      "metadata.json": "8bd2e8b581466582cf98fe50310d38238b01b047c6a3b4755382b5a44bfa2495",
+      "trivy.db": "7deff905cefceb3953cf6638e5399e3efb2061a8c71b7360d4d6fb3076a574de"
+    },
+    "metadata": {
+      "Version": 2,
+      "NextUpdate": "2026-10-23T19:14:47.059491102Z",
+      "UpdatedAt": "2026-10-22T19:14:47.059491382Z",
+      "DownloadedAt": "2026-10-23T00:44:25.847530258Z"
+    },
+    "repository": "ghcr.io/aquasecurity/trivy-db:2",
+    "digest": "4566427d61ff4e2c565b331376b07e58afc5166efd4a78cdc8fd10ca657d2898"
+  }
+}

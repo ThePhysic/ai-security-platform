@@ -11,9 +11,10 @@ class ScannerRead(BaseModel):
     scanner_id: str
     adapter_version: str
     status: str
-    coverage: dict[str, int | str | bool]
+    coverage: dict[str, int | str | bool | list[str]]
     error_code: str | None
     synthetic: bool = True
+    provenance: dict[str, str | int] = Field(default_factory=dict)
 
 
 class ScanStatus(StrEnum):
