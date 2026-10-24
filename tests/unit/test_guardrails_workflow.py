@@ -36,6 +36,24 @@ def test_manual_trusted_workflows_and_artifact_only_permissions():
     assert "npm " not in raw and "pip install" not in raw
 
 
+def test_expected_demo_policy_and_failure_gating_preserve_cleanup():
+    workflow = yaml.safe_load((ROOT / ".github/workflows/developer-guardrails.yml").read_text())
+    steps = workflow["jobs"]["artifacts"]["steps"]
+    generate = next(step for step in steps if step.get("id") == "generate")
+    verify = next(step for step in steps if step.get("id") == "verify")
+    upload = next(step for step in steps if "upload-artifact@" in step.get("uses", ""))
+    assert verify["if"] == "success() && steps.generate.outcome == 'success'"
+    assert upload["if"] == "success() && steps.verify.outcome == 'success'"
+    assert steps.index(generate) < steps.index(verify) < steps.index(upload)
+    assert "--send" in verify["run"] and "--stdin" in verify["run"]
+    assert "set -euo pipefail" in verify["run"] and "docker exec -i" in verify["run"]
+    assert "scripts/verify_ci_artifacts.py" in verify["run"]
+    assert steps[-1]["if"] == "always()"
+    assert "docker rm --force asp-phase5-artifacts" in steps[-1]["run"]
+    for flag in ["--user 10001:10001", "--pids-limit 64", "--memory 512m", "--cpus 1"]:
+        assert flag in generate["run"]
+
+
 def test_vendored_sarif_schema_is_pinned_and_has_no_network_refs():
     root = ROOT / "tests/schemas"
     record = json.loads((root / "provenance.json").read_text())

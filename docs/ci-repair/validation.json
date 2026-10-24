@@ -1,0 +1,134 @@
+{
+  "head": "806835f13ee57ff3f734efc534f886933a2a367f",
+  "checkout_method": "Git checkout-index with explicit Linux/Windows configs, authorized repair overlay, then actual Linux Docker execution",
+  "checkouts": [
+    {
+      "mode": "linux",
+      "core_autocrlf": "false",
+      "core_eol": "lf",
+      "frozen_members_verified": 32,
+      "recorded_freeze_identity_valid": true,
+      "other_evaluation_checkout_bytes_unchanged": true
+    },
+    {
+      "mode": "windows",
+      "core_autocrlf": "true",
+      "core_eol": "crlf",
+      "frozen_members_verified": 32,
+      "recorded_freeze_identity_valid": true,
+      "other_evaluation_checkout_bytes_unchanged": true
+    }
+  ],
+  "original_index_unchanged": true,
+  "generation": {
+    "artifacts": 3,
+    "policy_exit_code": 1,
+    "live_scans": 0,
+    "hosted_calls": 0
+  },
+  "verification": {
+    "artifacts": 3,
+    "policy_exit_code": 1,
+    "verification": "passed"
+  },
+  "negative_verification_cases": [
+    {
+      "case": "unexpected_pass",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "sanitized_error_type": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "operational_failure",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "sanitized_error_type": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "boolean_code",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "sanitized_error_type": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "missing_policy",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "sanitized_error_type": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "malformed_sarif",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "sanitized_error_type": "JSONDecodeError",
+      "passed": true
+    },
+    {
+      "case": "incomplete_required_scanner",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "sanitized_error_type": "ValueError",
+      "passed": true
+    }
+  ],
+  "host_sender_stdlib_only": true,
+  "old_policy_check_exit": 1,
+  "artifact_sha256": {
+    "guardrails.json": "0e7b8058b4ab3513a9a6b95bbeb5eff0fdda9d37373c8a9e61617d57832a79e4",
+    "guardrails.sarif": "03abd55144db5638c03255816dd725d9506dba659163139ad57d7f9b22f7dc69",
+    "policy.json": "af6d62776af664c25d17ab4c6b1626b5ab643858be6af010ebe125f84806742a"
+  },
+  "container": {
+    "network": "none",
+    "readonly": true,
+    "user": "10001:10001",
+    "cap_drop": [
+      "ALL"
+    ],
+    "pids": 64,
+    "memory_bytes": 536870912,
+    "cpus": 1,
+    "tmpfs_mib": 128,
+    "credentials_provided": false
+  },
+  "checks": [
+    {
+      "name": "frozen",
+      "command": "docker run --rm --network none --read-only --user 10001:10001 --cap-drop ALL --security-opt no-new-privileges:true --pids-limit 64 --memory 512m --cpus 1 --tmpfs /tmp:rw,nosuid,nodev,size=256m asp-ci-repair/tests:ce11048351e14bbabc44c36e631560e4 uv run --no-sync pytest -q tests/unit/test_evaluation_corpus.py",
+      "exit_code": 0,
+      "passed": 4
+    },
+    {
+      "name": "unit-api",
+      "command": "docker run --rm --network none --read-only --user 10001:10001 --cap-drop ALL --security-opt no-new-privileges:true --pids-limit 64 --memory 512m --cpus 1 --tmpfs /tmp:rw,nosuid,nodev,size=256m asp-ci-repair/tests:ce11048351e14bbabc44c36e631560e4 uv run --no-sync pytest -q -m \"unit or api\" --tb=short",
+      "exit_code": 0,
+      "passed": 219
+    },
+    {
+      "name": "ruff",
+      "command": "docker run --rm --network none --read-only --user 10001:10001 --cap-drop ALL --security-opt no-new-privileges:true --pids-limit 64 --memory 512m --cpus 1 --tmpfs /tmp:rw,nosuid,nodev,size=256m asp-ci-repair/tests:ce11048351e14bbabc44c36e631560e4 uv run --no-sync ruff check .",
+      "exit_code": 0,
+      "passed": null
+    },
+    {
+      "name": "format",
+      "command": "docker run --rm --network none --read-only --user 10001:10001 --cap-drop ALL --security-opt no-new-privileges:true --pids-limit 64 --memory 512m --cpus 1 --tmpfs /tmp:rw,nosuid,nodev,size=256m asp-ci-repair/tests:ce11048351e14bbabc44c36e631560e4 uv run --no-sync ruff format --check src scripts/generate_ci_artifacts.py scripts/verify_ci_artifacts.py scripts/validate_ci_repair.py tests/unit/test_evaluation_corpus.py tests/unit/test_guardrails_workflow.py tests/unit/test_reporting_cli.py",
+      "exit_code": 0,
+      "passed": null
+    },
+    {
+      "name": "mypy",
+      "command": "docker run --rm --network none --read-only --user 10001:10001 --cap-drop ALL --security-opt no-new-privileges:true --pids-limit 64 --memory 512m --cpus 1 --tmpfs /tmp:rw,nosuid,nodev,size=256m asp-ci-repair/tests:ce11048351e14bbabc44c36e631560e4 uv run --no-sync mypy src",
+      "exit_code": 0,
+      "passed": null
+    }
+  ],
+  "remote_actions_executed": false,
+  "database_services_started": false,
+  "benchmark_files_modified": false,
+  "disposable_container_removed": true
+}

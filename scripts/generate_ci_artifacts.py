@@ -20,6 +20,7 @@ from ai_security_platform.reporting.files import write_artifact  # noqa: E402
 from ai_security_platform.reporting.policy import Policy, evaluate  # noqa: E402
 from ai_security_platform.snapshots.store import SnapshotStore  # noqa: E402
 from evaluation.corpus import BASE, load, materialize  # noqa: E402
+from scripts.verify_ci_artifacts import EXECUTION_MODE, safe_exception_type  # noqa: E402
 
 
 def main():
@@ -83,7 +84,7 @@ def main():
     jsonschema.validators.validator_for(schema)(schema).validate(document)
     jsonschema.validate(report, json.loads((ROOT / "tests/schemas/report-v1.json").read_text()))
     decision = evaluate(report, Policy(required_scanners=["semgrep"]))
-    decision["execution_mode"] = "offline replay of genuine controlled observations; not a new scan"
+    decision["execution_mode"] = EXECUTION_MODE
     for name, format, value in [
         ("guardrails", "json", report),
         ("guardrails", "sarif", document),
@@ -106,6 +107,13 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except Exception:
-        print(json.dumps({"error": "offline_artifact_generation_failed"}))
+    except Exception as error:
+        print(
+            json.dumps(
+                {
+                    "error": "offline_artifact_generation_failed",
+                    "error_type": safe_exception_type(error),
+                }
+            )
+        )
         raise SystemExit(2) from None

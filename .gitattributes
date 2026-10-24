@@ -5,4 +5,8 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 evaluation/** text eol=lf
+# Preserve the original byte identities checked by the frozen corpus and observations.
+evaluation/manifest.json text eol=crlf
+evaluation/adversarial.json text eol=crlf
+evaluation/frozen-v1.json text eol=crlf
 tests/schemas/** text eol=lf

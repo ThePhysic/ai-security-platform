@@ -15,6 +15,13 @@ from ai_security_platform.reporting.core import build_json, encode, sarif
 from ai_security_platform.reporting.files import write_artifact
 from ai_security_platform.reporting.policy import Policy, evaluate
 from ai_security_platform.snapshots.store import SnapshotStore
+from scripts.verify_ci_artifacts import (
+    EXECUTION_MODE,
+    MAX_ENVELOPE,
+    safe_exception_type,
+    verify,
+    verify_stream,
+)
 
 pytestmark = pytest.mark.unit
 SCHEMA = Path(__file__).resolve().parents[1] / "schemas/sarif-2.1.0.json"
@@ -196,3 +203,94 @@ def test_polling_and_pagination_boundaries():
         all_findings(lambda *a, **k: {"items": [], "next_cursor": "repeat"}, "local", "id", 1, 3)
     with pytest.raises(ValueError):
         all_findings(lambda *a, **k: {"items": [], "next_cursor": "next"}, "local", "id", 1, 1)
+
+
+@pytest.fixture
+def ci_artifacts(report_data, tmp_path):
+    scan, finding, source, _ = report_data
+    scan = scan.model_copy(update={"profile_id": "offline-fixture-replay"})
+    report = build_json(scan, [finding], source)
+    policy = evaluate(report, Policy(required_scanners=["semgrep"]))
+    policy["execution_mode"] = EXECUTION_MODE
+    directory = tmp_path / "ci-artifacts"
+    directory.mkdir()
+    for name, value in [
+        ("guardrails.json", report),
+        ("guardrails.sarif", sarif(report)),
+        ("policy.json", policy),
+    ]:
+        (directory / name).write_bytes(encode(value))
+    return directory
+
+
+def test_ci_expected_failure_is_successful_verification(ci_artifacts):
+    assert verify(ci_artifacts) == {"artifacts": 3, "policy_exit_code": 1, "verification": "passed"}
+    assert json.loads((ci_artifacts / "policy.json").read_bytes())["exit_code"] == 1
+
+
+@pytest.mark.parametrize("code", [0, 2, True, "1", 1.0, None])
+def test_ci_rejects_unexpected_policy_codes(ci_artifacts, code):
+    path = ci_artifacts / "policy.json"
+    policy = json.loads(path.read_bytes())
+    policy["exit_code"] = code
+    path.write_bytes(encode(policy))
+    with pytest.raises(ValueError):
+        verify(ci_artifacts)
+
+
+@pytest.mark.parametrize("name", ["guardrails.json", "guardrails.sarif", "policy.json"])
+def test_ci_missing_artifacts_fail(ci_artifacts, name):
+    (ci_artifacts / name).unlink()
+    with pytest.raises(ValueError):
+        verify(ci_artifacts)
+
+
+@pytest.mark.parametrize(
+    "raw", [b"{", b"{}", b'{"exit_code":1,"exit_code":0}', b'{"exit_code":NaN}', b"x" * 4194305]
+)
+def test_ci_invalid_policy_artifacts_fail(ci_artifacts, raw):
+    (ci_artifacts / "policy.json").write_bytes(raw)
+    with pytest.raises(ValueError):
+        verify(ci_artifacts)
+
+
+def test_ci_mismatched_sarif_and_incomplete_scanner_fail(ci_artifacts):
+    path = ci_artifacts / "guardrails.sarif"
+    original = path.read_bytes()
+    document = json.loads(original)
+    document["runs"][0]["results"] = []
+    path.write_bytes(encode(document))
+    with pytest.raises(ValueError):
+        verify(ci_artifacts)
+    path.write_bytes(original)
+    report_path = ci_artifacts / "guardrails.json"
+    report = json.loads(report_path.read_bytes())
+    semgrep = next(row for row in report["scan"]["scanner_runs"] if row["scanner_id"] == "semgrep")
+    semgrep["coverage"]["complete_execution"] = False
+    report_path.write_bytes(encode(report))
+    path.write_bytes(encode(sarif(report)))
+    with pytest.raises(ValueError):
+        verify(ci_artifacts)
+
+
+def test_ci_error_categories_never_echo_exception_values():
+    secret = "SYNTHETIC_SECRET_private_diagnostic"
+    assert safe_exception_type(AssertionError(secret)) == "AssertionError"
+    assert safe_exception_type(RuntimeError(secret)) == "UnexpectedError"
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        b"{",
+        b"{}",
+        b"[]",
+        b"x" * (MAX_ENVELOPE + 1),
+        b'{"guardrails.json":"!","guardrails.sarif":"!","policy.json":"!"}',
+    ],
+)
+def test_ci_stream_validation_is_bounded_and_fail_closed(payload):
+    from io import BytesIO
+
+    with pytest.raises(ValueError):
+        verify_stream(BytesIO(payload))

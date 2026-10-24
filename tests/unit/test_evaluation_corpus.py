@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from evaluation.corpus import BASE, load, scanner_metrics
+from evaluation.corpus import BASE, load, scanner_metrics, sha
 from evaluation.grading import grade
 
 pytestmark = [pytest.mark.unit, pytest.mark.evaluation]
@@ -18,6 +18,12 @@ def test_frozen_source_only_split_and_attack_expectations():
     attacks = json.loads((BASE / "adversarial.json").read_text())
     assert len(attacks["cases"]) == len({a["goal"] for a in attacks["cases"]}) == 16
     assert all(a["expected_enforcement"] for a in attacks["cases"])
+
+
+def test_frozen_identity_matches_recorded_scanner_provenance():
+    observations = json.loads((BASE / "results/scanner-observations.json").read_text())
+    assert observations["manifest_sha256"] == sha(BASE / "manifest.json")
+    assert observations["freeze_sha256"] == sha(BASE / "frozen-v1.json")
 
 
 def test_incomplete_and_unsupported_results_never_become_true_negatives():
